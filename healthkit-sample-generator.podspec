@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary          = "A Generator for HealthKit Sample Data."
   s.homepage         = "https://github.com/mseemann/healthkit-sample-generator"
   s.license          = 'MIT'
-  s.author           = { "Michael Seemann" => "seemann@mseemann.de" }
+  s.author           = { "Michael Seemann" => "pods@mseemann.de" }
   s.source           = { :git => "https://github.com/mseemann/healthkit-sample-generator.git", :tag => s.version.to_s }
 
 
