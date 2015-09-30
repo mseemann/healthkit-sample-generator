@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-import healthkit-sample-generator
+import healthkit_sample_generator
 
 class Tests: XCTestCase {
     
