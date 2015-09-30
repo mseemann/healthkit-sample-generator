@@ -1,0 +1,6 @@
+framework module healthkit_sample_generator {
+  umbrella header "healthkit-sample-generator-umbrella.h"
+
+  export *
+  module * { export * }
+}

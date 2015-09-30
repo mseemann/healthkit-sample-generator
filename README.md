@@ -1,4 +1,9 @@
+
 # healthkit-sample-generator
+
+Generator for HealthKit Sample Data (swift + UI)
+
+Objective: Easy to use generator for HealthKit Sample Data that can be used in code and in the simulator.
 
 [![CI Status](http://img.shields.io/travis/Michael Seemann/healthkit-sample-generator.svg?style=flat)](https://travis-ci.org/Michael Seemann/healthkit-sample-generator)
 [![Version](https://img.shields.io/cocoapods/v/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
@@ -22,7 +27,7 @@ pod "healthkit-sample-generator"
 
 ## Author
 
-Michael Seemann, seemann@mseemann.de
+Michael Seemann, pods@mseemann.de
 
 ## License
 
