@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'HealthKitSampleGenerator_Example', :exclusive => true do
+  pod "HealthKitSampleGenerator", :path => "../"
+end
+
+target 'HealthKitSampleGenerator_Tests', :exclusive => true do
+  pod "HealthKitSampleGenerator", :path => "../"
+
+  
+end
