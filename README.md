@@ -1,5 +1,5 @@
 
-# healthkit-sample-generator
+# HealthKitSampleGenerator
 
 Generator for HealthKit Sample Data (swift + UI)
 
