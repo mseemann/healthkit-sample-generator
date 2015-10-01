@@ -1,0 +1,14 @@
+PODS:
+  - HealthKitSampleGenerator (0.1.0)
+
+DEPENDENCIES:
+  - HealthKitSampleGenerator (from `../`)
+
+EXTERNAL SOURCES:
+  HealthKitSampleGenerator:
+    :path: ../
+
+SPEC CHECKSUMS:
+  HealthKitSampleGenerator: 9fbeb4574669b97fb3bd75f82a4c9a09e4b6730f
+
+COCOAPODS: 0.39.0.beta.4
