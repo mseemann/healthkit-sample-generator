@@ -22,7 +22,7 @@ healthkit-sample-generator is available through [CocoaPods](http://cocoapods.org
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "healthkit-sample-generator"
+pod "HealthKitSampleGenerator"
 ```
 
 ## Author
