@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		15607CD3CE554B2FF63D7E0457FF16ED /* Pods-HealthKitSampleGenerator_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D76E71FC213B2E6761F0723AD0FEF /* Pods-HealthKitSampleGenerator_Example-dummy.m */; };
 		241D8C4CC638194D08FBE13C041C4BDD /* Pods-HealthKitSampleGenerator_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 11235C435F86042FE510687D4B645729 /* Pods-HealthKitSampleGenerator_Tests-dummy.m */; };
+		2F9E305A1BBE87820005DF72 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30591BBE87820005DF72 /* Constants.swift */; settings = {ASSET_TAGS = (); }; };
+		2F9E305C1BBE992D0005DF72 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E305B1BBE992D0005DF72 /* todo.txt */; settings = {ASSET_TAGS = (); }; };
+		2F9E305E1BBED4320005DF72 /* Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E305D1BBED4320005DF72 /* Export.swift */; settings = {ASSET_TAGS = (); }; };
 		32A49471A8C962449BAA6C0BFB93C182 /* Pods-HealthKitSampleGenerator_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 37779ECAE7FF4B738D8C8CB02F6E9C78 /* Pods-HealthKitSampleGenerator_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38F746F56CF7203FF1D963375AB5C908 /* Pods-HealthKitSampleGenerator_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 05392518CC0907AC7B9939ADBA69A9D2 /* Pods-HealthKitSampleGenerator_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57889DBE25EE20690EA297B4F0CC78C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC9C4550B8118D353DB568544C4F533 /* Foundation.framework */; };
@@ -16,7 +19,6 @@
 		A7CC2ECCC3F9DFEC56BEB6D05235F7DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC9C4550B8118D353DB568544C4F533 /* Foundation.framework */; };
 		AA35EB30EB803C72908CBB908E2525FC /* HealthKitSampleGenerator-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D05A01E0619DDF2A58904052240D66 /* HealthKitSampleGenerator-dummy.m */; };
 		BD108D63B4275EB4EEDFC8AA0404A0A5 /* HealthKitSampleGenerator-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A4E2A16C92BE3A240740B51DD1AB76E0 /* HealthKitSampleGenerator-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E17E49B727400FD8704BBA3418D53D86 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD6C70D9E15DEFDE63B6CBA8F7F6676 /* ReplaceMe.swift */; };
 		E2F9241D1F8FE8337D573A5075B8E562 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC9C4550B8118D353DB568544C4F533 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,13 +53,15 @@
 		09D05A01E0619DDF2A58904052240D66 /* HealthKitSampleGenerator-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HealthKitSampleGenerator-dummy.m"; sourceTree = "<group>"; };
 		11235C435F86042FE510687D4B645729 /* Pods-HealthKitSampleGenerator_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HealthKitSampleGenerator_Tests-dummy.m"; sourceTree = "<group>"; };
 		2065F67A980712141655A2AD710F2FB1 /* Pods-HealthKitSampleGenerator_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HealthKitSampleGenerator_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		2F9E30591BBE87820005DF72 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2F9E305B1BBE992D0005DF72 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
+		2F9E305D1BBED4320005DF72 /* Export.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Export.swift; sourceTree = "<group>"; };
 		31971283FA8916C9C34FAFEA055DAA40 /* Pods-HealthKitSampleGenerator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HealthKitSampleGenerator_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		36E2732FC631C401C31B39737A435170 /* Pods_HealthKitSampleGenerator_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthKitSampleGenerator_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37779ECAE7FF4B738D8C8CB02F6E9C78 /* Pods-HealthKitSampleGenerator_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HealthKitSampleGenerator_Tests-umbrella.h"; sourceTree = "<group>"; };
 		3AC9C4550B8118D353DB568544C4F533 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		4C72C225DE1AC5E012728543D62538C0 /* Pods-HealthKitSampleGenerator_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HealthKitSampleGenerator_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4DFBE0597ED6EFD7CD381DDD40002C82 /* Pods-HealthKitSampleGenerator_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HealthKitSampleGenerator_Example.release.xcconfig"; sourceTree = "<group>"; };
-		5BD6C70D9E15DEFDE63B6CBA8F7F6676 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplaceMe.swift; sourceTree = "<group>"; };
 		6979EA882FC59FA91CB1DC63C27AE6C5 /* Pods_HealthKitSampleGenerator_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthKitSampleGenerator_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB72AC4C5B71AF2170C79971985BE2F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F746BC3426C524B4B39B5B14C86355A /* Pods-HealthKitSampleGenerator_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HealthKitSampleGenerator_Example-resources.sh"; sourceTree = "<group>"; };
@@ -203,7 +207,9 @@
 		75E05E9A618124E0C479D54F91F8008B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5BD6C70D9E15DEFDE63B6CBA8F7F6676 /* ReplaceMe.swift */,
+				2F9E30591BBE87820005DF72 /* Constants.swift */,
+				2F9E305B1BBE992D0005DF72 /* todo.txt */,
+				2F9E305D1BBED4320005DF72 /* Export.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -382,6 +388,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F9E305C1BBE992D0005DF72 /* todo.txt in Resources */,
 				6B5163DAFAF4C6ABE836F4189F8AFC73 /* HealthKitSampleGenerator.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,7 +416,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA35EB30EB803C72908CBB908E2525FC /* HealthKitSampleGenerator-dummy.m in Sources */,
-				E17E49B727400FD8704BBA3418D53D86 /* ReplaceMe.swift in Sources */,
+				2F9E305A1BBE87820005DF72 /* Constants.swift in Sources */,
+				2F9E305E1BBED4320005DF72 /* Export.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

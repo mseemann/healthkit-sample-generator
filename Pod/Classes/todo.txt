@@ -1,0 +1,8 @@
+health authorisierung anfordern
+
+export für healtdaten - json format
+- alle
+- der app
+- alle vom testcode erzeugten
+- test für export HKPreditcate
+- export als ? mail, speichern unter - aber wohin?, upload auf einen sever?

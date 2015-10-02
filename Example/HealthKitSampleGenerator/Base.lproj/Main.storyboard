@@ -1,25 +1,148 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="iH5-IJ-PIg">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="ufC-wZ-h7g">
+        <!--Profile-->
+        <scene sceneID="kbr-pg-aXk">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Profile" id="cBN-zd-gg0" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                        <viewControllerLayoutGuide type="top" id="XmJ-pY-is4"/>
+                        <viewControllerLayoutGuide type="bottom" id="NYv-0g-PwD"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                    <view key="view" contentMode="scaleToFill" id="nYf-Tz-hOS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLF-qo-owr">
+                                <rect key="frame" x="255" y="283" width="87" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Profile" id="VgN-Zy-ZhG"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y60-vK-6B0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-1713" y="-1444"/>
+        </scene>
+        <!--Export-->
+        <scene sceneID="eAY-Np-2HO">
+            <objects>
+                <viewController title="Export" id="sxH-Cz-h7O" customClass="ExportViewController" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pEL-Ow-7ku"/>
+                        <viewControllerLayoutGuide type="bottom" id="nuN-Uf-zaP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KU0-sR-pt9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGr-rR-ng7">
+                                <rect key="frame" x="190" y="513" width="220" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="6cJ-uT-ZE2"/>
+                                    <constraint firstAttribute="height" constant="30" id="rcX-Y9-dCW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <state key="normal" title="Export HealthKit Data"/>
+                                <connections>
+                                    <action selector="doExport:" destination="sxH-Cz-h7O" eventType="touchUpInside" id="MJ9-Lr-rpQ"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="om5-xh-e3w">
+                                <rect key="frame" x="20" y="28" width="560" height="477"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQm-gD-klT">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="19.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="specify a name for the profile" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Jhs-pz-uYo">
+                                        <rect key="frame" x="0.0" y="25.5" width="560" height="31"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="3hc-Gq-1I2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="sxH-Cz-h7O" id="W2u-pP-iJs"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data to export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2e-zM-GoU">
+                                        <rect key="frame" x="0.0" y="62.5" width="560" height="19.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VnF-Qm-js0">
+                                        <rect key="frame" x="0.0" y="88" width="560" height="389"/>
+                                        <animations/>
+                                    </pickerView>
+                                </subviews>
+                                <animations/>
+                            </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6pj-OF-47h">
+                                <rect key="frame" x="418" y="518" width="20" height="20"/>
+                                <animations/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6pj-OF-47h" firstAttribute="leading" secondItem="VGr-rR-ng7" secondAttribute="trailing" constant="8" symbolic="YES" id="4li-aV-fbA"/>
+                            <constraint firstItem="om5-xh-e3w" firstAttribute="centerX" secondItem="KU0-sR-pt9" secondAttribute="centerX" id="7AN-WS-o02"/>
+                            <constraint firstItem="VGr-rR-ng7" firstAttribute="top" secondItem="om5-xh-e3w" secondAttribute="bottom" constant="8" symbolic="YES" id="9FH-ch-Jjf"/>
+                            <constraint firstItem="VGr-rR-ng7" firstAttribute="centerX" secondItem="KU0-sR-pt9" secondAttribute="centerX" id="Sg3-jh-AgR"/>
+                            <constraint firstItem="nuN-Uf-zaP" firstAttribute="top" secondItem="VGr-rR-ng7" secondAttribute="bottom" constant="8" symbolic="YES" id="WnA-kO-9xf"/>
+                            <constraint firstItem="om5-xh-e3w" firstAttribute="leading" secondItem="KU0-sR-pt9" secondAttribute="leadingMargin" id="jEq-J0-qP9"/>
+                            <constraint firstItem="6pj-OF-47h" firstAttribute="centerY" secondItem="VGr-rR-ng7" secondAttribute="centerY" id="ki0-HV-BoO"/>
+                            <constraint firstItem="om5-xh-e3w" firstAttribute="top" secondItem="pEL-Ow-7ku" secondAttribute="bottom" constant="8" symbolic="YES" id="krX-iD-lXz"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Export" id="tT0-qq-KbR"/>
+                    <connections>
+                        <outlet property="avExporting" destination="6pj-OF-47h" id="SZU-cL-ZUZ"/>
+                        <outlet property="btnExport" destination="VGr-rR-ng7" id="zwQ-fB-5Xq"/>
+                        <outlet property="dataToExportPicker" destination="VnF-Qm-js0" id="98y-c6-6Z7"/>
+                        <outlet property="tfProfileName" destination="Jhs-pz-uYo" id="rXI-gh-D84"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3rf-z3-1nj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1729" y="-2465"/>
+        </scene>
+        <!--Main Tab Controller-->
+        <scene sceneID="qKZ-aP-peG">
+            <objects>
+                <tabBarController id="iH5-IJ-PIg" customClass="MainTabController" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Aeu-y7-0dB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="sxH-Cz-h7O" kind="relationship" relationship="viewControllers" id="9c9-Hh-g8j"/>
+                        <segue destination="cBN-zd-gg0" kind="relationship" relationship="viewControllers" id="ilu-Fo-cCQ"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wUn-nd-Prw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2461" y="-1902"/>
         </scene>
     </scenes>
 </document>
