@@ -32,13 +32,13 @@ class JsonWriterTest: XCTestCase {
         XCTAssertEqual(jsonString, "[]")
     }
     
-    func testWriteOneObject() {
+    func testWriteOneObject() throws {
         let stream = NSOutputStream.outputStreamToMemory()
         
         let jsonWriter = JsonWriter(outputStream: stream)
         
         jsonWriter.writeArrayStart()
-        jsonWriter.writeObject(["a":"b"])
+        try jsonWriter.writeObject(["a":"b"])
         jsonWriter.writeArrayEnd()
         
         stream.close()
@@ -48,14 +48,14 @@ class JsonWriterTest: XCTestCase {
         XCTAssertEqual(jsonString, "[{\n  \"a\" : \"b\"\n}]")
     }
     
-    func testWriteTwoObject() {
+    func testWriteTwoObject() throws{
         let stream = NSOutputStream.outputStreamToMemory()
         
         let jsonWriter = JsonWriter(outputStream: stream)
         
         jsonWriter.writeArrayStart()
-        jsonWriter.writeObject(["a":"b"])
-        jsonWriter.writeObject(["c":"d"])
+        try jsonWriter.writeObject(["a":"b"])
+        try jsonWriter.writeObject(["c":"d"])
         jsonWriter.writeArrayEnd()
         
         stream.close()

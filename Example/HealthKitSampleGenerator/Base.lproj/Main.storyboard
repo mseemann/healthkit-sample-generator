@@ -21,7 +21,7 @@
                                 <rect key="frame" x="255" y="283" width="87" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -63,14 +63,17 @@
                                 <rect key="frame" x="20" y="28" width="560" height="477"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQm-gD-klT">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="19"/>
                                         <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="19" id="m5f-BY-UA9"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="specify a name for the profile" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Jhs-pz-uYo">
-                                        <rect key="frame" x="0.0" y="25.5" width="560" height="31"/>
+                                        <rect key="frame" x="0.0" y="25" width="560" height="31"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="31" id="3hc-Gq-1I2"/>
@@ -81,15 +84,73 @@
                                             <outlet property="delegate" destination="sxH-Cz-h7O" id="W2u-pP-iJs"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data to export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2e-zM-GoU">
-                                        <rect key="frame" x="0.0" y="62.5" width="560" height="19.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export-File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGJ-wJ-Ufh">
+                                        <rect key="frame" x="0.0" y="62" width="560" height="20"/>
                                         <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="h7b-cG-z78"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vX7-dz-UrM">
+                                        <rect key="frame" x="0.0" y="88" width="560" height="141"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="overwrite if exist" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7a-aJ-xOp">
+                                                <rect key="frame" x="331" y="113" width="172" height="17"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="172" id="q9Z-15-maw"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdp-Dy-FqO">
+                                                <rect key="frame" x="511" y="106" width="51" height="31"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="31" id="liI-Wl-eIZ"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="swOverwriteIfExistChanged:" destination="sxH-Cz-h7O" eventType="valueChanged" id="P7v-kI-OtW"/>
+                                                </connections>
+                                            </switch>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ux-oo-or9">
+                                                <rect key="frame" x="8" y="8" width="544" height="109"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="109" id="3Ly-er-dj5"/>
+                                                </constraints>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textView>
+                                        </subviews>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstItem="vdp-Dy-FqO" firstAttribute="leading" secondItem="E7a-aJ-xOp" secondAttribute="trailing" constant="8" symbolic="YES" id="DF7-7A-Bg7"/>
+                                            <constraint firstItem="vdp-Dy-FqO" firstAttribute="centerY" secondItem="E7a-aJ-xOp" secondAttribute="centerY" id="Mqy-6e-gfD"/>
+                                            <constraint firstItem="5Ux-oo-or9" firstAttribute="leading" secondItem="vX7-dz-UrM" secondAttribute="leadingMargin" id="OBL-tg-D5Q"/>
+                                            <constraint firstItem="vdp-Dy-FqO" firstAttribute="top" secondItem="5Ux-oo-or9" secondAttribute="bottom" constant="-11" id="Z20-HV-g2b"/>
+                                            <constraint firstItem="5Ux-oo-or9" firstAttribute="trailing" secondItem="vX7-dz-UrM" secondAttribute="trailingMargin" id="nC4-wk-NuX"/>
+                                            <constraint firstAttribute="trailing" secondItem="vdp-Dy-FqO" secondAttribute="trailing" id="tfr-Ok-pdk"/>
+                                            <constraint firstItem="5Ux-oo-or9" firstAttribute="top" secondItem="vX7-dz-UrM" secondAttribute="topMargin" id="wpJ-6r-5mo"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data to export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2e-zM-GoU">
+                                        <rect key="frame" x="0.0" y="235" width="560" height="20"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="2xT-pI-G53"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VnF-Qm-js0">
-                                        <rect key="frame" x="0.0" y="88" width="560" height="389"/>
+                                        <rect key="frame" x="0.0" y="261" width="560" height="216"/>
                                         <animations/>
                                     </pickerView>
                                 </subviews>
@@ -118,7 +179,9 @@
                         <outlet property="avExporting" destination="6pj-OF-47h" id="SZU-cL-ZUZ"/>
                         <outlet property="btnExport" destination="VGr-rR-ng7" id="zwQ-fB-5Xq"/>
                         <outlet property="dataToExportPicker" destination="VnF-Qm-js0" id="98y-c6-6Z7"/>
+                        <outlet property="swOverwriteIfExist" destination="vdp-Dy-FqO" id="jSI-J5-et4"/>
                         <outlet property="tfProfileName" destination="Jhs-pz-uYo" id="rXI-gh-D84"/>
+                        <outlet property="tvOutputFileName" destination="5Ux-oo-or9" id="RZD-kO-yD4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3rf-z3-1nj" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -16,6 +16,8 @@ class ExportViewController : UIViewController, UIPickerViewDelegate, UITextField
     @IBOutlet weak var tfProfileName:       UITextField!
     @IBOutlet weak var btnExport:           UIButton!
     @IBOutlet weak var avExporting:         UIActivityIndicatorView!
+    @IBOutlet weak var tvOutputFileName:    UITextView!
+    @IBOutlet weak var swOverwriteIfExist:  UISwitch!
     
     var selectedHealthDataToExport = HealthDataToExportType.GENERATED_BY_THIS_APP
     
@@ -27,6 +29,8 @@ class ExportViewController : UIViewController, UIPickerViewDelegate, UITextField
         }
     }
     
+    var outputFielName: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         btnExport.enabled               = false
@@ -35,6 +39,7 @@ class ExportViewController : UIViewController, UIPickerViewDelegate, UITextField
         dataToExportPicker.dataSource   = self
         pickerData                      = HealthDataToExportType.allValues
         
+        tfProfileName.text              = "output"
         tfProfileName.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
     
@@ -43,37 +48,74 @@ class ExportViewController : UIViewController, UIPickerViewDelegate, UITextField
         
         dataToExportPicker.selectRow(pickerData.indexOf(selectedHealthDataToExport)!, inComponent: 0, animated: true)
         
-       validateExportConfiguration()
+        analyzeExportConfiguration()
     }
     
     @IBAction func doExport(_: AnyObject) {
         avExporting.hidden  = false
         btnExport.enabled   = false
-        HealthKitDataExporter.INSTANCE.export(selectedHealthDataToExport, profileName:tfProfileName.text!) { (error:NSError?) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.avExporting.hidden  = true
-                self.btnExport.enabled   = true
-            })
+        
+        var exportConfiguration = ExportConfiguration()
+        exportConfiguration.exportType = selectedHealthDataToExport
+        exportConfiguration.profilName = tfProfileName.text
+        exportConfiguration.ouputStream = NSOutputStream.init(toFileAtPath: outputFielName!, append: false)!
+        
+
+        
+        exportConfiguration.ouputStream?.open()
+        do{
+            try HealthKitDataExporter.INSTANCE.export(exportConfiguration) { (error:NSError?) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    exportConfiguration.ouputStream?.close()
+                    
+                    self.avExporting.hidden  = true
+                    self.btnExport.enabled   = true
+                })
+            }
+        } catch let error as ExportError {
+            // FIXME inform the view
+            print(error)
+        } catch _ {
+            print("unknown error")
         }
     }
     
-    func validateExportConfiguration(){
+    @IBAction func swOverwriteIfExistChanged(sender: AnyObject) {
+        analyzeExportConfiguration()
+    }
+    
+    func analyzeExportConfiguration(){
         exportConfigurationValid = false
+        
         // selectedHealthDataToExport is always set!
-        if let text = tfProfileName.text {
+        
+        var fileName = "output"
+        if let text = tfProfileName.text where !text.isEmpty {
             exportConfigurationValid = !text.isEmpty
+            fileName = FileNameUtil.normalizeName(text)
         }
         
+        let documentsUrl = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        
+        outputFielName = documentsUrl.URLByAppendingPathComponent(fileName+".json").path!
+        
+        tvOutputFileName.text = outputFielName
+        
+        // if the outputFileName already exists, the state is only valid, if overwrite is allowed
+        if NSFileManager.defaultManager().fileExistsAtPath(outputFielName!) {
+            exportConfigurationValid = exportConfigurationValid && swOverwriteIfExist.on
+        }
     }
 
     func textFieldDidChange(_: UITextField) {
-       validateExportConfiguration()
+       analyzeExportConfiguration()
     }
 
     
     func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent _: Int) {
         selectedHealthDataToExport = pickerData[row]
-        validateExportConfiguration()
+        analyzeExportConfiguration()
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

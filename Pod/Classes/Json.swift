@@ -8,6 +8,9 @@
 
 import Foundation
 
+enum JsonWriterError: ErrorType {
+    case NSJSONSerializationError
+}
 
 public class JsonWriter {
     
@@ -28,14 +31,20 @@ public class JsonWriter {
         write("]")
     }
     
-    public func writeObject(theObject: AnyObject){
+    public func writeObject(theObject: AnyObject) throws {
         openStreamIfNeeded()
         if(objectWritten){
             write(",\r\n")
             objectWritten = false
         }
         
-        NSJSONSerialization.writeJSONObject(theObject, toStream: self.outputStream, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
+        var err: NSError?
+        
+        NSJSONSerialization.writeJSONObject(theObject, toStream: self.outputStream, options: NSJSONWritingOptions.PrettyPrinted, error: &err)
+        
+        if(err != nil){
+            throw JsonWriterError.NSJSONSerializationError
+        }
         
         objectWritten = true
     }
