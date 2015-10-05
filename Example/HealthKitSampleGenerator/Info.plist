@@ -40,5 +40,7 @@
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+	<key>CFBundleDisplayName</key>
+	<string>HealthKit Sample Generator</string>
 </dict>
 </plist>
