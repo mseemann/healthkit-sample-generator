@@ -95,7 +95,7 @@ class ExportViewController : UIViewController, UIPickerViewDelegate, UITextField
         
         let documentsUrl = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         
-        outputFielName = documentsUrl.URLByAppendingPathComponent(fileName+".json").path!
+        outputFielName = documentsUrl.URLByAppendingPathComponent(fileName+".json.hsg").path!
         
         tvOutputFileName.text = outputFielName
         
