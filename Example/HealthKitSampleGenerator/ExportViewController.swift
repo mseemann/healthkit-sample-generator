@@ -55,19 +55,16 @@ class ExportViewController : UIViewController, UIPickerViewDelegate, UITextField
         avExporting.hidden  = false
         btnExport.enabled   = false
         
-        var exportConfiguration = ExportConfiguration()
+        var exportConfiguration = ExportConfiguration(outputStream: NSOutputStream.init(toFileAtPath: outputFielName!, append: false)!)
         exportConfiguration.exportType = selectedHealthDataToExport
         exportConfiguration.profilName = tfProfileName.text
-        exportConfiguration.ouputStream = NSOutputStream.init(toFileAtPath: outputFielName!, append: false)!
         
-
-        
-        exportConfiguration.ouputStream?.open()
+        exportConfiguration.outputStream.open()
         do{
             try HealthKitDataExporter.INSTANCE.export(exportConfiguration) { (error:NSError?) in
                 dispatch_async(dispatch_get_main_queue(), {
                     
-                    exportConfiguration.ouputStream?.close()
+                    exportConfiguration.outputStream.close()
                     
                     self.avExporting.hidden  = true
                     self.btnExport.enabled   = true

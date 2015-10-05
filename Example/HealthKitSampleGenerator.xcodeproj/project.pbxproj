@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2519807D2C1089FBBE7DAB86 /* Pods_HealthKitSampleGenerator_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2F90C57F1BC3051500587117 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F90C57E1BC3051500587117 /* HealthKit.framework */; };
 		2F9E30561BBE79E30005DF72 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30551BBE79E30005DF72 /* MainTabController.swift */; settings = {ASSET_TAGS = (); }; };
 		2F9E30581BBE81630005DF72 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30571BBE81630005DF72 /* ExportViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		2F9E30631BC2AA940005DF72 /* JsonWriterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */; settings = {ASSET_TAGS = (); }; };
@@ -31,6 +32,8 @@
 /* Begin PBXFileReference section */
 		162271BC1D58D2A3973BF2B9 /* Pods-HealthKitSampleGenerator_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthKitSampleGenerator_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-HealthKitSampleGenerator_Example/Pods-HealthKitSampleGenerator_Example.release.xcconfig"; sourceTree = "<group>"; };
 		2629469B90C63E0981BD4420 /* HealthKitSampleGenerator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HealthKitSampleGenerator.podspec; path = ../HealthKitSampleGenerator.podspec; sourceTree = "<group>"; };
+		2F90C57D1BC3051500587117 /* HealthKitSampleGenerator_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HealthKitSampleGenerator_Example.entitlements; sourceTree = "<group>"; };
+		2F90C57E1BC3051500587117 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		2F9E30551BBE79E30005DF72 /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		2F9E30571BBE81630005DF72 /* ExportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
 		2F9E305F1BC277590005DF72 /* HealthKitSampleGeneratorPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HealthKitSampleGeneratorPlayground.playground; sourceTree = "<group>"; };
@@ -58,6 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2519807D2C1089FBBE7DAB86 /* Pods_HealthKitSampleGenerator_Example.framework in Frameworks */,
+				2F90C57F1BC3051500587117 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +79,7 @@
 		07F465E8CAD041A32B390A96 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F90C57E1BC3051500587117 /* HealthKit.framework */,
 				64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */,
 				83C68FA6A8987337C85C7D43 /* Pods_HealthKitSampleGenerator_Tests.framework */,
 			);
@@ -84,6 +89,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				2F90C57D1BC3051500587117 /* HealthKitSampleGenerator_Example.entitlements */,
 				2F9E305F1BC277590005DF72 /* HealthKitSampleGeneratorPlayground.playground */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for HealthKitSampleGenerator */,
@@ -220,6 +226,11 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -495,11 +506,15 @@
 			baseConfigurationReference = B5D9583B9AAA55F82063F614 /* Pods-HealthKitSampleGenerator_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HealthKitSampleGenerator_Example.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HealthKitSampleGenerator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -508,11 +523,15 @@
 			baseConfigurationReference = 162271BC1D58D2A3973BF2B9 /* Pods-HealthKitSampleGenerator_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HealthKitSampleGenerator_Example.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HealthKitSampleGenerator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

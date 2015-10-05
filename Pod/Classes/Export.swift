@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import HealthKit
 
 public enum ExportError: ErrorType {
     case IllegalArgumentError(String)
@@ -25,23 +26,31 @@ public typealias ExportCompletion = (NSError?) -> Void
 
 class ExportOperation: NSOperation {
     
-    init(completionBlock: (() -> Void)? ){
+    var exportConfiguration: ExportConfiguration
+    
+    init(exportConfiguration: ExportConfiguration, healthStore: HKHealthStore, completionBlock: (() -> Void)? ){
+        self.exportConfiguration = exportConfiguration
         super.init()
         self.completionBlock = completionBlock
+
     }
     
     override func main() {
-        sleep(4)
-
+        let jsonWriter = JsonWriter(outputStream: exportConfiguration.outputStream)
+        jsonWriter.writeArrayStart()
+        
+        jsonWriter.writeArrayEnd()
     }
 }
 
 public struct ExportConfiguration {
     public var exportType = HealthDataToExportType.ALL
     public var profilName: String?
-    public var ouputStream: NSOutputStream?
+    public var outputStream: NSOutputStream
     
-    public init(){}
+    public init(outputStream: NSOutputStream){
+        self.outputStream = outputStream
+    }
 }
 
 public class HealthKitDataExporter {
@@ -55,19 +64,33 @@ public class HealthKitDataExporter {
         return queue
     }()
     
+    let healthStore = HKHealthStore()
+    
+    let healthKitTypesToRead = Set(arrayLiteral:
+        HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierDateOfBirth)!,
+        HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex)!,
+        HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!,
+        HKObjectType.workoutType()
+    )
+
+    
     init() { }
     
     public func export(exportConfiguration: ExportConfiguration, onCompletion: ExportCompletion) throws -> Void {
-        print(exportConfiguration)
-        
-        if(exportConfiguration.ouputStream?.streamStatus != .Open){
+        if(exportConfiguration.outputStream.streamStatus != .Open){
             throw ExportError.IllegalArgumentError("the outputstream must be open")
         }
         
-        let exporter = ExportOperation(completionBlock:{
+        let exporter = ExportOperation(exportConfiguration: exportConfiguration, healthStore: healthStore, completionBlock:{
             onCompletion(nil)
         })
         
-        exportQueue.addOperation(exporter)
+        healthStore.requestAuthorizationToShareTypes(nil, readTypes: healthKitTypesToRead) {
+            (success, error) -> Void in
+            
+            self.exportQueue.addOperation(exporter)
+            
+        }
+    
     }
 }
