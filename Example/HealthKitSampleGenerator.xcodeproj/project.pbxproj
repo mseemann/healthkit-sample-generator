@@ -10,11 +10,11 @@
 		2519807D2C1089FBBE7DAB86 /* Pods_HealthKitSampleGenerator_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2F9E30561BBE79E30005DF72 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30551BBE79E30005DF72 /* MainTabController.swift */; settings = {ASSET_TAGS = (); }; };
 		2F9E30581BBE81630005DF72 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30571BBE81630005DF72 /* ExportViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		2F9E30631BC2AA940005DF72 /* JsonWriterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */; settings = {ASSET_TAGS = (); }; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		F97E53BF2853FEB20747894A /* Pods_HealthKitSampleGenerator_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C68FA6A8987337C85C7D43 /* Pods_HealthKitSampleGenerator_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -33,6 +33,8 @@
 		2629469B90C63E0981BD4420 /* HealthKitSampleGenerator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HealthKitSampleGenerator.podspec; path = ../HealthKitSampleGenerator.podspec; sourceTree = "<group>"; };
 		2F9E30551BBE79E30005DF72 /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		2F9E30571BBE81630005DF72 /* ExportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
+		2F9E305F1BC277590005DF72 /* HealthKitSampleGeneratorPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HealthKitSampleGeneratorPlayground.playground; sourceTree = "<group>"; };
+		2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonWriterTest.swift; sourceTree = "<group>"; };
 		3E763853067A80A9434CF184 /* Pods-HealthKitSampleGenerator_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthKitSampleGenerator_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HealthKitSampleGenerator_Tests/Pods-HealthKitSampleGenerator_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* HealthKitSampleGenerator_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthKitSampleGenerator_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -42,7 +44,6 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* HealthKitSampleGenerator_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HealthKitSampleGenerator_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthKitSampleGenerator_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83C68FA6A8987337C85C7D43 /* Pods_HealthKitSampleGenerator_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthKitSampleGenerator_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D9583B9AAA55F82063F614 /* Pods-HealthKitSampleGenerator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthKitSampleGenerator_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HealthKitSampleGenerator_Example/Pods-HealthKitSampleGenerator_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				2F9E305F1BC277590005DF72 /* HealthKitSampleGeneratorPlayground.playground */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for HealthKitSampleGenerator */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -127,7 +129,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -372,7 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				2F9E30631BC2AA940005DF72 /* JsonWriterTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

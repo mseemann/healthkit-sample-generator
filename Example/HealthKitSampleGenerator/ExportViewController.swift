@@ -49,7 +49,7 @@ class ExportViewController : UIViewController, UIPickerViewDelegate, UITextField
     @IBAction func doExport(_: AnyObject) {
         avExporting.hidden  = false
         btnExport.enabled   = false
-        HealthKitDataExporter().export(selectedHealthDataToExport, profileName:tfProfileName.text!) { (error:NSError?) in
+        HealthKitDataExporter.INSTANCE.export(selectedHealthDataToExport, profileName:tfProfileName.text!) { (error:NSError?) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.avExporting.hidden  = true
                 self.btnExport.enabled   = true

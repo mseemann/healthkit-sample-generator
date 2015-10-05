@@ -12,6 +12,7 @@
 		2F9E305A1BBE87820005DF72 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30591BBE87820005DF72 /* Constants.swift */; settings = {ASSET_TAGS = (); }; };
 		2F9E305C1BBE992D0005DF72 /* todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E305B1BBE992D0005DF72 /* todo.txt */; settings = {ASSET_TAGS = (); }; };
 		2F9E305E1BBED4320005DF72 /* Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E305D1BBED4320005DF72 /* Export.swift */; settings = {ASSET_TAGS = (); }; };
+		2F9E30611BC2A2070005DF72 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30601BC2A2070005DF72 /* Json.swift */; settings = {ASSET_TAGS = (); }; };
 		32A49471A8C962449BAA6C0BFB93C182 /* Pods-HealthKitSampleGenerator_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 37779ECAE7FF4B738D8C8CB02F6E9C78 /* Pods-HealthKitSampleGenerator_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38F746F56CF7203FF1D963375AB5C908 /* Pods-HealthKitSampleGenerator_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 05392518CC0907AC7B9939ADBA69A9D2 /* Pods-HealthKitSampleGenerator_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57889DBE25EE20690EA297B4F0CC78C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC9C4550B8118D353DB568544C4F533 /* Foundation.framework */; };
@@ -56,6 +57,7 @@
 		2F9E30591BBE87820005DF72 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2F9E305B1BBE992D0005DF72 /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		2F9E305D1BBED4320005DF72 /* Export.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Export.swift; sourceTree = "<group>"; };
+		2F9E30601BC2A2070005DF72 /* Json.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		31971283FA8916C9C34FAFEA055DAA40 /* Pods-HealthKitSampleGenerator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HealthKitSampleGenerator_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		36E2732FC631C401C31B39737A435170 /* Pods_HealthKitSampleGenerator_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthKitSampleGenerator_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37779ECAE7FF4B738D8C8CB02F6E9C78 /* Pods-HealthKitSampleGenerator_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HealthKitSampleGenerator_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				2F9E30591BBE87820005DF72 /* Constants.swift */,
 				2F9E305B1BBE992D0005DF72 /* todo.txt */,
 				2F9E305D1BBED4320005DF72 /* Export.swift */,
+				2F9E30601BC2A2070005DF72 /* Json.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				AA35EB30EB803C72908CBB908E2525FC /* HealthKitSampleGenerator-dummy.m in Sources */,
 				2F9E305A1BBE87820005DF72 /* Constants.swift in Sources */,
 				2F9E305E1BBED4320005DF72 /* Export.swift in Sources */,
+				2F9E30611BC2A2070005DF72 /* Json.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
