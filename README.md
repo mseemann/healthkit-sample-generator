@@ -10,6 +10,10 @@ Objective: Easy to use generator for HealthKit Sample Data that can be used in c
 [![License](https://img.shields.io/cocoapods/l/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 [![Platform](https://img.shields.io/cocoapods/p/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 
+##Shortdescription
+
+![](screen_export.png?raw=true "Profile export screenshot")
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
