@@ -21,14 +21,16 @@ public enum HealthDataToExportType : String {
     public static let allValues = [ALL, ADDED_BY_THIS_APP, GENERATED_BY_THIS_APP];
 }
 
-public typealias ExportCompletion = (NSError?) -> Void
+public typealias ExportCompletion = (ExportError?) -> Void
 
 
 class ExportOperation: NSOperation {
     
     var exportConfiguration: ExportConfiguration
     
-    init(exportConfiguration: ExportConfiguration, healthStore: HKHealthStore, completionBlock: (() -> Void)? ){
+    init(exportConfiguration: ExportConfiguration,
+        healthStore: HKHealthStore,
+        completionBlock: (() -> Void)? ) {
         self.exportConfiguration = exportConfiguration
         super.init()
         self.completionBlock = completionBlock
@@ -36,7 +38,7 @@ class ExportOperation: NSOperation {
     }
     
     override func main() {
-        let jsonWriter = JsonWriter(outputStream: exportConfiguration.outputStream)
+        let jsonWriter = JsonWriter(outputStream: exportConfiguration.outputStream!)
         jsonWriter.writeArrayStart()
         
         jsonWriter.writeArrayEnd()
@@ -44,12 +46,27 @@ class ExportOperation: NSOperation {
 }
 
 public struct ExportConfiguration {
-    public var exportType = HealthDataToExportType.ALL
-    public var profilName: String?
-    public var outputStream: NSOutputStream
     
-    public init(outputStream: NSOutputStream){
-        self.outputStream = outputStream
+    public var exportType = HealthDataToExportType.ALL // required
+    public var profileName: String? // required
+    public var outputFielName: String? // not required
+    public var overwriteIfFileExist = false
+    public var outputStream: NSOutputStream? // requried
+    
+    public init(){}
+    
+    public func isValid() -> Bool {
+        // profile name is required
+        var valid = !(profileName ?? "").isEmpty
+        
+        // if the outputFileName already exists, the state is only valid, if overwrite is allowed
+        if let fileName = outputFielName where !fileName.isEmpty {
+            if NSFileManager.defaultManager().fileExistsAtPath(fileName) {
+                valid = valid && overwriteIfFileExist
+            }
+        }
+        
+        return valid
     }
 }
 
@@ -76,11 +93,18 @@ public class HealthKitDataExporter {
     
     init() { }
     
-    public func export(exportConfiguration: ExportConfiguration, onCompletion: ExportCompletion) throws -> Void {
-        if(exportConfiguration.outputStream.streamStatus != .Open){
-            throw ExportError.IllegalArgumentError("the outputstream must be open")
+    public func export(exportConfiguration: ExportConfiguration, onCompletion: ExportCompletion) -> Void {
+        if(exportConfiguration.outputStream == nil){
+            let error =  ExportError.IllegalArgumentError("the outputstream must be set")
+            onCompletion(error)
+            return
         }
-        
+        if(exportConfiguration.outputStream!.streamStatus != .Open){
+            let error = ExportError.IllegalArgumentError("the outputstream must be open")
+            onCompletion(error)
+            return
+        }
+                
         let exporter = ExportOperation(exportConfiguration: exportConfiguration, healthStore: healthStore, completionBlock:{
             onCompletion(nil)
         })

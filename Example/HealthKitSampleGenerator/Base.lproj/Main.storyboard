@@ -46,23 +46,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGr-rR-ng7">
-                                <rect key="frame" x="190" y="513" width="220" height="30"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="6cJ-uT-ZE2"/>
-                                    <constraint firstAttribute="height" constant="30" id="rcX-Y9-dCW"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <state key="normal" title="Export HealthKit Data"/>
-                                <connections>
-                                    <action selector="doExport:" destination="sxH-Cz-h7O" eventType="touchUpInside" id="MJ9-Lr-rpQ"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="om5-xh-e3w">
-                                <rect key="frame" x="20" y="28" width="560" height="477"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="om5-xh-e3w">
+                                <rect key="frame" x="20" y="28" width="560" height="349"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQm-gD-klT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profilename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQm-gD-klT">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="19"/>
                                         <animations/>
                                         <constraints>
@@ -84,63 +71,61 @@
                                             <outlet property="delegate" destination="sxH-Cz-h7O" id="W2u-pP-iJs"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export-File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGJ-wJ-Ufh">
-                                        <rect key="frame" x="0.0" y="62" width="560" height="20"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="h7b-cG-z78"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vX7-dz-UrM">
-                                        <rect key="frame" x="0.0" y="88" width="560" height="141"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Q8q-8n-ekW">
+                                        <rect key="frame" x="0.0" y="62" width="560" height="31"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="overwrite if exist" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7a-aJ-xOp">
-                                                <rect key="frame" x="331" y="113" width="172" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export-File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGJ-wJ-Ufh">
+                                                <rect key="frame" x="0.0" y="0.0" width="190" height="31"/>
                                                 <animations/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="172" id="q9Z-15-maw"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdp-Dy-FqO">
-                                                <rect key="frame" x="511" y="106" width="51" height="31"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Usu-SQ-fe7">
+                                                <rect key="frame" x="194" y="0.0" width="367" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="overwrite if exist" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7a-aJ-xOp">
+                                                        <rect key="frame" x="0.0" y="0.0" width="313" height="31"/>
+                                                        <animations/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdp-Dy-FqO">
+                                                        <rect key="frame" x="318" y="0.0" width="51" height="31"/>
+                                                        <animations/>
+                                                        <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <connections>
+                                                            <action selector="swOverwriteIfExistChanged:" destination="sxH-Cz-h7O" eventType="valueChanged" id="P7v-kI-OtW"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
                                                 <animations/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="31" id="liI-Wl-eIZ"/>
-                                                </constraints>
-                                                <connections>
-                                                    <action selector="swOverwriteIfExistChanged:" destination="sxH-Cz-h7O" eventType="valueChanged" id="P7v-kI-OtW"/>
-                                                </connections>
-                                            </switch>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ux-oo-or9">
-                                                <rect key="frame" x="8" y="8" width="544" height="109"/>
+                                            </stackView>
+                                        </subviews>
+                                        <animations/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="740" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="5oT-qN-foT">
+                                        <rect key="frame" x="0.0" y="99" width="560" height="109"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="240" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ux-oo-or9">
+                                                <rect key="frame" x="0.0" y="0.0" width="560" height="109"/>
                                                 <animations/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="109" id="3Ly-er-dj5"/>
                                                 </constraints>
                                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textView>
                                         </subviews>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstItem="vdp-Dy-FqO" firstAttribute="leading" secondItem="E7a-aJ-xOp" secondAttribute="trailing" constant="8" symbolic="YES" id="DF7-7A-Bg7"/>
-                                            <constraint firstItem="vdp-Dy-FqO" firstAttribute="centerY" secondItem="E7a-aJ-xOp" secondAttribute="centerY" id="Mqy-6e-gfD"/>
-                                            <constraint firstItem="5Ux-oo-or9" firstAttribute="leading" secondItem="vX7-dz-UrM" secondAttribute="leadingMargin" id="OBL-tg-D5Q"/>
-                                            <constraint firstItem="vdp-Dy-FqO" firstAttribute="top" secondItem="5Ux-oo-or9" secondAttribute="bottom" constant="-11" id="Z20-HV-g2b"/>
-                                            <constraint firstItem="5Ux-oo-or9" firstAttribute="trailing" secondItem="vX7-dz-UrM" secondAttribute="trailingMargin" id="nC4-wk-NuX"/>
-                                            <constraint firstAttribute="trailing" secondItem="vdp-Dy-FqO" secondAttribute="trailing" id="tfr-Ok-pdk"/>
-                                            <constraint firstItem="5Ux-oo-or9" firstAttribute="top" secondItem="vX7-dz-UrM" secondAttribute="topMargin" id="wpJ-6r-5mo"/>
+                                            <constraint firstItem="5Ux-oo-or9" firstAttribute="leading" secondItem="5oT-qN-foT" secondAttribute="leading" id="562-yc-PgE"/>
                                         </constraints>
-                                    </view>
+                                    </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data to export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2e-zM-GoU">
-                                        <rect key="frame" x="0.0" y="235" width="560" height="20"/>
+                                        <rect key="frame" x="0.0" y="214" width="560" height="20"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="2xT-pI-G53"/>
@@ -149,28 +134,75 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VnF-Qm-js0">
-                                        <rect key="frame" x="0.0" y="261" width="560" height="216"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hm9-Tl-d1J">
+                                        <rect key="frame" x="0.0" y="240" width="560" height="29"/>
                                         <animations/>
-                                    </pickerView>
+                                        <segments>
+                                            <segment title="All"/>
+                                            <segment title="Added by this App"/>
+                                            <segment title="Generated by this App"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="scEpxortDataTypeChanged:" destination="sxH-Cz-h7O" eventType="valueChanged" id="PAi-9E-3QC"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fWi-lh-Kva">
+                                        <rect key="frame" x="0.0" y="274" width="560" height="75"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="fkb-PK-OSu"/>
+                                        </constraints>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstItem="Jhs-pz-uYo" firstAttribute="top" secondItem="kQm-gD-klT" secondAttribute="bottom" constant="6" id="RtU-58-SWd"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="1Tg-qC-7EZ">
+                                <rect key="frame" x="206" y="413" width="189" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGr-rR-ng7">
+                                        <rect key="frame" x="0.0" y="0.0" width="164" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="rcX-Y9-dCW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <state key="normal" title="Export HealthKit Data"/>
+                                        <connections>
+                                            <action selector="doExport:" destination="sxH-Cz-h7O" eventType="touchUpInside" id="MJ9-Lr-rpQ"/>
+                                        </connections>
+                                    </button>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6pj-OF-47h">
+                                        <rect key="frame" x="169" y="0.0" width="20" height="30"/>
+                                        <animations/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <animations/>
                             </stackView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6pj-OF-47h">
-                                <rect key="frame" x="418" y="518" width="20" height="20"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uRv-Ue-HIe">
+                                <rect key="frame" x="20" y="465" width="560" height="78"/>
                                 <animations/>
-                            </activityIndicatorView>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="6pj-OF-47h" firstAttribute="leading" secondItem="VGr-rR-ng7" secondAttribute="trailing" constant="8" symbolic="YES" id="4li-aV-fbA"/>
+                            <constraint firstItem="uRv-Ue-HIe" firstAttribute="leading" secondItem="KU0-sR-pt9" secondAttribute="leadingMargin" id="0yx-m4-CQv"/>
                             <constraint firstItem="om5-xh-e3w" firstAttribute="centerX" secondItem="KU0-sR-pt9" secondAttribute="centerX" id="7AN-WS-o02"/>
-                            <constraint firstItem="VGr-rR-ng7" firstAttribute="top" secondItem="om5-xh-e3w" secondAttribute="bottom" constant="8" symbolic="YES" id="9FH-ch-Jjf"/>
-                            <constraint firstItem="VGr-rR-ng7" firstAttribute="centerX" secondItem="KU0-sR-pt9" secondAttribute="centerX" id="Sg3-jh-AgR"/>
-                            <constraint firstItem="nuN-Uf-zaP" firstAttribute="top" secondItem="VGr-rR-ng7" secondAttribute="bottom" constant="8" symbolic="YES" id="WnA-kO-9xf"/>
+                            <constraint firstItem="uRv-Ue-HIe" firstAttribute="trailing" secondItem="KU0-sR-pt9" secondAttribute="trailingMargin" id="Lb1-CL-Kya"/>
+                            <constraint firstItem="nuN-Uf-zaP" firstAttribute="top" secondItem="uRv-Ue-HIe" secondAttribute="bottom" constant="8" id="OI2-sl-NOB"/>
+                            <constraint firstItem="1Tg-qC-7EZ" firstAttribute="centerX" secondItem="KU0-sR-pt9" secondAttribute="centerX" id="Pe1-AH-uKi"/>
+                            <constraint firstItem="uRv-Ue-HIe" firstAttribute="top" secondItem="1Tg-qC-7EZ" secondAttribute="bottom" constant="22" id="Xr3-NS-2bV"/>
+                            <constraint firstItem="1Tg-qC-7EZ" firstAttribute="top" secondItem="om5-xh-e3w" secondAttribute="bottom" constant="36" id="YiV-KC-iew"/>
                             <constraint firstItem="om5-xh-e3w" firstAttribute="leading" secondItem="KU0-sR-pt9" secondAttribute="leadingMargin" id="jEq-J0-qP9"/>
-                            <constraint firstItem="6pj-OF-47h" firstAttribute="centerY" secondItem="VGr-rR-ng7" secondAttribute="centerY" id="ki0-HV-BoO"/>
                             <constraint firstItem="om5-xh-e3w" firstAttribute="top" secondItem="pEL-Ow-7ku" secondAttribute="bottom" constant="8" symbolic="YES" id="krX-iD-lXz"/>
                         </constraints>
                     </view>
@@ -178,9 +210,11 @@
                     <connections>
                         <outlet property="avExporting" destination="6pj-OF-47h" id="SZU-cL-ZUZ"/>
                         <outlet property="btnExport" destination="VGr-rR-ng7" id="zwQ-fB-5Xq"/>
-                        <outlet property="dataToExportPicker" destination="VnF-Qm-js0" id="98y-c6-6Z7"/>
+                        <outlet property="scExportType" destination="Hm9-Tl-d1J" id="HTS-sz-zpw"/>
                         <outlet property="swOverwriteIfExist" destination="vdp-Dy-FqO" id="jSI-J5-et4"/>
                         <outlet property="tfProfileName" destination="Jhs-pz-uYo" id="rXI-gh-D84"/>
+                        <outlet property="tvExportDescription" destination="fWi-lh-Kva" id="URv-4k-Rq0"/>
+                        <outlet property="tvExportMessages" destination="uRv-Ue-HIe" id="ZKQ-IY-Ldj"/>
                         <outlet property="tvOutputFileName" destination="5Ux-oo-or9" id="RZD-kO-yD4"/>
                     </connections>
                 </viewController>

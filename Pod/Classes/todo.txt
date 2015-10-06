@@ -1,4 +1,4 @@
-health authorisierung anfordern
+
 
 export für healtdaten - json format
 
