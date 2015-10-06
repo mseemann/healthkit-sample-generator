@@ -6,3 +6,5 @@ export für healtdaten - json format
 - export als ? mail, speichern unter - aber wohin?, upload auf einen sever?
 
 - url scheme um profil direkt zu laden, mit der generator app und dann den import zu starten
+
+- bei profil import anzeigen, welche daten manuel angegeben werden müssen

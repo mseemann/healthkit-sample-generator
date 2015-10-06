@@ -20,6 +20,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var scExportType:        UISegmentedControl!
     @IBOutlet weak var tvExportDescription: UITextView!
     @IBOutlet weak var tvExportMessages:    UITextView!
+    @IBOutlet weak var pvExportProgress:    UIProgressView!
     
     var exportConfigurationValid = false {
         didSet {
@@ -43,8 +44,9 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
     
     var exportInProgress = false {
         didSet {
-            avExporting.hidden  = !exportInProgress
-            btnExport.enabled   = !exportInProgress
+            avExporting.hidden      = !exportInProgress
+            btnExport.enabled       = !exportInProgress
+            pvExportProgress.hidden = !exportInProgress
         }
     }
     
@@ -52,8 +54,6 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        btnExport.enabled                   = false
-        avExporting.hidden                  = true
         
         tfProfileName.text                  = "output"
         tfProfileName.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
@@ -65,6 +65,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        exportInProgress = false
         createAndAnalyzeExportConfiguration()
     }
     
@@ -74,23 +75,35 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
     
     @IBAction func doExport(_: AnyObject) {
         exportInProgress = true
-        
+        self.pvExportProgress.progress = 0.0
 
         exportConfiguration.outputStream = NSOutputStream.init(toFileAtPath: exportConfiguration.outputFielName!, append: false)!
         exportConfiguration.outputStream!.open()
         
-
-        HealthKitDataExporter.INSTANCE.export(exportConfiguration) { (error:ExportError?) in
-            dispatch_async(dispatch_get_main_queue(), {
-                if let exportError = error {
-                    self.tvExportMessages.text = "Export error: \(exportError)"
-                    print(exportError)
-                }
-                
-                self.exportConfiguration.outputStream!.close()
-                self.exportInProgress = false
-            })
-        }
+        HealthKitDataExporter.INSTANCE.export(
+            
+            exportConfiguration,
+            
+            onProgress: {(message: String, progressInPercent: NSNumber?)->Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tvExportMessages.text = message
+                    if let progress = progressInPercent {
+                        self.pvExportProgress.progress = progress.floatValue
+                    }
+                })
+            },
+            
+            onCompletion: {(error: ExportError?)-> Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if let exportError = error {
+                        self.tvExportMessages.text = "Export error: \(exportError)"
+                        print(exportError)
+                    }
+                    
+                    self.exportConfiguration.outputStream!.close()
+                    self.exportInProgress = false
+                })
+            } )
     }
     
     @IBAction func swOverwriteIfExistChanged(sender: AnyObject) {

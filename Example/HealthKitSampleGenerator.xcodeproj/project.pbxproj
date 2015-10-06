@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2519807D2C1089FBBE7DAB86 /* Pods_HealthKitSampleGenerator_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2F90C57F1BC3051500587117 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F90C57E1BC3051500587117 /* HealthKit.framework */; };
+		2F90C5811BC44BE500587117 /* UIControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F90C5801BC44BE500587117 /* UIControls.swift */; settings = {ASSET_TAGS = (); }; };
 		2F9E30561BBE79E30005DF72 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30551BBE79E30005DF72 /* MainTabController.swift */; settings = {ASSET_TAGS = (); }; };
 		2F9E30581BBE81630005DF72 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30571BBE81630005DF72 /* ExportViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		2F9E30631BC2AA940005DF72 /* JsonWriterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */; settings = {ASSET_TAGS = (); }; };
@@ -34,6 +35,7 @@
 		2629469B90C63E0981BD4420 /* HealthKitSampleGenerator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HealthKitSampleGenerator.podspec; path = ../HealthKitSampleGenerator.podspec; sourceTree = "<group>"; };
 		2F90C57D1BC3051500587117 /* HealthKitSampleGenerator_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HealthKitSampleGenerator_Example.entitlements; sourceTree = "<group>"; };
 		2F90C57E1BC3051500587117 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		2F90C5801BC44BE500587117 /* UIControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIControls.swift; sourceTree = "<group>"; };
 		2F9E30551BBE79E30005DF72 /* MainTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		2F9E30571BBE81630005DF72 /* ExportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
 		2F9E305F1BC277590005DF72 /* HealthKitSampleGeneratorPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HealthKitSampleGeneratorPlayground.playground; sourceTree = "<group>"; };
@@ -112,13 +114,14 @@
 		607FACD21AFB9204008FA782 /* Example for HealthKitSampleGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				607FACD31AFB9204008FA782 /* Supporting Files */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
-				607FACD31AFB9204008FA782 /* Supporting Files */,
+				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				2F9E30551BBE79E30005DF72 /* MainTabController.swift */,
 				2F9E30571BBE81630005DF72 /* ExportViewController.swift */,
+				2F90C5801BC44BE500587117 /* UIControls.swift */,
 			);
 			name = "Example for HealthKitSampleGenerator";
 			path = HealthKitSampleGenerator;
@@ -376,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F9E30561BBE79E30005DF72 /* MainTabController.swift in Sources */,
+				2F90C5811BC44BE500587117 /* UIControls.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				2F9E30581BBE81630005DF72 /* ExportViewController.swift in Sources */,
 			);
