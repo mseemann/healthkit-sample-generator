@@ -49,10 +49,10 @@ class ExportOperation: NSOperation {
     override func main() {
         let jsonWriter = JsonWriter(outputStream: exportConfiguration.outputStream!)
         jsonWriter.writeArrayStart()
-        self.onProgress(message: "reading HKCharacteristicTypeIdentifierDateOfBirth", progressInPercent: 0.0)
-
-        sleep(3)
         
+        self.onProgress(message: "reading user data", progressInPercent: 0.0)
+        let userData = HealthKitDataExporter.INSTANCE.exportUserData(healthStore)
+        try! jsonWriter.writeObject(userData)
         
         jsonWriter.writeArrayEnd()
         self.onProgress(message: "export done", progressInPercent: 1.0)
@@ -101,6 +101,8 @@ public class HealthKitDataExporter {
     let healthKitTypesToRead = Set(arrayLiteral:
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierDateOfBirth)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex)!,
+        HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBloodType)!,
+        HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierFitzpatrickSkinType)!,
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!,
         HKObjectType.workoutType()
     )
@@ -137,4 +139,28 @@ public class HealthKitDataExporter {
         }
     
     }
+    
+    public func exportUserData(healthStore: HKHealthStore) -> NSDictionary {
+       var result = Dictionary<String, AnyObject>()
+        result["type"] = "userData"
+        
+        if let birthDay = try? healthStore.dateOfBirth() {
+            result["dateOfBirth"] = birthDay.timeIntervalSince1970
+        }
+        
+        if let sex = try? healthStore.biologicalSex() {
+            result["biologicalSex"] = sex.biologicalSex.rawValue
+        }
+        
+        if let bloodType = try? healthStore.bloodType() {
+            result["bloodType"] = bloodType.bloodType.rawValue
+        }
+        
+        if let fitzpatrick = try? healthStore.fitzpatrickSkinType() {
+            result["fitzpatrickSkinType"] = fitzpatrick.skinType.rawValue
+        }
+        
+        return result
+    }
+
 }
