@@ -17,6 +17,6 @@ language: objective-c
 install:
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 script: 
-- set -o pipefail && xcodebuild test -workspace Example/HealthKitSampleGenerator.xcworkspace -list | xcpretty -c
+- set -o pipefail && xcodebuild test -workspace Example/HealthKitSampleGenerator.xcworkspace -list
 #- set -o pipefail && xcodebuild test -workspace Example/HealthKitSampleGenerator.xcworkspace -scheme TravisCiTest -sdk iphonesimulator9.0 ONLY_ACTIVE_ARCH=NO | xcpretty -c
 - pod lib lint --quick
