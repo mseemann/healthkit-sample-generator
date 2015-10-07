@@ -50,15 +50,15 @@ public class UserDataExporter: BaseDataExporter, DataExporter {
             result["dateOfBirth"] = birthDay.timeIntervalSince1970
         }
         
-        if let sex = try? healthStore.biologicalSex() {
+        if let sex = try? healthStore.biologicalSex() where sex.biologicalSex != HKBiologicalSex.NotSet {
             result["biologicalSex"] = sex.biologicalSex.rawValue
         }
         
-        if let bloodType = try? healthStore.bloodType() {
+        if let bloodType = try? healthStore.bloodType() where bloodType.bloodType != HKBloodType.NotSet {
             result["bloodType"] = bloodType.bloodType.rawValue
         }
         
-        if let fitzpatrick = try? healthStore.fitzpatrickSkinType() {
+        if let fitzpatrick = try? healthStore.fitzpatrickSkinType() where fitzpatrick.skinType != HKFitzpatrickSkinType.NotSet {
             result["fitzpatrickSkinType"] = fitzpatrick.skinType.rawValue
         }
         
