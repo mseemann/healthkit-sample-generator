@@ -14,7 +14,3 @@ target 'HealthKitSampleGenerator_Tests', :exclusive => true do
   pod "HealthKitSampleGenerator", :path => "../"
   testing_pods
 end
-
-target 'HealthKitSampleGenerator_ExampleUITests', :exclusive => true do
-    pod "HealthKitSampleGenerator", :path => "../"
-end
