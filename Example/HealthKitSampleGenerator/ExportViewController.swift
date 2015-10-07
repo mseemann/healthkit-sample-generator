@@ -58,7 +58,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
         tfProfileName.text                  = "output"
         tfProfileName.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         
-        scExportType.selectedSegmentIndex   = HealthDataToExportType.allValues.indexOf(HealthDataToExportType.GENERATED_BY_THIS_APP)!
+        scExportType.selectedSegmentIndex   = HealthDataToExportType.allValues.indexOf(HealthDataToExportType.ALL)!
         
         tvExportMessages.text               = ""
     }

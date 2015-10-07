@@ -30,16 +30,19 @@ class ExportOperation: NSOperation {
     var exportConfiguration: ExportConfiguration
     var healthStore: HKHealthStore
     var onProgress: ExportProgress
+    var dataExporter: [DataExporter]
     
     init(
         exportConfiguration: ExportConfiguration,
         healthStore: HKHealthStore,
+        dataExporter: [DataExporter],
         onProgress: ExportProgress,
         completionBlock: (() -> Void)?
         ) {
         
         self.exportConfiguration = exportConfiguration
         self.healthStore = healthStore
+        self.dataExporter = dataExporter
         self.onProgress = onProgress
         super.init()
         self.completionBlock = completionBlock
@@ -50,9 +53,12 @@ class ExportOperation: NSOperation {
         let jsonWriter = JsonWriter(outputStream: exportConfiguration.outputStream!)
         jsonWriter.writeArrayStart()
         
-        self.onProgress(message: "reading user data", progressInPercent: 0.0)
-        let userData = HealthKitDataExporter.INSTANCE.exportUserData(healthStore)
-        try! jsonWriter.writeObject(userData)
+        let exporterCount = Double(dataExporter.count)
+        
+        for (index, exporter) in dataExporter.enumerate() {
+            self.onProgress(message: exporter.message, progressInPercent: Double(index)/exporterCount)
+            try! exporter.export(healthStore, jsonWriter: jsonWriter)
+        }
         
         jsonWriter.writeArrayEnd()
         self.onProgress(message: "export done", progressInPercent: 1.0)
@@ -84,6 +90,7 @@ public struct ExportConfiguration {
         return valid
     }
 }
+
 
 public class HealthKitDataExporter {
     
@@ -123,10 +130,14 @@ public class HealthKitDataExporter {
             onCompletion(ExportError.IllegalArgumentError("the outputstream must be open"))
             return
         }
+        
+        let dataExporter : [DataExporter] = getDataExporterForType(exportConfiguration)
+        
                 
         let exportOperation = ExportOperation(
             exportConfiguration: exportConfiguration,
             healthStore: healthStore,
+            dataExporter: dataExporter,
             onProgress: onProgress,
             completionBlock:{
             onCompletion(nil)
@@ -140,24 +151,14 @@ public class HealthKitDataExporter {
     
     }
     
-    public func exportUserData(healthStore: HKHealthStore) -> NSDictionary {
-       var result = Dictionary<String, AnyObject>()
-        result["type"] = "userData"
+    func getDataExporterForType(exportConfiguration: ExportConfiguration) -> [DataExporter]{
+        var result : [DataExporter] = []
         
-        if let birthDay = try? healthStore.dateOfBirth() {
-            result["dateOfBirth"] = birthDay.timeIntervalSince1970
-        }
+        result.append(MetaDataExporter(exportConfiguration: exportConfiguration))
         
-        if let sex = try? healthStore.biologicalSex() {
-            result["biologicalSex"] = sex.biologicalSex.rawValue
-        }
-        
-        if let bloodType = try? healthStore.bloodType() {
-            result["bloodType"] = bloodType.bloodType.rawValue
-        }
-        
-        if let fitzpatrick = try? healthStore.fitzpatrickSkinType() {
-            result["fitzpatrickSkinType"] = fitzpatrick.skinType.rawValue
+        // user data are only exported if type is ALL beacouse the app can never write these data!
+        if exportConfiguration.exportType == .ALL {
+            result.append(UserDataExporter(exportConfiguration: exportConfiguration))
         }
         
         return result

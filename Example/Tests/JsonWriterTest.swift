@@ -24,7 +24,7 @@ class JsonWriterTest: QuickSpec {
             
             let jsonString = self.getStringFormStream(stream)
             
-            expect(jsonString).to(equal("[]"))
+            expect(jsonString) == "[]"
         }
         
         it("should write an json object within an array") {
@@ -38,7 +38,7 @@ class JsonWriterTest: QuickSpec {
             
             let jsonString = self.getStringFormStream(stream)
             
-            expect(jsonString).to(equal("[{\n  \"a\" : \"b\"\n}]"))
+            expect(jsonString) == "[{\n  \"a\" : \"b\"\n}]"
         }
         
         it("should write an json array with 2 objects"){
@@ -53,7 +53,7 @@ class JsonWriterTest: QuickSpec {
             
             let jsonString = self.getStringFormStream(stream)
             
-            expect(jsonString).to(equal( "[{\n  \"a\" : \"b\"\n},\r\n{\n  \"c\" : \"d\"\n}]"))
+            expect(jsonString) == "[{\n  \"a\" : \"b\"\n},\r\n{\n  \"c\" : \"d\"\n}]"
         }
     }
     
