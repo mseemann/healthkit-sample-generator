@@ -53,6 +53,16 @@
                ReferencedContainer = "container:HealthKitSampleGenerator.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2F78168C1BC4FD93002112E1"
+               BuildableName = "HealthKitSampleGenerator_ExampleUITests.xctest"
+               BlueprintName = "HealthKitSampleGenerator_ExampleUITests"
+               ReferencedContainer = "container:HealthKitSampleGenerator.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
