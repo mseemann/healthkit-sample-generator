@@ -1,19 +1,18 @@
 {
   "name": "HealthKitSampleGenerator",
-  "version": "0.1.0",
-  "summary": "A short description of HealthKitSampleGenerator.",
-  "description": "",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/HealthKitSampleGenerator",
+  "version": "0.2.0",
+  "summary": "A Generator for HealthKit Sample Data.",
+  "homepage": "https://github.com/mseemann/healthkit-sample-generator",
   "license": "MIT",
   "authors": {
-    "Michael Seemann": "seemann@mseemann.de"
+    "Michael Seemann": "pods@mseemann.de"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/HealthKitSampleGenerator.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/mseemann/healthkit-sample-generator.git",
+    "tag": "0.2.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "requires_arc": true,
   "source_files": "Pod/Classes/**/*",
