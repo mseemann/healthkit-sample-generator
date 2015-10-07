@@ -156,10 +156,12 @@ public class HealthKitDataExporter {
         
         result.append(MetaDataExporter(exportConfiguration: exportConfiguration))
         
-        // user data are only exported if type is ALL beacouse the app can never write these data!
+        // user data are only exported if type is ALL beacause the app can never write these data!
         if exportConfiguration.exportType == .ALL {
             result.append(UserDataExporter(exportConfiguration: exportConfiguration))
         }
+        
+        result.append(HeartRateDataExporter(exportConfiguration: exportConfiguration))
         
         return result
     }

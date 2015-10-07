@@ -65,3 +65,56 @@ public class UserDataExporter: BaseDataExporter, DataExporter {
         try jsonWriter.writeObject(result)
     }
 }
+
+public class HeartRateDataExporter: BaseDataExporter, DataExporter {
+    public var message = "exporting hart rate data"
+    
+    public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
+        
+        let semaphore = dispatch_semaphore_create(0)
+        
+        var predicate: NSPredicate? = nil
+        if exportConfiguration.exportType == HealthDataToExportType.ADDED_BY_THIS_APP {
+            predicate = HKQuery.predicateForObjectsFromSource(HKSource.defaultSource())
+        } else if exportConfiguration.exportType == HealthDataToExportType.GENERATED_BY_THIS_APP {
+            predicate = HKQuery.predicateForObjectsWithMetadataKey("GeneratorSource")
+        }
+        
+        
+        let heartRatePerMinute  = HKUnit(fromString: "count/min") //HKUnit.countUnit().unitDividedByUnit(HKUnit.minuteUnit())
+        let heartRateType       = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!
+        let sortDescriptor      = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
+        
+        let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
+            
+            if error != nil {
+                print(error)
+                
+            } else {
+                for sample in tmpResult as! [HKQuantitySample] {
+                                        
+                    let value = Int(sample.quantity.doubleValueForUnit(heartRatePerMinute))
+                    
+                    var result = Dictionary<String, AnyObject>()
+                    result["type"] = "HeartRate"
+                    result["date"] = sample.startDate.timeIntervalSince1970
+                    result["value"] = value
+                    result["unit"] = heartRatePerMinute.description
+                    
+                    try! jsonWriter.writeObject(result)
+                    
+                }
+            }
+            dispatch_semaphore_signal(semaphore)
+            
+        }
+        
+        
+        // finally, we execute our query
+        healthStore.executeQuery(query)
+
+        // wait for asyn call to complete
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+
+    }
+}
