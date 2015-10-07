@@ -38,7 +38,7 @@ class JsonWriterTest: QuickSpec {
             
             let jsonString = self.getStringFormStream(stream)
             
-            expect(jsonString) == "[{\n  \"a\" : \"b\"\n}]"
+            expect(jsonString) == "[{\"a\":\"b\"}]"
         }
         
         it("should write an json array with 2 objects"){
@@ -53,7 +53,7 @@ class JsonWriterTest: QuickSpec {
             
             let jsonString = self.getStringFormStream(stream)
             
-            expect(jsonString) == "[{\n  \"a\" : \"b\"\n},\r\n{\n  \"c\" : \"d\"\n}]"
+            expect(jsonString) == "[{\"a\":\"b\"},\r\n{\"c\":\"d\"}]"
         }
     }
     

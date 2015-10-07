@@ -40,7 +40,7 @@ public class JsonWriter {
         
         var err: NSError?
         
-        NSJSONSerialization.writeJSONObject(theObject, toStream: self.outputStream, options: NSJSONWritingOptions.PrettyPrinted, error: &err)
+        NSJSONSerialization.writeJSONObject(theObject, toStream: self.outputStream, options: NSJSONWritingOptions(rawValue: 0), error: &err)
         
         if(err != nil){
             throw JsonWriterError.NSJSONSerializationError

@@ -77,7 +77,7 @@ public class HeartRateDataExporter: BaseDataExporter, DataExporter {
         if exportConfiguration.exportType == HealthDataToExportType.ADDED_BY_THIS_APP {
             predicate = HKQuery.predicateForObjectsFromSource(HKSource.defaultSource())
         } else if exportConfiguration.exportType == HealthDataToExportType.GENERATED_BY_THIS_APP {
-            predicate = HKQuery.predicateForObjectsWithMetadataKey("GeneratorSource")
+            predicate = HKQuery.predicateForObjectsWithMetadataKey("GeneratorSource", allowedValues: ["HSG"])
         }
         
         
