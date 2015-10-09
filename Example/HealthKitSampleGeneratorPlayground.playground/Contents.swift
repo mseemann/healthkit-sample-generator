@@ -1,22 +1,35 @@
 //: Playground - noun: a place where people can play
 
-import UIKit
 import Foundation
 import HealthKitSampleGenerator
-import HealthKit
 
-let tmpDir = NSURL(fileURLWithPath: NSTemporaryDirectory()) as NSURL!
-let fileURL = tmpDir.URLByAppendingPathComponent("h.hsg")
+var config = ExportConfiguration()
 
-print(fileURL)
+let documentsUrl = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
 
-var error: NSError?
+config.outputFielName          = documentsUrl.URLByAppendingPathComponent("export.json").path!
+config.exportType              = HealthDataToExportType.ALL
+config.profileName             = "Profilename"
+config.overwriteIfFileExist    = true
 
-print(fileURL.checkResourceIsReachableAndReturnError(&error))
+print(config.outputFielName)
 
-//NSFileManager.defaultManager().createDirectoryAtURL(<#T##url: NSURL##NSURL#>, withIntermediateDirectories: <#T##Bool#>, attributes: <#T##[String : AnyObject]?#>)
+config.outputStream = NSOutputStream.init(toFileAtPath: config.outputFielName!, append: false)!
+config.outputStream!.open()
 
-
-print(String(HKQuantityTypeIdentifierHeartRate))
-
-print(HKWorkoutActivityType.Other.rawValue)
+HealthKitDataExporter.INSTANCE.export(
+    
+    config,
+    
+    onProgress: {(message: String, progressInPercent: NSNumber?)->Void in
+        // show progressinformation if you want
+    },
+    
+    onCompletion: {(error: ErrorType?)-> Void in
+        dispatch_async(dispatch_get_main_queue(), {
+            if let exportError = error {
+                print(exportError)
+            }
+        })
+    }
+)

@@ -96,6 +96,9 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
         let semaphore       = dispatch_semaphore_create(0)
         
         
+        // FIXME save mem an export 10000 entries max. iterate over the entries
+        // solution? HKAnchoredObjectQuery? https://developer.apple.com/library/ios/documentation/HealthKit/Reference/HKAnchoredObjectQuery_Class/index.html#//apple_ref/doc/uid/TP40014742
+        
         let query = HKSampleQuery(sampleType: type, predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
             
             if error != nil {

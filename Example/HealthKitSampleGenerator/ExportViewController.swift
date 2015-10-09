@@ -103,7 +103,8 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
                     self.exportConfiguration.outputStream!.close()
                     self.exportInProgress = false
                 })
-            } )
+            }
+        )
     }
     
     @IBAction func swOverwriteIfExistChanged(sender: AnyObject) {
