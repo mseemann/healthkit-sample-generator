@@ -27,14 +27,13 @@ import HealthKitSampleGenerator
 
 var config = ExportConfiguration()
 
-let documentsUrl = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+let fm                         = NSFileManager.defaultManager()
+let documentsUrl               = fm.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
 
 config.outputFielName          = documentsUrl.URLByAppendingPathComponent("export.json").path!
 config.exportType              = HealthDataToExportType.ALL
 config.profileName             = "Profilename"
 config.overwriteIfFileExist    = true
-
-print(config.outputFielName)
 
 config.outputStream = NSOutputStream.init(toFileAtPath: config.outputFielName!, append: false)!
 config.outputStream!.open()
