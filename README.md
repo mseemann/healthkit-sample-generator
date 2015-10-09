@@ -58,6 +58,11 @@ HealthKitDataExporter.INSTANCE.export(
 )
 ```
 
+This will output all the data that are available through HealthKit in JSON format:
+```json
+{"metaData":{"creationDat":1444409923.551447,"profileName":"output"},"userData":{},"HKQuantityTypeIdentifierHeartRate":{"unit":"count/min","data":[{"d":1444242420,"v":60}]},"HKQuantityTypeIdentifierStepCount":{"unit":"count","data":[]},"HKQuantityTypeIdentifierBodyMass":{"unit":"kg","data":[{"d":1444407300,"v":71}]},"HKWorkoutType":[{"sampleType":"HKWorkoutTypeIdentifier","workoutActivityType":37,"startDate":1444395120,"endDate":1444398720,"duration":3600,"totalDistance":1609.344,"totalEnergyBurned":1000,"workoutEvents":[]}]}
+```
+
 ## Requirements
 
 ## Installation
