@@ -11,6 +11,7 @@ import HealthKit
 
 public enum ExportError: ErrorType {
     case IllegalArgumentError(String)
+    case DataWriteError(String?)
 }
 
 public enum HealthDataToExportType : String {
@@ -183,7 +184,7 @@ public class HealthKitDataExporter {
             result.append(UserDataExporter(exportConfiguration: exportConfiguration))
         }
         
-        result.append(HeartRateDataExporter(exportConfiguration: exportConfiguration))
+        //result.append(HeartRateDataExporter(exportConfiguration: exportConfiguration))
         result.append(WorkoutDataExporter(exportConfiguration: exportConfiguration))
         
         return result

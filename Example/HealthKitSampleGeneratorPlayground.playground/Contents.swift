@@ -18,3 +18,5 @@ print(fileURL.checkResourceIsReachableAndReturnError(&error))
 
 
 print(String(HKQuantityTypeIdentifierHeartRate))
+
+print(HKWorkoutActivityType.Other.rawValue)

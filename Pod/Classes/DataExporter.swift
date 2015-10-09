@@ -70,13 +70,13 @@ public class HeartRateDataExporter: BaseDataExporter, DataExporter {
     
     public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
         
-        var healthQueryError: NSError? = nil;
-        var exportError: ErrorType? = nil
+        var healthQueryError: NSError?  = nil;
+        var exportError: ErrorType?     = nil
         
-        let semaphore = dispatch_semaphore_create(0)
+        let semaphore                   = dispatch_semaphore_create(0)
         
-        let heartRatePerMinute  = HKUnit(fromString: "count/min") //HKUnit.countUnit().unitDividedByUnit(HKUnit.minuteUnit())
-        let heartRateType       = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!
+        let heartRatePerMinute          = HKUnit(fromString: "count/min") //HKUnit.countUnit().unitDividedByUnit(HKUnit.minuteUnit())
+        let heartRateType               = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!
 
         
         let query = HKSampleQuery(sampleType: heartRateType, predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
@@ -119,7 +119,7 @@ public class HeartRateDataExporter: BaseDataExporter, DataExporter {
         // throw collected errors in the completion block
         if healthQueryError != nil {
             print(healthQueryError)
-            throw JsonWriterError.NSJSONSerializationError
+            throw ExportError.DataWriteError(healthQueryError?.description)
         }
         if let throwableError = exportError {
             throw throwableError
@@ -132,27 +132,50 @@ public class WorkoutDataExporter: BaseDataExporter, DataExporter {
 
     public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
         
+        var healthQueryError: NSError?  = nil;
+        var exportError: ErrorType?     = nil
         let semaphore = dispatch_semaphore_create(0)
 
         let query = HKSampleQuery(sampleType: HKObjectType.workoutType(), predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
             
-    
-            
-            for sample in tmpResult as! [HKWorkout] {
-                print(sample.sampleType.identifier)
-                print(sample.workoutActivityType.rawValue)
-                print(sample.startDate)
-                print(sample.endDate)
-                print(sample.duration) // seconds
-                print(sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit()))
-                print(sample.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit()))
-                for event in sample.workoutEvents ?? [] {
-                    print(event.type.rawValue)
-                    print(event.date)
-                }
 
+            if error != nil {
+                healthQueryError = error
+            } else {
+                do {
+                    try jsonWriter.writeArrayFieldStart(String(HKWorkoutType))
+                    
+                    for sample in tmpResult as! [HKWorkout] {
+                        
+                        
+                        try jsonWriter.writeStartObject()
+                        
+                        try jsonWriter.writeField("sampleType", value: sample.sampleType.identifier)
+                        try jsonWriter.writeField("workoutActivityType", value: sample.workoutActivityType.rawValue)
+                        try jsonWriter.writeField("startDate", value: sample.startDate.timeIntervalSince1970)
+                        try jsonWriter.writeField("endDate", value: sample.endDate.timeIntervalSince1970)
+                        try jsonWriter.writeField("duration", value: sample.duration) // seconds
+                        try jsonWriter.writeField("totalDistance", value: sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit()))
+                        try jsonWriter.writeField("totalEnergyBurned", value: sample.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit()))
+                        
+                        try jsonWriter.writeArrayFieldStart("workoutEvents")
+                        for event in sample.workoutEvents ?? [] {
+                            try jsonWriter.writeStartObject()
+                            try jsonWriter.writeField("type", value: event.type.rawValue)
+                            try jsonWriter.writeField("startDate", value: event.date.timeIntervalSince1970)
+                            try jsonWriter.writeEndObject()
+                        }
+                        try jsonWriter.writeEndArray()
+                      
+                        try jsonWriter.writeEndObject()
+                        
+                    }
+                    
+                    try jsonWriter.writeEndArray()
+                } catch let err {
+                    exportError = err
+                }
             }
-      
             
             dispatch_semaphore_signal(semaphore)
         
@@ -162,5 +185,14 @@ public class WorkoutDataExporter: BaseDataExporter, DataExporter {
         
         // wait for asyn call to complete
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        
+        // throw collected errors in the completion block
+        if healthQueryError != nil {
+            print(healthQueryError)
+            throw ExportError.DataWriteError(healthQueryError?.description)
+        }
+        if let throwableError = exportError {
+            throw throwableError
+        }
     }
 }
