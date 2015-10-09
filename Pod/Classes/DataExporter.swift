@@ -15,12 +15,25 @@ public protocol DataExporter {
 }
 
 public class BaseDataExporter {
-    
+    var healthQueryError: NSError?  = nil
+    var exportError: ErrorType?     = nil
     var exportConfiguration: ExportConfiguration
-    let sortDescriptor      = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
+    let sortDescriptor              = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
     
     public init(exportConfiguration: ExportConfiguration){
         self.exportConfiguration = exportConfiguration
+    }
+    
+    func rethrowCollectedErrors() throws {
+        
+        // throw collected errors in the completion block
+        if healthQueryError != nil {
+            print(healthQueryError)
+            throw ExportError.DataWriteError(healthQueryError?.description)
+        }
+        if let throwableError = exportError {
+            throw throwableError
+        }
     }
 }
 
@@ -70,9 +83,6 @@ public class HeartRateDataExporter: BaseDataExporter, DataExporter {
     
     public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
         
-        var healthQueryError: NSError?  = nil;
-        var exportError: ErrorType?     = nil
-        
         let semaphore                   = dispatch_semaphore_create(0)
         
         let heartRatePerMinute          = HKUnit(fromString: "count/min") //HKUnit.countUnit().unitDividedByUnit(HKUnit.minuteUnit())
@@ -82,27 +92,30 @@ public class HeartRateDataExporter: BaseDataExporter, DataExporter {
         let query = HKSampleQuery(sampleType: heartRateType, predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
             
             if error != nil {
-                healthQueryError = error
+                self.healthQueryError = error
             } else {
                 do {
-                    try jsonWriter.writeArrayFieldStart(String(HKQuantityTypeIdentifierHeartRate))
+                    try jsonWriter.writeObjectFieldStart(String(HKQuantityTypeIdentifierHeartRate))
                     
-                    for sample in tmpResult as! [HKQuantitySample] {
-                                            
-                        let value = Int(sample.quantity.doubleValueForUnit(heartRatePerMinute))
-                        try jsonWriter.writeStartObject()
+                        try jsonWriter.writeField("unit", value: heartRatePerMinute.description)
+                        try jsonWriter.writeArrayFieldStart("data")
                         
-                        try jsonWriter.writeField("d", value: sample.startDate.timeIntervalSince1970)
-                        try jsonWriter.writeField("v", value: value)
-                        try jsonWriter.writeField("u", value: heartRatePerMinute.description)
-                        
-                        try jsonWriter.writeEndObject()
-                        
-                    }
+                        for sample in tmpResult as! [HKQuantitySample] {
+                                                
+                            let value = Int(sample.quantity.doubleValueForUnit(heartRatePerMinute))
+                            try jsonWriter.writeStartObject()
+                            
+                            try jsonWriter.writeField("d", value: sample.startDate.timeIntervalSince1970)
+                            try jsonWriter.writeField("v", value: value)
+                            
+                            try jsonWriter.writeEndObject()
+                            
+                        }
 
-                    try jsonWriter.writeEndArray()
+                        try jsonWriter.writeEndArray()
+                    try jsonWriter.writeEndObject()
                 } catch let err {
-                    exportError = err
+                    self.exportError = err
                 }
             }
             dispatch_semaphore_signal(semaphore)
@@ -116,14 +129,70 @@ public class HeartRateDataExporter: BaseDataExporter, DataExporter {
         // wait for asyn call to complete
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
 
-        // throw collected errors in the completion block
-        if healthQueryError != nil {
-            print(healthQueryError)
-            throw ExportError.DataWriteError(healthQueryError?.description)
+        try rethrowCollectedErrors()
+    }
+}
+
+
+
+public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
+    public var message:String = ""
+    
+    var type : HKQuantityType
+    var unit: HKUnit
+    
+    public init(exportConfiguration: ExportConfiguration, type: HKQuantityType, unit: HKUnit){
+        self.type = type
+        self.unit = unit
+        self.message = "exporting \(type)"
+        super.init(exportConfiguration: exportConfiguration)
+    }
+    
+    public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
+        let semaphore       = dispatch_semaphore_create(0)
+        
+        
+        let query = HKSampleQuery(sampleType: type, predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
+            
+            if error != nil {
+                self.healthQueryError = error
+            } else {
+                do {
+                    try jsonWriter.writeObjectFieldStart(String(self.type))
+                    
+                    try jsonWriter.writeField("unit", value: self.unit.description)
+                    try jsonWriter.writeArrayFieldStart("data")
+                    
+                    for sample in tmpResult as! [HKQuantitySample] {
+                        
+                        let value = Int(sample.quantity.doubleValueForUnit(self.unit))
+                        try jsonWriter.writeStartObject()
+                        
+                        try jsonWriter.writeField("d", value: sample.startDate.timeIntervalSince1970)
+                        try jsonWriter.writeField("v", value: value)
+                        
+                        try jsonWriter.writeEndObject()
+                        
+                    }
+                    
+                    try jsonWriter.writeEndArray()
+                    try jsonWriter.writeEndObject()
+                } catch let err {
+                    self.exportError = err
+                }
+            }
+            dispatch_semaphore_signal(semaphore)
+            
         }
-        if let throwableError = exportError {
-            throw throwableError
-        }
+        
+        
+        // finally, we execute our query
+        healthStore.executeQuery(query)
+        
+        // wait for asyn call to complete
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        
+        try rethrowCollectedErrors()
     }
 }
 
@@ -132,15 +201,14 @@ public class WorkoutDataExporter: BaseDataExporter, DataExporter {
 
     public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
         
-        var healthQueryError: NSError?  = nil;
-        var exportError: ErrorType?     = nil
+
         let semaphore = dispatch_semaphore_create(0)
 
         let query = HKSampleQuery(sampleType: HKObjectType.workoutType(), predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
             
 
             if error != nil {
-                healthQueryError = error
+                self.healthQueryError = error
             } else {
                 do {
                     try jsonWriter.writeArrayFieldStart(String(HKWorkoutType))
@@ -173,7 +241,7 @@ public class WorkoutDataExporter: BaseDataExporter, DataExporter {
                     
                     try jsonWriter.writeEndArray()
                 } catch let err {
-                    exportError = err
+                    self.exportError = err
                 }
             }
             
@@ -186,13 +254,6 @@ public class WorkoutDataExporter: BaseDataExporter, DataExporter {
         // wait for asyn call to complete
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
         
-        // throw collected errors in the completion block
-        if healthQueryError != nil {
-            print(healthQueryError)
-            throw ExportError.DataWriteError(healthQueryError?.description)
-        }
-        if let throwableError = exportError {
-            throw throwableError
-        }
+        try rethrowCollectedErrors()
     }
 }

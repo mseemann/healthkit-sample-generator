@@ -124,16 +124,21 @@ public class HealthKitDataExporter {
     
     let healthStore = HKHealthStore()
     
-    let healthKitTypesToRead = Set(arrayLiteral:
+    let healthKitTypesToRead: Set<HKObjectType> = Set(arrayLiteral:
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierDateOfBirth)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBloodType)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierFitzpatrickSkinType)!,
-        HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!,
         HKObjectType.workoutType()
     )
 
+    let healthKitQuantityTypes: Set<HKQuantityType> = Set(arrayLiteral:
+        HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!,
+        HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!,
+        HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierStepCount)!
+    )
     
+
     init() { }
     
     public func export(exportConfiguration: ExportConfiguration, onProgress: ExportProgress, onCompletion: ExportCompletion) -> Void {
@@ -150,31 +155,39 @@ public class HealthKitDataExporter {
             return
         }
         
-        let dataExporter : [DataExporter] = getDataExporterForType(exportConfiguration)
-        
-                
-        let exportOperation = ExportOperation(
-            exportConfiguration: exportConfiguration,
-            healthStore: healthStore,
-            dataExporter: dataExporter,
-            onProgress: onProgress,
-            onError: {(err:ErrorType?) -> Void in
-                onCompletion(err)
-            },
-            completionBlock:{
-                onCompletion(nil)
-            }
-        )
-        
-        healthStore.requestAuthorizationToShareTypes(nil, readTypes: healthKitTypesToRead) {
-            (success, error) -> Void in
-            self.exportQueue.addOperation(exportOperation)
-            
+        var testTypes = healthKitTypesToRead
+        for type in healthKitQuantityTypes {
+            testTypes.insert(type)
         }
-    
+        
+        // FIXME error Propagation
+        healthStore.requestAuthorizationToShareTypes(nil, readTypes: testTypes) {
+            (success, error) -> Void in
+            
+            self.healthStore.preferredUnitsForQuantityTypes(self.healthKitQuantityTypes) {
+                (typeMap, error) in
+        
+                let dataExporter : [DataExporter] = self.getDataExporters(exportConfiguration, typeMap: typeMap)
+                        
+                let exportOperation = ExportOperation(
+                    exportConfiguration: exportConfiguration,
+                    healthStore: self.healthStore,
+                    dataExporter: dataExporter,
+                    onProgress: onProgress,
+                    onError: {(err:ErrorType?) -> Void in
+                        onCompletion(err)
+                    },
+                    completionBlock:{
+                        onCompletion(nil)
+                    }
+                )
+                
+                self.exportQueue.addOperation(exportOperation)
+            }
+        }
     }
     
-    func getDataExporterForType(exportConfiguration: ExportConfiguration) -> [DataExporter]{
+    func getDataExporters(exportConfiguration: ExportConfiguration, typeMap: [HKQuantityType : HKUnit]) -> [DataExporter]{
         var result : [DataExporter] = []
         
         result.append(MetaDataExporter(exportConfiguration: exportConfiguration))
@@ -184,7 +197,11 @@ public class HealthKitDataExporter {
             result.append(UserDataExporter(exportConfiguration: exportConfiguration))
         }
         
-        //result.append(HeartRateDataExporter(exportConfiguration: exportConfiguration))
+        // add all QunatityTypes
+        for(type, unit) in typeMap {
+            result.append(QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type , unit: unit))
+        }
+        
         result.append(WorkoutDataExporter(exportConfiguration: exportConfiguration))
         
         return result
