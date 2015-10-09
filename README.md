@@ -16,9 +16,6 @@ Easy to use generator for HealthKit Sample Data that can be used in code and in 
 
 ![](screen_export.png?raw=true "Profile export screenshot")
 
-## Usage
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Export data that are saved by HealthKit
 ### Export by API
