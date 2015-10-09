@@ -17,7 +17,7 @@ class JsonWriterTest: QuickSpec {
         it("should write a simple array as json"){
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream)
+            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
             
             try! jsonWriter.writeStartArray()
             try! jsonWriter.writeEndArray()
@@ -30,7 +30,7 @@ class JsonWriterTest: QuickSpec {
         it("should write an json object within an array") {
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream)
+            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
             
             try! jsonWriter.writeStartArray()
             try! jsonWriter.writeStartObject()
@@ -46,7 +46,7 @@ class JsonWriterTest: QuickSpec {
         it("should write an json array with 2 objects"){
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream)
+            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
             
             try! jsonWriter.writeStartArray()
             try! jsonWriter.writeStartObject()
@@ -65,7 +65,7 @@ class JsonWriterTest: QuickSpec {
         it("should write an Object with two properties"){
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream)
+            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
             
             try! jsonWriter.writeStartObject()
             try! jsonWriter.writeField("a", value: "b")
@@ -80,7 +80,7 @@ class JsonWriterTest: QuickSpec {
         it("should write Bool and Number values"){
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream)
+            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
             
             try! jsonWriter.writeStartObject()
             try! jsonWriter.writeField("a", value: true)

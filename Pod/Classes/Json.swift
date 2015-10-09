@@ -81,7 +81,7 @@ class JsonWriterContext {
 public class JsonWriter {
     
     var outputStream: NSOutputStream
-    var autoOpenStream = true
+    var autoOpenStream = false
     var writerContext = JsonWriterContext()
     
     public init (outputStream: NSOutputStream) {
