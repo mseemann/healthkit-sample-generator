@@ -15,7 +15,7 @@ Status:
 Next Step:
 * complete export
 * optimize memory usage during export
-* add test
+* improve test coverage
 * improve documentation
 
 [![CI Status](http://img.shields.io/travis/mseemann/healthkit-sample-generator.svg?style=flat)](https://travis-ci.org/mseemann/healthkit-sample-generator)
