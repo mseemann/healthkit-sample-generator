@@ -8,9 +8,9 @@ Generator for HealthKit Sample Data (swift + UI)
 Easy to use generator for HealthKit Sample Data that can be used in code and in the simulator. It supports you by exporting the current health data into a json profile, recreates the profile from a json file and is able to create a complete health data profile randomly. So you have reproducable test data to test your code and your ui.
 
 Status: 
-    Export of HealthData 30%
-    Import HelathData 0%
-    Generate HelthData 0%
+    * Export of HealthData 30%
+    * Import HelathData 0%
+    * Generate HelthData 0%
 
 [![CI Status](http://img.shields.io/travis/mseemann/healthkit-sample-generator.svg?style=flat)](https://travis-ci.org/mseemann/healthkit-sample-generator)
 [![Version](https://img.shields.io/cocoapods/v/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
