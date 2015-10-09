@@ -19,8 +19,8 @@ class JsonWriterTest: QuickSpec {
             
             let jsonWriter = JsonWriter(outputStream: stream)
             
-            jsonWriter.writeArrayStart()
-            jsonWriter.writeArrayEnd()
+            try! jsonWriter.writeStartArray()
+            try! jsonWriter.writeEndArray()
             
             let jsonString = self.getStringFormStream(stream)
             
@@ -32,9 +32,11 @@ class JsonWriterTest: QuickSpec {
             
             let jsonWriter = JsonWriter(outputStream: stream)
             
-            jsonWriter.writeArrayStart()
-            try! jsonWriter.writeObject(["a":"b"])
-            jsonWriter.writeArrayEnd()
+            try! jsonWriter.writeStartArray()
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeField("a", value: "b")
+            try! jsonWriter.writeEndObject()
+            try! jsonWriter.writeEndArray()
             
             let jsonString = self.getStringFormStream(stream)
             
@@ -46,14 +48,48 @@ class JsonWriterTest: QuickSpec {
             
             let jsonWriter = JsonWriter(outputStream: stream)
             
-            jsonWriter.writeArrayStart()
-            try! jsonWriter.writeObject(["a":"b"])
-            try! jsonWriter.writeObject(["c":"d"])
-            jsonWriter.writeArrayEnd()
+            try! jsonWriter.writeStartArray()
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeField("a", value: "b")
+            try! jsonWriter.writeEndObject()
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeField("c", value: "d")
+            try! jsonWriter.writeEndObject()
+            try! jsonWriter.writeEndArray()
             
             let jsonString = self.getStringFormStream(stream)
             
-            expect(jsonString) == "[{\"a\":\"b\"},\r\n{\"c\":\"d\"}]"
+            expect(jsonString) == "[{\"a\":\"b\"},{\"c\":\"d\"}]"
+        }
+        
+        it("should write an Object with two properties"){
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeField("a", value: "b")
+             try! jsonWriter.writeField("c", value: "d")
+            try! jsonWriter.writeEndObject()
+
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":\"b\",\"c\":\"d\"}"
+        }
+        
+        it("should write Bool and Number values"){
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeField("a", value: true)
+            try! jsonWriter.writeField("c", value: 23)
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":true,\"c\":23}"
         }
     }
     

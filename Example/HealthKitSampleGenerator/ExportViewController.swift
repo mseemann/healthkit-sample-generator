@@ -93,7 +93,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
                 })
             },
             
-            onCompletion: {(error: ExportError?)-> Void in
+            onCompletion: {(error: ErrorType?)-> Void in
                 dispatch_async(dispatch_get_main_queue(), {
                     if let exportError = error {
                         self.tvExportMessages.text = "Export error: \(exportError)"

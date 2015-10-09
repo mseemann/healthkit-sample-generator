@@ -21,7 +21,7 @@ public enum HealthDataToExportType : String {
     public static let allValues = [ALL, ADDED_BY_THIS_APP, GENERATED_BY_THIS_APP];
 }
 
-public typealias ExportCompletion = (ExportError?) -> Void
+public typealias ExportCompletion = (ErrorType?) -> Void
 public typealias ExportProgress = (message: String, progressInPercent: NSNumber?) -> Void
 
 
@@ -30,6 +30,7 @@ class ExportOperation: NSOperation {
     var exportConfiguration: ExportConfiguration
     var healthStore: HKHealthStore
     var onProgress: ExportProgress
+    var onError: ExportCompletion
     var dataExporter: [DataExporter]
     
     init(
@@ -37,6 +38,7 @@ class ExportOperation: NSOperation {
         healthStore: HKHealthStore,
         dataExporter: [DataExporter],
         onProgress: ExportProgress,
+        onError: ExportCompletion,
         completionBlock: (() -> Void)?
         ) {
         
@@ -44,25 +46,29 @@ class ExportOperation: NSOperation {
         self.healthStore = healthStore
         self.dataExporter = dataExporter
         self.onProgress = onProgress
+        self.onError = onError
         super.init()
         self.completionBlock = completionBlock
 
     }
     
     override func main() {
-        let jsonWriter = JsonWriter(outputStream: exportConfiguration.outputStream!)
-        jsonWriter.writeArrayStart()
-        
-        let exporterCount = Double(dataExporter.count)
-        
-        for (index, exporter) in dataExporter.enumerate() {
-            self.onProgress(message: exporter.message, progressInPercent: Double(index)/exporterCount)
-            try! exporter.export(healthStore, jsonWriter: jsonWriter)
+        do {
+            let jsonWriter = JsonWriter(outputStream: exportConfiguration.outputStream!)
+            try jsonWriter.writeStartObject()
+            
+            let exporterCount = Double(dataExporter.count)
+            
+            for (index, exporter) in dataExporter.enumerate() {
+                self.onProgress(message: exporter.message, progressInPercent: Double(index)/exporterCount)
+                try exporter.export(healthStore, jsonWriter: jsonWriter)
+            }
+            
+            try jsonWriter.writeEndObject()
+            self.onProgress(message: "export done", progressInPercent: 1.0)
+        } catch let err {
+            self.onError(err)
         }
-        
-        jsonWriter.writeArrayEnd()
-        self.onProgress(message: "export done", progressInPercent: 1.0)
-
     }
 }
 
@@ -88,6 +94,18 @@ public struct ExportConfiguration {
         }
         
         return valid
+    }
+    
+    public func getPredicate() -> NSPredicate? {
+        switch exportType {
+        case .ALL:
+            return nil
+        case .ADDED_BY_THIS_APP:
+            return HKQuery.predicateForObjectsFromSource(HKSource.defaultSource())
+        case .GENERATED_BY_THIS_APP:
+            return HKQuery.predicateForObjectsWithMetadataKey("GeneratorSource", allowedValues: ["HSG"])
+        }
+
     }
 }
 
@@ -139,9 +157,13 @@ public class HealthKitDataExporter {
             healthStore: healthStore,
             dataExporter: dataExporter,
             onProgress: onProgress,
+            onError: {(err:ErrorType?) -> Void in
+                onCompletion(err)
+            },
             completionBlock:{
-            onCompletion(nil)
-        })
+                onCompletion(nil)
+            }
+        )
         
         healthStore.requestAuthorizationToShareTypes(nil, readTypes: healthKitTypesToRead) {
             (success, error) -> Void in
@@ -162,6 +184,7 @@ public class HealthKitDataExporter {
         }
         
         result.append(HeartRateDataExporter(exportConfiguration: exportConfiguration))
+        result.append(WorkoutDataExporter(exportConfiguration: exportConfiguration))
         
         return result
     }
