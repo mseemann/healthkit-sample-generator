@@ -1,7 +1,7 @@
 
 # HealthKitSampleGenerator
 
-Generator for HealthKit Sample Data (swift + UI)
+Export/Import/Sample Generator for HealthKit Data (Swift + UI)
 
 ##Objective: 
 

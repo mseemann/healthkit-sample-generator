@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 s.name             = "HealthKitSampleGenerator"
 s.version          = "0.2.0"
-s.summary          = "A Generator for HealthKit Sample Data."
+s.summary          = "Export/Import/Sample Generator for HealthKit Data (Swift + UI)"
 s.homepage         = "https://github.com/mseemann/healthkit-sample-generator"
 s.license          = 'MIT'
 s.author           = { "Michael Seemann" => "pods@mseemann.de" }
