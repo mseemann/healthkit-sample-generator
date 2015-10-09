@@ -17,10 +17,6 @@ Status:
 [![License](https://img.shields.io/cocoapods/l/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 [![Platform](https://img.shields.io/cocoapods/p/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 
-##Shortdescription
-
-![](screen_export.png?raw=true "Profile export screenshot")
-
 
 ## Export data that are saved by HealthKit
 ### Export by API
@@ -107,6 +103,7 @@ Just build and run the App. Tap on the button "Export HealthKit Data". This will
 using the simulator you may access the export file on your mac - the path to the file is visibe in the UI of the app. To access the exported
 data on a real device you need to open iTunes, go to the device app section and have a look at the shared documents section. From there you
 are able to save the file on your mac.
+![](screen_export.png?raw=true "Profile export screenshot")
 
 The output format is the same as through the api.
 
