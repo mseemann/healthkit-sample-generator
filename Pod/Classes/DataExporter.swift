@@ -78,62 +78,6 @@ public class UserDataExporter: BaseDataExporter, DataExporter {
     }
 }
 
-public class HeartRateDataExporter: BaseDataExporter, DataExporter {
-    public var message = "exporting hart rate data"
-    
-    public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
-        
-        let semaphore                   = dispatch_semaphore_create(0)
-        
-        let heartRatePerMinute          = HKUnit(fromString: "count/min") //HKUnit.countUnit().unitDividedByUnit(HKUnit.minuteUnit())
-        let heartRateType               = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!
-
-        
-        let query = HKSampleQuery(sampleType: heartRateType, predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
-            
-            if error != nil {
-                self.healthQueryError = error
-            } else {
-                do {
-                    try jsonWriter.writeObjectFieldStart(String(HKQuantityTypeIdentifierHeartRate))
-                    
-                        try jsonWriter.writeField("unit", value: heartRatePerMinute.description)
-                        try jsonWriter.writeArrayFieldStart("data")
-                        
-                        for sample in tmpResult as! [HKQuantitySample] {
-                                                
-                            let value = Int(sample.quantity.doubleValueForUnit(heartRatePerMinute))
-                            try jsonWriter.writeStartObject()
-                            
-                            try jsonWriter.writeField("d", value: sample.startDate.timeIntervalSince1970)
-                            try jsonWriter.writeField("v", value: value)
-                            
-                            try jsonWriter.writeEndObject()
-                            
-                        }
-
-                        try jsonWriter.writeEndArray()
-                    try jsonWriter.writeEndObject()
-                } catch let err {
-                    self.exportError = err
-                }
-            }
-            dispatch_semaphore_signal(semaphore)
-            
-        }
-        
-        
-        // finally, we execute our query
-        healthStore.executeQuery(query)
-
-        // wait for asyn call to complete
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
-
-        try rethrowCollectedErrors()
-    }
-}
-
-
 
 public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
     public var message:String = ""
