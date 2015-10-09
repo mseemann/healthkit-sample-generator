@@ -58,12 +58,6 @@ HealthKitDataExporter.INSTANCE.export(
    }
 )
 ```
-###Export by Exmaple-App
-Just build and run the App. Tap on the button "Export HealthKit Data". This will create a JSON file in the App Documents folder. If you are
-using the simulator you may access the export file on your mac - the path to the file is visibe in the UI of the app. To access the exported
-data on a real device you need to open iTunes, go to the device app section and have a look at the shared documents section. From there you
-are able to save the file on your mac.
-
 
 This will output all the data that are available through HealthKit in JSON format:
 ```json
@@ -106,7 +100,17 @@ This will output all the data that are available through HealthKit in JSON forma
 }
 ```
 
+###Export by Exmaple-App
+Just build and run the App. Tap on the button "Export HealthKit Data". This will create a JSON file in the App Documents folder. If you are
+using the simulator you may access the export file on your mac - the path to the file is visibe in the UI of the app. To access the exported
+data on a real device you need to open iTunes, go to the device app section and have a look at the shared documents section. From there you
+are able to save the file on your mac.
+
+The output format is the same as through the api.
+
 ## Requirements
+
+iOS 9.0, XCode 7
 
 ## Installation
 
