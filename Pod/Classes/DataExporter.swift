@@ -44,7 +44,7 @@ public class MetaDataExporter : BaseDataExporter, DataExporter {
     public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
         try jsonWriter.writeObjectFieldStart("metaData")
         
-        try jsonWriter.writeField("creationDat", value: NSDate().timeIntervalSince1970)
+        try jsonWriter.writeField("creationDate", value: NSDate())
         try jsonWriter.writeField("profileName", value: exportConfiguration.profileName)
         
         try jsonWriter.writeEndObject()
@@ -59,7 +59,7 @@ public class UserDataExporter: BaseDataExporter, DataExporter {
         try jsonWriter.writeObjectFieldStart("userData")
         
         if let birthDay = try? healthStore.dateOfBirth() {
-             try jsonWriter.writeField("dateOfBirth", value: birthDay.timeIntervalSince1970)
+             try jsonWriter.writeField("dateOfBirth", value: birthDay)
         }
         
         if let sex = try? healthStore.biologicalSex() where sex.biologicalSex != HKBiologicalSex.NotSet {
@@ -115,7 +115,7 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
                         let value = Int(sample.quantity.doubleValueForUnit(self.unit))
                         try jsonWriter.writeStartObject()
                         
-                        try jsonWriter.writeField("d", value: sample.startDate.timeIntervalSince1970)
+                        try jsonWriter.writeField("d", value: sample.startDate)
                         try jsonWriter.writeField("v", value: value)
                         
                         try jsonWriter.writeEndObject()
@@ -167,8 +167,8 @@ public class WorkoutDataExporter: BaseDataExporter, DataExporter {
                         
                         try jsonWriter.writeField("sampleType", value: sample.sampleType.identifier)
                         try jsonWriter.writeField("workoutActivityType", value: sample.workoutActivityType.rawValue)
-                        try jsonWriter.writeField("startDate", value: sample.startDate.timeIntervalSince1970)
-                        try jsonWriter.writeField("endDate", value: sample.endDate.timeIntervalSince1970)
+                        try jsonWriter.writeField("startDate", value: sample.startDate)
+                        try jsonWriter.writeField("endDate", value: sample.endDate)
                         try jsonWriter.writeField("duration", value: sample.duration) // seconds
                         try jsonWriter.writeField("totalDistance", value: sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit()))
                         try jsonWriter.writeField("totalEnergyBurned", value: sample.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit()))
@@ -177,7 +177,7 @@ public class WorkoutDataExporter: BaseDataExporter, DataExporter {
                         for event in sample.workoutEvents ?? [] {
                             try jsonWriter.writeStartObject()
                             try jsonWriter.writeField("type", value: event.type.rawValue)
-                            try jsonWriter.writeField("startDate", value: event.date.timeIntervalSince1970)
+                            try jsonWriter.writeField("startDate", value: event.date)
                             try jsonWriter.writeEndObject()
                         }
                         try jsonWriter.writeEndArray()

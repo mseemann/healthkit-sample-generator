@@ -91,6 +91,22 @@ class JsonWriterTest: QuickSpec {
             
             expect(jsonString) == "{\"a\":true,\"c\":23}"
         }
+        
+        it("should write NSDate values"){
+            let date = NSDate()
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeField("a", value: date)
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            let milisecondDate = Int(date.timeIntervalSince1970*1000)
+            expect(jsonString) == "{\"a\":\(milisecondDate)}"
+        }
     }
     
     internal func getStringFormStream(stream: NSOutputStream) -> String {

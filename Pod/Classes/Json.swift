@@ -211,6 +211,15 @@ public class JsonWriter {
         try writeNumber(value)
     }
     
+    public func writeField(fieldName: String, value: NSDate?) throws {
+        try writeFieldName(fieldName)
+        if let date = value {
+            try writeNumber(Int(date.timeIntervalSince1970*1000))
+        } else {
+            try writeNull()
+        }
+    }
+    
     public func writeArrayFieldStart(fieldName: String) throws {
         try writeFieldName(fieldName)
         try writeStartArray()
