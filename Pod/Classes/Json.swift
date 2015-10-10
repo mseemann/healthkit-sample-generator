@@ -169,9 +169,9 @@ public class JsonWriter {
     
     public func writeNumber(number: NSNumber?) throws {
         openStreamIfNeeded()
-         writerContext.writeValue()
-        write(":")
+        writerContext.writeValue()
         if let v = number {
+            write(":")
             write(v.stringValue)
         } else  {
             try writeNull()

@@ -104,8 +104,24 @@ class JsonWriterTest: QuickSpec {
             
             let jsonString = self.getStringFormStream(stream)
             
-            let milisecondDate = Int(date.timeIntervalSince1970*1000)
+            let milisecondDate = Int64(date.timeIntervalSince1970*1000)
             expect(jsonString) == "{\"a\":\(milisecondDate)}"
+        }
+        
+        it ("should write nil values") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            
+            let testValue:NSNumber? = nil
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeField("a", value: testValue)
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":null}"
         }
     }
     
