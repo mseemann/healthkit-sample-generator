@@ -67,7 +67,7 @@ This will output all the data that are available through HealthKit in JSON forma
 ```json
 {
    "metaData": {
-        "creationDat":1444409923.551447,
+        "creationDate":1444463602521,
         "profileName":"output"},
    "userData":{},
    "HKQuantityTypeIdentifierHeartRate":{
