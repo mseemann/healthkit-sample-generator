@@ -214,7 +214,8 @@ public class JsonWriter {
     public func writeField(fieldName: String, value: NSDate?) throws {
         try writeFieldName(fieldName)
         if let date = value {
-            try writeNumber(Int(date.timeIntervalSince1970*1000))
+            let number = NSNumber(double:date.timeIntervalSince1970*1000).integerValue
+            try writeNumber(number)
         } else {
             try writeNull()
         }
