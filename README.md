@@ -8,13 +8,12 @@ Export/Import/Sample Generator for HealthKit Data (Swift + UI)
 Easy to use generator for HealthKit Sample Data that can be used in code and in the simulator. It supports you by exporting the current health data into a json profile, recreates the profile from a json file and is able to create a complete health data profile randomly. So you have reproducable test data to test your code and your ui.
 
 Status: 
-* Export of HealthData 30%
+* Export of HealthData 40%
 * Import HelathData 0%
 * Generate HelthData 0%
 
 Next Step:
 * complete export
-* optimize memory usage during export
 * improve test coverage
 * improve documentation
 
@@ -24,8 +23,8 @@ Next Step:
 [![Platform](https://img.shields.io/cocoapods/p/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 
 
-## Export data that are saved by HealthKit
-### Export by API
+## Export data that is saved by HealthKit
+### Export by using the API
 ```swift
 import Foundation
 import HealthKitSampleGenerator
@@ -104,14 +103,14 @@ This will output all the data that are available through HealthKit in JSON forma
 }
 ```
 
-###Export by Exmaple-App
+###Export by using the Example-App
 Just build and run the App. Tap on the button "Export HealthKit Data". This will create a JSON file in the App Documents folder. If you are
 using the simulator you may access the export file on your mac - the path to the file is visibe in the UI of the app. To access the exported
 data on a real device you need to open iTunes, go to the device app section and have a look at the shared documents section. From there you
 are able to save the file on your mac.
 ![](screen_export.png?raw=true "Profile export screenshot")
 
-The output format is the same as through the api.
+The output format is the same as using the api.
 
 ## Requirements
 

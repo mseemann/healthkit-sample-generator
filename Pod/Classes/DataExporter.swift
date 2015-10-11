@@ -85,6 +85,8 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
     var type : HKQuantityType
     var unit: HKUnit
     
+    let queryCountLimit = 10000
+    
     public init(exportConfiguration: ExportConfiguration, type: HKQuantityType, unit: HKUnit){
         self.type = type
         self.unit = unit
@@ -92,25 +94,22 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
         super.init(exportConfiguration: exportConfiguration)
     }
     
-    public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
-        let semaphore       = dispatch_semaphore_create(0)
+    func anchorQuery(healthStore: HKHealthStore, jsonWriter: JsonWriter, anchor : HKQueryAnchor?) throws -> (anchor:HKQueryAnchor?, count:Int?) {
         
-        
-        // FIXME save mem an export 10000 entries max. iterate over the entries
-        // solution? HKAnchoredObjectQuery? https://developer.apple.com/library/ios/documentation/HealthKit/Reference/HKAnchoredObjectQuery_Class/index.html#//apple_ref/doc/uid/TP40014742
-        
-        let query = HKSampleQuery(sampleType: type, predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
-            
+        let semaphore = dispatch_semaphore_create(0)
+        var resultAnchor: HKQueryAnchor?
+        var resultCount: Int?
+        let query = HKAnchoredObjectQuery(
+            type: type,
+            predicate: exportConfiguration.getPredicate(),
+            anchor: anchor ,
+            limit: queryCountLimit) { (query, results, deleted, newAnchor, error) -> Void in
+
             if error != nil {
                 self.healthQueryError = error
             } else {
                 do {
-                    try jsonWriter.writeObjectFieldStart(String(self.type))
-                    
-                    try jsonWriter.writeField("unit", value: self.unit.description)
-                    try jsonWriter.writeArrayFieldStart("data")
-                    
-                    for sample in tmpResult as! [HKQuantitySample] {
+                    for sample in results as! [HKQuantitySample] {
                         
                         let value = Int(sample.quantity.doubleValueForUnit(self.unit))
                         try jsonWriter.writeStartObject()
@@ -119,28 +118,46 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
                         try jsonWriter.writeField("v", value: value)
                         
                         try jsonWriter.writeEndObject()
-                        
                     }
-                    
-                    try jsonWriter.writeEndArray()
-                    try jsonWriter.writeEndObject()
                 } catch let err {
                     self.exportError = err
                 }
             }
+                
+            resultAnchor = newAnchor
+            resultCount = results?.count
             dispatch_semaphore_signal(semaphore)
-            
         }
         
-        
-        // finally, we execute our query
         healthStore.executeQuery(query)
         
-        // wait for asyn call to complete
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
         
         try rethrowCollectedErrors()
+        
+        let result = (anchor:resultAnchor, count: resultCount)
+        
+        return result
     }
+    
+    
+    public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
+        
+        try jsonWriter.writeObjectFieldStart(String(self.type))
+        
+        try jsonWriter.writeField("unit", value: self.unit.description)
+        try jsonWriter.writeArrayFieldStart("data")
+        
+        var result : (anchor:HKQueryAnchor?, count:Int?) = (anchor:nil, count: -1)
+        repeat {
+        
+            result = try anchorQuery(healthStore, jsonWriter: jsonWriter, anchor:result.anchor)
+        
+        } while result.count != 0 || result.count==queryCountLimit
+ 
+        try jsonWriter.writeEndArray()
+        try jsonWriter.writeEndObject()
+     }
 }
 
 public class WorkoutDataExporter: BaseDataExporter, DataExporter {
