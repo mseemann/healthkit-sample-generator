@@ -9,7 +9,7 @@
 import Foundation
 
 enum JsonWriterError: ErrorType {
-    case NSJSONSerializationError
+    case NSJSONSerializationError(String)
 }
 
 enum JsonContextType : Int {
@@ -196,6 +196,21 @@ public class JsonWriter {
         write("null")
     }
     
+    public func writeObject(anyObject: AnyObject) throws {
+        openStreamIfNeeded()
+        writerContext.writeValue()
+        write(":")
+        if !NSJSONSerialization.isValidJSONObject(anyObject) {
+            print(anyObject)
+            throw JsonWriterError.NSJSONSerializationError("invalid json object")
+        }
+        var err: NSError?;
+        NSJSONSerialization.writeJSONObject(anyObject, toStream: self.outputStream, options: NSJSONWritingOptions.init(rawValue: 0), error: &err)
+        if let realError = err {
+            throw JsonWriterError.NSJSONSerializationError(realError.localizedDescription)
+        }
+    }
+    
     public func writeField(fieldName: String, value: String?) throws {
         try writeFieldName(fieldName)
         try writeString(value)
@@ -219,6 +234,11 @@ public class JsonWriter {
         } else {
             try writeNull()
         }
+    }
+    
+    public func writeFieldWithJsonObject(fieldName: String, value: AnyObject) throws {
+        try writeFieldName(fieldName)
+        try writeObject(value)
     }
     
     public func writeArrayFieldStart(fieldName: String) throws {

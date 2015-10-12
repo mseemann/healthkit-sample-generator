@@ -123,6 +123,20 @@ class JsonWriterTest: QuickSpec {
             
             expect(jsonString) == "{\"a\":null}"
         }
+        
+        it ("should write array values") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeFieldWithJsonObject("a", value: ["a", "b"])
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":[\"a\",\"b\"]}"
+        }
     }
     
     internal func getStringFormStream(stream: NSOutputStream) -> String {

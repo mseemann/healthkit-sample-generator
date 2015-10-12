@@ -129,9 +129,20 @@ public class HealthKitDataExporter {
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBloodType)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierFitzpatrickSkinType)!,
+        
         HKObjectType.workoutType()
     )
 
+    let healthKitCategoryTypes: Set<HKCategoryType> = Set(arrayLiteral:
+        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierSleepAnalysis)!,
+        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierAppleStandHour)!,
+        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierCervicalMucusQuality)!,
+        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierOvulationTestResult)!,
+        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierMenstrualFlow)!,
+        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierIntermenstrualBleeding)!,
+        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierSexualActivity)!
+    )
+    
     let healthKitQuantityTypes: Set<HKQuantityType> = Set(arrayLiteral:
         // Body Measurements
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMassIndex)!,
@@ -208,7 +219,11 @@ public class HealthKitDataExporter {
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierUVExposure)!
     )
     
-
+    let healthKitCorrelationTypes: Set<HKCorrelationType> = Set(arrayLiteral:
+        HKObjectType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierBloodPressure)!,
+        HKObjectType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierFood)!
+    )
+    
     init() { }
     
     public func export(exportConfiguration: ExportConfiguration, onProgress: ExportProgress, onCompletion: ExportCompletion) -> Void {
@@ -225,13 +240,14 @@ public class HealthKitDataExporter {
             return
         }
         
-        var testTypes = healthKitTypesToRead
-        for type in healthKitQuantityTypes {
-            testTypes.insert(type)
-        }
+        var requestAuthorizationTypes: Set<HKObjectType> = Set()
+        requestAuthorizationTypes.unionInPlace(healthKitTypesToRead)
+        requestAuthorizationTypes.unionInPlace(healthKitQuantityTypes as Set<HKObjectType>!)
+        requestAuthorizationTypes.unionInPlace(healthKitCategoryTypes as Set<HKObjectType>!)
+
         
         // FIXME error Propagation
-        healthStore.requestAuthorizationToShareTypes(nil, readTypes: testTypes) {
+        healthStore.requestAuthorizationToShareTypes(nil, readTypes: requestAuthorizationTypes) {
             (success, error) -> Void in
             
             self.healthStore.preferredUnitsForQuantityTypes(self.healthKitQuantityTypes) {
@@ -262,7 +278,7 @@ public class HealthKitDataExporter {
         
         result.append(MetaDataExporter(exportConfiguration: exportConfiguration))
         
-        // user data are only exported if type is ALL beacause the app can never write these data!
+        // user data are only exported if type is ALL, beacause the app can never write these data!
         if exportConfiguration.exportType == .ALL {
             result.append(UserDataExporter(exportConfiguration: exportConfiguration))
         }
@@ -270,6 +286,15 @@ public class HealthKitDataExporter {
         // add all QunatityTypes
         for(type, unit) in typeMap {
             result.append(QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type , unit: unit))
+        }
+        
+        // add all CategoryTYpes
+        for categoryType in healthKitCategoryTypes {
+            result.append(CategoryTypeDataExporter(exportConfiguration: exportConfiguration, type: categoryType))
+        }
+        
+        for correlationType in healthKitCorrelationTypes {
+            result.append(CorrelationTypeDataExporter(exportConfiguration: exportConfiguration, type: correlationType))
         }
         
         result.append(WorkoutDataExporter(exportConfiguration: exportConfiguration))

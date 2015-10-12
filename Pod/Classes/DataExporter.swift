@@ -114,10 +114,12 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
                         let value = Int(sample.quantity.doubleValueForUnit(self.unit))
                         try jsonWriter.writeStartObject()
                         
+                        try jsonWriter.writeField("u", value: sample.UUID.UUIDString)
                         try jsonWriter.writeField("d", value: sample.startDate)
                         try jsonWriter.writeField("v", value: value)
                         
                         try jsonWriter.writeEndObject()
+                       
                     }
                 } catch let err {
                     self.exportError = err
@@ -160,6 +162,170 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
      }
 }
 
+public class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
+    public var message:String = ""
+    var type : HKCategoryType
+    let queryCountLimit = 10000
+    
+    public init(exportConfiguration: ExportConfiguration, type: HKCategoryType){
+        self.type = type
+        self.message = "exporting \(type)"
+        super.init(exportConfiguration: exportConfiguration)
+    }
+    
+    func anchorQuery(healthStore: HKHealthStore, jsonWriter: JsonWriter, anchor : HKQueryAnchor?) throws -> (anchor:HKQueryAnchor?, count:Int?) {
+        
+        let semaphore = dispatch_semaphore_create(0)
+        var resultAnchor: HKQueryAnchor?
+        var resultCount: Int?
+        let query = HKAnchoredObjectQuery(
+            type: type,
+            predicate: exportConfiguration.getPredicate(),
+            anchor: anchor ,
+            limit: queryCountLimit) { (query, results, deleted, newAnchor, error) -> Void in
+                
+                if error != nil {
+                    self.healthQueryError = error
+                } else {
+                    do {
+                        for sample in results as! [HKCategorySample] {
+                            
+                            try jsonWriter.writeStartObject()
+                            
+                            try jsonWriter.writeField("u", value: sample.UUID.UUIDString)
+                            try jsonWriter.writeField("d", value: sample.startDate)
+                            try jsonWriter.writeField("v", value: sample.value)
+                            
+                            try jsonWriter.writeEndObject()
+                        }
+                    } catch let err {
+                        self.exportError = err
+                    }
+                }
+                
+                resultAnchor = newAnchor
+                resultCount = results?.count
+                dispatch_semaphore_signal(semaphore)
+        }
+        
+        healthStore.executeQuery(query)
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        
+        try rethrowCollectedErrors()
+        
+        let result = (anchor:resultAnchor, count: resultCount)
+        
+        return result
+    }
+    
+    
+    public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
+        
+        try jsonWriter.writeObjectFieldStart(String(self.type))
+        
+        try jsonWriter.writeArrayFieldStart("data")
+        
+        var result : (anchor:HKQueryAnchor?, count:Int?) = (anchor:nil, count: -1)
+        repeat {
+            
+            result = try anchorQuery(healthStore, jsonWriter: jsonWriter, anchor:result.anchor)
+            
+        } while result.count != 0 || result.count==queryCountLimit
+        
+        try jsonWriter.writeEndArray()
+        try jsonWriter.writeEndObject()
+    }
+}
+
+public class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
+    public var message:String = ""
+    var type : HKCorrelationType
+    let queryCountLimit = 10000
+    
+    public init(exportConfiguration: ExportConfiguration, type: HKCorrelationType){
+        self.type = type
+        self.message = "exporting \(type)"
+        super.init(exportConfiguration: exportConfiguration)
+    }
+    
+    
+    func anchorQuery(healthStore: HKHealthStore, jsonWriter: JsonWriter, anchor : HKQueryAnchor?) throws -> (anchor:HKQueryAnchor?, count:Int?) {
+        
+        let semaphore = dispatch_semaphore_create(0)
+        var resultAnchor: HKQueryAnchor?
+        var resultCount: Int?
+        let query = HKAnchoredObjectQuery(
+            type: type,
+            predicate: exportConfiguration.getPredicate(),
+            anchor: anchor ,
+            limit: queryCountLimit) { (query, results, deleted, newAnchor, error) -> Void in
+                
+                if error != nil {
+                    self.healthQueryError = error
+                } else {
+                    do {
+                        for sample in results as! [HKCorrelation] {
+                            
+                            try jsonWriter.writeStartObject()
+                            
+                            try jsonWriter.writeField("u", value: sample.UUID.UUIDString)
+                            try jsonWriter.writeField("ds", value: sample.startDate)
+                            try jsonWriter.writeField("de", value: sample.endDate)
+                            
+                            var subSampleArray:[AnyObject] = []
+                            
+                            for subsample in sample.objects {
+                                subSampleArray.append([
+                                    "type": subsample.sampleType.identifier,
+                                    "uuid": subsample.UUID.UUIDString
+                                    ])
+                            }
+                            
+                            try jsonWriter.writeFieldWithJsonObject("s", value: subSampleArray)
+                            
+                            try jsonWriter.writeEndObject()
+                        }
+                    } catch let err {
+                        self.exportError = err
+                    }
+                }
+                
+                resultAnchor = newAnchor
+                resultCount = results?.count
+                dispatch_semaphore_signal(semaphore)
+        }
+        
+        healthStore.executeQuery(query)
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        
+        try rethrowCollectedErrors()
+        
+        let result = (anchor:resultAnchor, count: resultCount)
+        
+        return result
+    }
+    
+    public func export(healthStore: HKHealthStore, jsonWriter: JsonWriter) throws {
+        
+        try jsonWriter.writeObjectFieldStart(String(self.type))
+        
+        try jsonWriter.writeArrayFieldStart("data")
+        
+        var result : (anchor:HKQueryAnchor?, count:Int?) = (anchor:nil, count: -1)
+        repeat {
+            
+            result = try anchorQuery(healthStore, jsonWriter: jsonWriter, anchor:result.anchor)
+            
+        } while result.count != 0 || result.count==queryCountLimit
+        
+        try jsonWriter.writeEndArray()
+        try jsonWriter.writeEndObject()
+    }
+    
+}
+
 public class WorkoutDataExporter: BaseDataExporter, DataExporter {
     public var message = "exporting workouts data"
 
@@ -182,6 +348,7 @@ public class WorkoutDataExporter: BaseDataExporter, DataExporter {
                         
                         try jsonWriter.writeStartObject()
                         
+                        try jsonWriter.writeField("u", value: sample.UUID.UUIDString)
                         try jsonWriter.writeField("sampleType", value: sample.sampleType.identifier)
                         try jsonWriter.writeField("workoutActivityType", value: sample.workoutActivityType.rawValue)
                         try jsonWriter.writeField("startDate", value: sample.startDate)
