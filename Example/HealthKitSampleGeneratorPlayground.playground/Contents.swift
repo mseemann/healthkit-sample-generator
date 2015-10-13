@@ -19,7 +19,7 @@ print(config.outputFielName)
 config.outputStream = NSOutputStream.init(toFileAtPath: config.outputFielName!, append: false)!
 config.outputStream!.open()
 
-HealthKitDataExporter.INSTANCE.export(
+HealthKitDataExporter().export(
     
     config,
     

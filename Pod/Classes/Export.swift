@@ -50,7 +50,7 @@ class ExportOperation: NSOperation {
         self.onError = onError
         super.init()
         self.completionBlock = completionBlock
-
+        self.qualityOfService = NSQualityOfService.UserInteractive
     }
     
     override func main() {
@@ -70,6 +70,7 @@ class ExportOperation: NSOperation {
         } catch let err {
             self.onError(err)
         }
+        
     }
 }
 
@@ -113,9 +114,7 @@ public struct ExportConfiguration {
 
 public class HealthKitDataExporter {
     
-    public static let INSTANCE = HealthKitDataExporter()
-    
-    let exportQueue: NSOperationQueue = {
+     let exportQueue: NSOperationQueue = {
         var queue = NSOperationQueue()
         queue.name = "export queue"
         queue.maxConcurrentOperationCount = 1
@@ -224,7 +223,7 @@ public class HealthKitDataExporter {
         HKObjectType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierFood)!
     )
     
-    init() { }
+    public init() { }
     
     public func export(exportConfiguration: ExportConfiguration, onProgress: ExportProgress, onCompletion: ExportCompletion) -> Void {
         if(!exportConfiguration.isValid()){
@@ -240,13 +239,11 @@ public class HealthKitDataExporter {
             return
         }
         
-        var requestAuthorizationTypes: Set<HKObjectType> = Set()
-        requestAuthorizationTypes.unionInPlace(healthKitTypesToRead)
+        var requestAuthorizationTypes: Set<HKObjectType> = Set(healthKitTypesToRead)
         requestAuthorizationTypes.unionInPlace(healthKitQuantityTypes as Set<HKObjectType>!)
         requestAuthorizationTypes.unionInPlace(healthKitCategoryTypes as Set<HKObjectType>!)
 
-        
-        // FIXME error Propagation
+ 
         healthStore.requestAuthorizationToShareTypes(nil, readTypes: requestAuthorizationTypes) {
             (success, error) -> Void in
             
@@ -271,6 +268,7 @@ public class HealthKitDataExporter {
                 self.exportQueue.addOperation(exportOperation)
             }
         }
+        
     }
     
     func getDataExporters(exportConfiguration: ExportConfiguration, typeMap: [HKQuantityType : HKUnit]) -> [DataExporter]{

@@ -80,7 +80,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
         exportConfiguration.outputStream = NSOutputStream.init(toFileAtPath: exportConfiguration.outputFielName!, append: false)!
         exportConfiguration.outputStream!.open()
         
-        HealthKitDataExporter.INSTANCE.export(
+        HealthKitDataExporter().export(
             
             exportConfiguration,
             
