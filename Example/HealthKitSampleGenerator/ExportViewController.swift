@@ -86,7 +86,6 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
     @IBAction func doExport(_: AnyObject) {
         exportInProgress = true
         self.pvExportProgress.progress = 0.0
-
         
         HealthKitDataExporter().export(
             

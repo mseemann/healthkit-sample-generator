@@ -1155,6 +1155,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/HealthKitSampleGenerator/HealthKitSampleGenerator-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/HealthKitSampleGenerator/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1211,6 +1212,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/HealthKitSampleGenerator/HealthKitSampleGenerator-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/HealthKitSampleGenerator/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

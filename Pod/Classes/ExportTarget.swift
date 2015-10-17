@@ -14,7 +14,7 @@ public protocol ExportTarget {
     func startExport() throws -> Void
     func endExport() throws -> Void
     
-    func writeMetaData(creationDate creationDate: NSDate, profileName: String) throws -> Void
+    func writeMetaData(creationDate creationDate: NSDate, profileName: String, version: String) throws -> Void
     
     func writeUserDataDictionary(userData: Dictionary <String, AnyObject>) throws -> Void
     
@@ -31,9 +31,9 @@ public protocol ExportTarget {
 public class JsonSingleFileExportTarget : ExportTarget {
     
     private(set) public var outputFileName: String
-    var overwriteIfExist = false
-    var outputStream: NSOutputStream?
-    var jsonWriter: JsonWriter
+    private(set) var overwriteIfExist = false
+    private(set) var outputStream: NSOutputStream?
+    private(set) var jsonWriter: JsonWriter
     
     public init(outputFileName: String, overwriteIfExist:Bool){
         self.outputFileName = outputFileName
@@ -62,12 +62,13 @@ public class JsonSingleFileExportTarget : ExportTarget {
         jsonWriter.close()
     }
     
-    public func writeMetaData(creationDate creationDate: NSDate, profileName: String) throws {
+    public func writeMetaData(creationDate creationDate: NSDate, profileName: String, version: String) throws {
         
         try jsonWriter.writeObjectFieldStart("metaData")
         
         try jsonWriter.writeField("creationDate", value: creationDate)
         try jsonWriter.writeField("profileName", value: profileName)
+        try jsonWriter.writeField("version", value: version)
         
         try jsonWriter.writeEndObject()
     }

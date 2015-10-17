@@ -88,19 +88,19 @@ class JsonWriterContext {
     }
 }
 
-public class JsonWriter {
+internal class JsonWriter {
     
     var outputStream: NSOutputStream
     var writerContext = JsonWriterContext()
     
-    public init (outputStream: NSOutputStream) {
+    internal init (outputStream: NSOutputStream) {
         self.outputStream = outputStream
     }
     
     /**
         Starts writing a new Array (e.g. '[').
     */
-    public func writeStartArray() throws {
+    internal func writeStartArray() throws {
         openStreamIfNeeded()
         let status = writerContext.willStartArray()
         writeCommaOrColon(status)
@@ -111,7 +111,7 @@ public class JsonWriter {
     /**
         Writes the end of a json array (e.g. ']').
     */
-    public func writeEndArray() throws {
+    internal func writeEndArray() throws {
         openStreamIfNeeded()
         writerContext = writerContext.parent!
         write("]")
@@ -120,7 +120,7 @@ public class JsonWriter {
     /**
         Starts writing a new Object (e.g. '{')
     */
-    public func writeStartObject() throws {
+    internal func writeStartObject() throws {
         openStreamIfNeeded()
         let status = writerContext.willStartObject()
         writeCommaOrColon(status)
@@ -131,7 +131,7 @@ public class JsonWriter {
     /**
         Writed the end of a json object (e.g. '}')
     */
-    public func writeEndObject() throws {
+    internal func writeEndObject() throws {
         openStreamIfNeeded()
         writerContext = writerContext.parent!
         write("}")
@@ -140,7 +140,7 @@ public class JsonWriter {
     /**
         Strats writing a field name - a json string in quotation marks.
     */
-    public func writeFieldName(name: String) throws {
+    internal func writeFieldName(name: String) throws {
         openStreamIfNeeded()
         let status = writerContext.willWriteField()
         writeCommaOrColon(status)
@@ -159,7 +159,7 @@ public class JsonWriter {
     /**
     
     */
-    public func writeString(text: String?) throws {
+    internal func writeString(text: String?) throws {
         openStreamIfNeeded()
         if let v = text {
             let escapedV = v.stringByReplacingOccurrencesOfString("\"", withString: "\\")
@@ -172,7 +172,7 @@ public class JsonWriter {
         }
     }
     
-    public func writeNumber(number: NSNumber?) throws {
+    internal func writeNumber(number: NSNumber?) throws {
         openStreamIfNeeded()
         if let v = number {
             let status = writerContext.willWriteValue()
@@ -189,7 +189,7 @@ public class JsonWriter {
         }
     }
     
-    public func writeBool(value: Bool?) throws {
+    internal func writeBool(value: Bool?) throws {
         openStreamIfNeeded()
         if let v = value {
             let status = writerContext.willWriteValue()
@@ -201,7 +201,7 @@ public class JsonWriter {
         }
     }
     
-    public func writeDate(value: NSDate?) throws {
+    internal func writeDate(value: NSDate?) throws {
         openStreamIfNeeded()
         if let date = value {
             let number = NSNumber(double:date.timeIntervalSince1970*1000).integerValue
@@ -211,7 +211,7 @@ public class JsonWriter {
         }
     }
     
-    public func writeNull() throws {
+    internal func writeNull() throws {
         openStreamIfNeeded()
         let status = writerContext.willWriteValue()
         writeCommaOrColon(status)
@@ -222,7 +222,7 @@ public class JsonWriter {
     /**
         serailze an array or a dictionary to json.
     */
-    public func writeObject(anyObject: AnyObject) throws {
+    internal func writeObject(anyObject: AnyObject) throws {
         openStreamIfNeeded()
         if let array = anyObject as? [AnyObject] {
             try writeStartArray()
@@ -264,42 +264,42 @@ public class JsonWriter {
         }
     }
     
-    public func writeField(fieldName: String, value: String?) throws {
+    internal func writeField(fieldName: String, value: String?) throws {
         try writeFieldName(fieldName)
         try writeString(value)
     }
     
-    public func writeField(fieldName: String, value: Bool?) throws {
+    internal func writeField(fieldName: String, value: Bool?) throws {
         try writeFieldName(fieldName)
         try writeBool(value)
     }
 
-    public func writeField(fieldName: String, value: NSNumber?) throws {
+    internal func writeField(fieldName: String, value: NSNumber?) throws {
         try writeFieldName(fieldName)
         try writeNumber(value)
     }
     
-    public func writeField(fieldName: String, value: NSDate?) throws {
+    internal func writeField(fieldName: String, value: NSDate?) throws {
         try writeFieldName(fieldName)
         try writeDate(value)
     }
     
-    public func writeFieldWithObject(fieldName: String, value: AnyObject) throws {
+    internal func writeFieldWithObject(fieldName: String, value: AnyObject) throws {
         try writeFieldName(fieldName)
         try writeObject(value)
     }
     
-    public func writeArrayFieldStart(fieldName: String) throws {
+    internal func writeArrayFieldStart(fieldName: String) throws {
         try writeFieldName(fieldName)
         try writeStartArray()
     }
     
-    public func writeObjectFieldStart(fieldName: String) throws {
+    internal func writeObjectFieldStart(fieldName: String) throws {
         try writeFieldName(fieldName)
         try writeStartObject()
     }
     
-    public func close() {
+    internal func close() {
         outputStream.close()
     }
     

@@ -9,7 +9,7 @@
 import XCTest
 import Quick
 import Nimble
-import HealthKitSampleGenerator
+@testable import HealthKitSampleGenerator
 
 class JsonWriterTest: QuickSpec {
     

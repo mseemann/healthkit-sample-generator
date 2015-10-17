@@ -9,18 +9,18 @@
 import Foundation
 import HealthKit
 
-public protocol DataExporter {
+internal protocol DataExporter {
     var message: String {get}
     func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws -> Void
 }
 
-public class BaseDataExporter {
+internal class BaseDataExporter {
     var healthQueryError: NSError?  = nil
     var exportError: ErrorType?     = nil
     var exportConfiguration: ExportConfiguration
     let sortDescriptor              = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
     
-    public init(exportConfiguration: ExportConfiguration){
+    internal init(exportConfiguration: ExportConfiguration){
         self.exportConfiguration = exportConfiguration
     }
     
@@ -37,22 +37,22 @@ public class BaseDataExporter {
     }
 }
 
-public class MetaDataExporter : BaseDataExporter, DataExporter {
+internal class MetaDataExporter : BaseDataExporter, DataExporter {
     
-    public var message = "exporting metadata"
+    internal var message = "exporting metadata"
     
-    public func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
+    internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
-            try exportTarget.writeMetaData(creationDate: NSDate(), profileName: exportConfiguration.profileName)
+            try exportTarget.writeMetaData(creationDate: NSDate(), profileName: exportConfiguration.profileName, version:"0.2.0")
         }
     }
 }
 
-public class UserDataExporter: BaseDataExporter, DataExporter {
+internal class UserDataExporter: BaseDataExporter, DataExporter {
     
-    public var message = "exporting user data"
+    internal var message = "exporting user data"
     
-    public func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
+    internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         var userData = Dictionary<String, AnyObject>()
         
         
@@ -79,15 +79,15 @@ public class UserDataExporter: BaseDataExporter, DataExporter {
 }
 
 
-public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
-    public var message:String = ""
+internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
+    internal var message:String = ""
     
     var type : HKQuantityType
     var unit: HKUnit
     
     let queryCountLimit = 10000
     
-    public init(exportConfiguration: ExportConfiguration, type: HKQuantityType, unit: HKUnit){
+    internal init(exportConfiguration: ExportConfiguration, type: HKQuantityType, unit: HKUnit){
         self.type = type
         self.unit = unit
         self.message = "exporting \(type)"
@@ -139,7 +139,7 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
     }
     
     
-    public func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
+    internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
             try exportTarget.startWriteQuantityType(type, unit:unit)
             try exportTarget.startWriteDatas()
@@ -158,12 +158,12 @@ public class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
      }
 }
 
-public class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
-    public var message:String = ""
+internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
+    internal var message:String = ""
     var type : HKCategoryType
     let queryCountLimit = 10000
     
-    public init(exportConfiguration: ExportConfiguration, type: HKCategoryType){
+    internal init(exportConfiguration: ExportConfiguration, type: HKCategoryType){
         self.type = type
         self.message = "exporting \(type)"
         super.init(exportConfiguration: exportConfiguration)
@@ -213,7 +213,7 @@ public class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
     }
     
     
-    public func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
+    internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
             try exportTarget.startWriteType(type)
             try exportTarget.startWriteDatas()
@@ -231,12 +231,12 @@ public class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
     }
 }
 
-public class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
-    public var message:String = ""
+internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
+    internal var message:String = ""
     var type : HKCorrelationType
     let queryCountLimit = 10000
     
-    public init(exportConfiguration: ExportConfiguration, type: HKCorrelationType){
+    internal init(exportConfiguration: ExportConfiguration, type: HKCorrelationType){
         self.type = type
         self.message = "exporting \(type)"
         super.init(exportConfiguration: exportConfiguration)
@@ -298,7 +298,7 @@ public class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
         return result
     }
     
-    public func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
+    internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
             try exportTarget.startWriteType(type)
             try exportTarget.startWriteDatas()
@@ -318,10 +318,10 @@ public class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
     
 }
 
-public class WorkoutDataExporter: BaseDataExporter, DataExporter {
-    public var message = "exporting workouts data"
+internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
+    internal var message = "exporting workouts data"
 
-    public func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
+    internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         
 
         let semaphore = dispatch_semaphore_create(0)

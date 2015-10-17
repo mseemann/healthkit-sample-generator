@@ -18,9 +18,9 @@ public protocol ExportConfiguration {
 }
 
 
-public extension ExportConfiguration {
+internal extension ExportConfiguration {
     
-    public func getPredicate() -> NSPredicate? {
+    internal func getPredicate() -> NSPredicate? {
         switch exportType {
         case .ALL:
             return nil
