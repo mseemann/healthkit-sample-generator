@@ -3,31 +3,38 @@
 import Foundation
 import HealthKitSampleGenerator
 
-var config = ExportConfiguration()
 
-let fm = NSFileManager.defaultManager()
-let documentsUrl = fm.URLsForDirectory(.DocumentDirectory,
-                                       inDomains: .UserDomainMask)[0]
 
-config.outputFielName          = documentsUrl.URLByAppendingPathComponent("export.json").path!
-config.exportType              = HealthDataToExportType.ALL
-config.profileName             = "Profilename"
-config.overwriteIfFileExist    = true
+let fm              = NSFileManager.defaultManager()
+let documentsUrl    = fm.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+let outputFileName  = documentsUrl.URLByAppendingPathComponent("export.json").path!
 
-print(config.outputFielName)
 
-config.outputStream = NSOutputStream.init(toFileAtPath: config.outputFielName!, append: false)!
-config.outputStream!.open()
+let target          = JsonSingleFileExportTarget(outputFileName: outputFileName, overwriteIfExist:true)
 
-HealthKitDataExporter().export(
+let configuration   = HealthDataFullExportConfiguration(profileName: "Profilname", exportType: HealthDataToExportType.ALL)
+
+let exporter        =  HealthKitDataExporter()
+
+exporter.export(
     
-    config,
+    exportTargets: [target],
     
-    onProgress: {(message: String, progressInPercent: NSNumber?)->Void in
-        // show progressinformation if you want
+    exportConfiguration: configuration,
+    
+    onProgress: {
+        (message: String?, progressInPercent: NSNumber?)->Void in
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            if let unwrpMessage = message {
+                print(unwrpMessage)
+            }
+        })
     },
     
-    onCompletion: {(error: ErrorType?)-> Void in
+    onCompletion: {
+        (error: ErrorType?)-> Void in
+    
         dispatch_async(dispatch_get_main_queue(), {
             if let exportError = error {
                 print(exportError)

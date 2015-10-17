@@ -29,6 +29,7 @@ public typealias ExportProgress = (message: String, progressInPercent: NSNumber?
 class ExportOperation: NSOperation {
     
     var exportConfiguration: ExportConfiguration
+    var exportTargets: [ExportTarget]
     var healthStore: HKHealthStore
     var onProgress: ExportProgress
     var onError: ExportCompletion
@@ -36,6 +37,7 @@ class ExportOperation: NSOperation {
     
     init(
         exportConfiguration: ExportConfiguration,
+        exportTargets: [ExportTarget],
         healthStore: HKHealthStore,
         dataExporter: [DataExporter],
         onProgress: ExportProgress,
@@ -44,6 +46,7 @@ class ExportOperation: NSOperation {
         ) {
         
         self.exportConfiguration = exportConfiguration
+        self.exportTargets = exportTargets
         self.healthStore = healthStore
         self.dataExporter = dataExporter
         self.onProgress = onProgress
@@ -55,59 +58,27 @@ class ExportOperation: NSOperation {
     
     override func main() {
         do {
-            let jsonWriter = JsonWriter(outputStream: exportConfiguration.outputStream!)
-            try jsonWriter.writeStartObject()
+            for exportTarget in exportTargets {
+                try exportTarget.startExport();
+            }
+
             
             let exporterCount = Double(dataExporter.count)
             
             for (index, exporter) in dataExporter.enumerate() {
                 self.onProgress(message: exporter.message, progressInPercent: Double(index)/exporterCount)
-                try exporter.export(healthStore, jsonWriter: jsonWriter)
+                try exporter.export(healthStore, exportTargets: exportTargets)
             }
             
-            try jsonWriter.writeEndObject()
+            for exportTarget in exportTargets {
+                try exportTarget.endExport();
+            }
+            
             self.onProgress(message: "export done", progressInPercent: 1.0)
         } catch let err {
             self.onError(err)
         }
         
-    }
-}
-
-public struct ExportConfiguration {
-    
-    public var exportType = HealthDataToExportType.ALL // required
-    public var profileName: String? // required
-    public var outputFielName: String? // not required
-    public var overwriteIfFileExist = false
-    public var outputStream: NSOutputStream? // requried
-    
-    public init(){}
-    
-    public func isValid() -> Bool {
-        // profile name is required
-        var valid = !(profileName ?? "").isEmpty
-        
-        // if the outputFileName already exists, the state is only valid, if overwrite is allowed
-        if let fileName = outputFielName where !fileName.isEmpty {
-            if NSFileManager.defaultManager().fileExistsAtPath(fileName) {
-                valid = valid && overwriteIfFileExist
-            }
-        }
-        
-        return valid
-    }
-    
-    public func getPredicate() -> NSPredicate? {
-        switch exportType {
-        case .ALL:
-            return nil
-        case .ADDED_BY_THIS_APP:
-            return HKQuery.predicateForObjectsFromSource(HKSource.defaultSource())
-        case .GENERATED_BY_THIS_APP:
-            return HKQuery.predicateForObjectsWithMetadataKey("GeneratorSource", allowedValues: ["HSG"])
-        }
-
     }
 }
 
@@ -225,19 +196,14 @@ public class HealthKitDataExporter {
     
     public init() { }
     
-    public func export(exportConfiguration: ExportConfiguration, onProgress: ExportProgress, onCompletion: ExportCompletion) -> Void {
-        if(!exportConfiguration.isValid()){
-            onCompletion(ExportError.IllegalArgumentError("invalid export configuration"))
-            return
+    public func export(exportTargets exportTargets: [ExportTarget], exportConfiguration: ExportConfiguration, onProgress: ExportProgress, onCompletion: ExportCompletion) -> Void {
+        for exportTarget in exportTargets {
+            if(!exportTarget.isValid()){
+                onCompletion(ExportError.IllegalArgumentError("invalid export target \(exportTarget)"))
+                return
+            }
         }
-        if(exportConfiguration.outputStream == nil){
-            onCompletion(ExportError.IllegalArgumentError("the outputstream must be set"))
-            return
-        }
-        if(exportConfiguration.outputStream!.streamStatus != .Open){
-            onCompletion(ExportError.IllegalArgumentError("the outputstream must be open"))
-            return
-        }
+
         
         var requestAuthorizationTypes: Set<HKObjectType> = Set(healthKitTypesToRead)
         requestAuthorizationTypes.unionInPlace(healthKitQuantityTypes as Set<HKObjectType>!)
@@ -254,6 +220,7 @@ public class HealthKitDataExporter {
                         
                 let exportOperation = ExportOperation(
                     exportConfiguration: exportConfiguration,
+                    exportTargets: exportTargets,
                     healthStore: self.healthStore,
                     dataExporter: dataExporter,
                     onProgress: onProgress,

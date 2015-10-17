@@ -19,6 +19,8 @@
 		1EB0395E90DC786D257E35F4BB737D6B /* EndWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2573055CDD988719A774B9A78C2B2 /* EndWith.swift */; };
 		1FE799F6E3BF45982DEB8D03BD84D125 /* World.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2314F9D831C73EA35E0E19E09E97C2 /* World.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2241BD9DF0F7D0711B0E7225D4974BBD /* MatcherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268D6308FD81E6D31EB2B5EB9648544 /* MatcherProtocols.swift */; };
+		2F8DF7CC1BD1522D000F797F /* ExportTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DF7CB1BD1522D000F797F /* ExportTarget.swift */; settings = {ASSET_TAGS = (); }; };
+		2F8DF7CE1BD1525F000F797F /* ExportConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DF7CD1BD1525F000F797F /* ExportConfiguration.swift */; settings = {ASSET_TAGS = (); }; };
 		34DCFCCAA82FE906F481ACD5A6797422 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C163EB363ABEA376EA74FBF8C1BCACB9 /* Filter.swift */; };
 		35046BFF06F9602D2A04AE23115E7952 /* BeGreaterThanOrEqualTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFA48AD4CBF2294E94626E2803758E1 /* BeGreaterThanOrEqualTo.swift */; };
 		3689360651A699DC84CD3A88F843A2EF /* Quick-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 09ED86DD95111B4BA74888E09DB678C5 /* Quick-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -160,6 +162,8 @@
 		2C29D0140F99F570B9C3CF9B2CAEB2D6 /* DSL.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DSL.m; path = Nimble/objc/DSL.m; sourceTree = "<group>"; };
 		2D7A20C09F57F76DE513CA0E69DC58CD /* DSL+Wait.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DSL+Wait.swift"; path = "Nimble/DSL+Wait.swift"; sourceTree = "<group>"; };
 		2F66B2F667E5F1FC43A5803846F29CE3 /* Quick.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Quick.xcconfig; sourceTree = "<group>"; };
+		2F8DF7CB1BD1522D000F797F /* ExportTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportTarget.swift; sourceTree = "<group>"; };
+		2F8DF7CD1BD1525F000F797F /* ExportConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportConfiguration.swift; sourceTree = "<group>"; };
 		31971283FA8916C9C34FAFEA055DAA40 /* Pods-HealthKitSampleGenerator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HealthKitSampleGenerator_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		326A8B8239D07F9F25E079DFB644B266 /* BeNil.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeNil.swift; path = Nimble/Matchers/BeNil.swift; sourceTree = "<group>"; };
 		335CFF9F10075C8B76653D3514A5E0E9 /* AssertionRecorder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AssertionRecorder.swift; path = Nimble/Adapters/AssertionRecorder.swift; sourceTree = "<group>"; };
@@ -419,6 +423,8 @@
 				CC5245684BAFE908471382EBED3E61E9 /* Export.swift */,
 				B1843126E4D5D7C53CC3DF49DB375195 /* Json.swift */,
 				B4103C7B3E494FAD376C10DD8CDDBDAC /* Util.swift */,
+				2F8DF7CB1BD1522D000F797F /* ExportTarget.swift */,
+				2F8DF7CD1BD1525F000F797F /* ExportConfiguration.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -780,8 +786,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F8DF7CE1BD1525F000F797F /* ExportConfiguration.swift in Sources */,
 				CA2484BC964B4CA0E5CD396FC0A49A87 /* DataExporter.swift in Sources */,
 				7620FA33931DFCA80343D3AB273ABBB7 /* Export.swift in Sources */,
+				2F8DF7CC1BD1522D000F797F /* ExportTarget.swift in Sources */,
 				1090C9922CFFA26B30DC6281BE9FA4BF /* HealthKitSampleGenerator-dummy.m in Sources */,
 				DA151B0BB8B23C5FB80ED44E69E2E36B /* Json.swift in Sources */,
 				960A3CCB484A18B4B8F8430BE4E51985 /* Util.swift in Sources */,

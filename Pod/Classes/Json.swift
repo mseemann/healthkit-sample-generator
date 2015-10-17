@@ -76,21 +76,25 @@ class JsonWriterContext {
         }
         return .OK
     }
+    
+    func willWriteValue() -> JsonWriterStatus {
+        if startField {
+            return .WILL_NEED_COLON
+        }
+        if(index > 0){
+            return .WILL_NEED_COMMA
+        }
+        return .OK
+    }
 }
 
 public class JsonWriter {
     
     var outputStream: NSOutputStream
-    var autoOpenStream = false
     var writerContext = JsonWriterContext()
     
     public init (outputStream: NSOutputStream) {
         self.outputStream = outputStream
-    }
-    
-    public convenience init (outputStream: NSOutputStream, autoOpenStream: Bool) {
-        self.init(outputStream: outputStream)
-        self.autoOpenStream = autoOpenStream
     }
     
     /**
@@ -157,10 +161,11 @@ public class JsonWriter {
     */
     public func writeString(text: String?) throws {
         openStreamIfNeeded()
-        writerContext.writeValue()
-        write(":")
         if let v = text {
             let escapedV = v.stringByReplacingOccurrencesOfString("\"", withString: "\\")
+            let status = writerContext.willWriteValue()
+            writeCommaOrColon(status)
+            writerContext.writeValue()
             write("\""+escapedV+"\"")
         } else  {
             try writeNull()
@@ -169,10 +174,16 @@ public class JsonWriter {
     
     public func writeNumber(number: NSNumber?) throws {
         openStreamIfNeeded()
-        writerContext.writeValue()
         if let v = number {
-            write(":")
-            write(v.stringValue)
+            let status = writerContext.willWriteValue()
+            writeCommaOrColon(status)
+            writerContext.writeValue()
+            if(v.isBoolNumber()){
+                // bool is bridged to nsnumber - but we need to keep true and false and not 1 and 0 in json. 
+                 write(v.boolValue ? "true": "false")
+            } else {
+                write(v.stringValue)
+            }
         } else  {
             try writeNull()
         }
@@ -180,34 +191,76 @@ public class JsonWriter {
     
     public func writeBool(value: Bool?) throws {
         openStreamIfNeeded()
-         writerContext.writeValue()
-        write(":")
         if let v = value {
+            let status = writerContext.willWriteValue()
+            writeCommaOrColon(status)
+            writerContext.writeValue()
             write(v ? "true": "false")
         }else{
             try writeNull()
         }
     }
     
+    public func writeDate(value: NSDate?) throws {
+        openStreamIfNeeded()
+        if let date = value {
+            let number = NSNumber(double:date.timeIntervalSince1970*1000).integerValue
+            try writeNumber(number)
+        } else {
+            try writeNull()
+        }
+    }
+    
     public func writeNull() throws {
         openStreamIfNeeded()
+        let status = writerContext.willWriteValue()
+        writeCommaOrColon(status)
         writerContext.writeValue()
-        write(":")
         write("null")
     }
     
+    /**
+        serailze an array or a dictionary to json.
+    */
     public func writeObject(anyObject: AnyObject) throws {
         openStreamIfNeeded()
-        writerContext.writeValue()
-        write(":")
-        if !NSJSONSerialization.isValidJSONObject(anyObject) {
-            print(anyObject)
-            throw JsonWriterError.NSJSONSerializationError("invalid json object")
+        if let array = anyObject as? [AnyObject] {
+            try writeStartArray()
+            for element in array {
+                if let strValue = element as? String {
+                    try writeString(strValue)
+                } else if let numberValue = element as? NSNumber {
+                    try writeNumber(numberValue)
+                } else if let dateValue = element as? NSDate {
+                    try writeDate(dateValue)
+                } else if let dictValue = element as?  Dictionary<String, AnyObject> {
+                    try writeObject(dictValue)
+                } else  {
+                    throw JsonWriterError.NSJSONSerializationError("unsupported value type: \(element.dynamicType)")
+                }
+            }
+            try writeEndArray()
         }
-        var err: NSError?;
-        NSJSONSerialization.writeJSONObject(anyObject, toStream: self.outputStream, options: NSJSONWritingOptions.init(rawValue: 0), error: &err)
-        if let realError = err {
-            throw JsonWriterError.NSJSONSerializationError(realError.localizedDescription)
+        else if let dict = anyObject as? Dictionary<String, AnyObject> {
+            try writeStartObject()
+            for (key, value) in dict {
+                //print(key, value, value.dynamicType)
+                if let strValue = value as? String {
+                    try writeField(key, value: strValue)
+                } else if let numberValue = value as? NSNumber {
+                    try writeField(key, value: numberValue)
+                } else if let dateValue = value as? NSDate {
+                    try writeField(key, value: dateValue)
+                } else if let arrayValue = value as? NSArray {
+                    try writeFieldName(key)
+                    try writeObject(arrayValue)
+                } else  {
+                    throw JsonWriterError.NSJSONSerializationError("unsupported value type: \(value.dynamicType)")
+                }
+            }
+            try writeEndObject()
+        }else  {
+            throw JsonWriterError.NSJSONSerializationError("unsupported value type: \(anyObject.dynamicType)")
         }
     }
     
@@ -228,15 +281,10 @@ public class JsonWriter {
     
     public func writeField(fieldName: String, value: NSDate?) throws {
         try writeFieldName(fieldName)
-        if let date = value {
-            let number = NSNumber(double:date.timeIntervalSince1970*1000).integerValue
-            try writeNumber(number)
-        } else {
-            try writeNull()
-        }
+        try writeDate(value)
     }
     
-    public func writeFieldWithJsonObject(fieldName: String, value: AnyObject) throws {
+    public func writeFieldWithObject(fieldName: String, value: AnyObject) throws {
         try writeFieldName(fieldName)
         try writeObject(value)
     }
@@ -251,11 +299,11 @@ public class JsonWriter {
         try writeStartObject()
     }
     
+    public func close() {
+        outputStream.close()
+    }
     
     func openStreamIfNeeded(){
-        if !autoOpenStream {
-            return
-        }
         if outputStream.streamStatus != NSStreamStatus.Open {
            outputStream.open()
         }
@@ -268,5 +316,14 @@ public class JsonWriter {
     
     func stringToData(theString: String) -> NSData {
         return theString.dataUsingEncoding(NSUTF8StringEncoding)!
+    }
+}
+
+extension NSNumber {
+    
+    func isBoolNumber() -> Bool {
+        let boolID = CFBooleanGetTypeID()
+        let numID = CFGetTypeID(self)
+        return numID == boolID
     }
 }

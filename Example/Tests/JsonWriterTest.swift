@@ -17,7 +17,7 @@ class JsonWriterTest: QuickSpec {
         it("should write a simple array as json"){
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            let jsonWriter = JsonWriter(outputStream: stream)
             
             try! jsonWriter.writeStartArray()
             try! jsonWriter.writeEndArray()
@@ -30,7 +30,7 @@ class JsonWriterTest: QuickSpec {
         it("should write an json object within an array") {
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            let jsonWriter = JsonWriter(outputStream: stream)
             
             try! jsonWriter.writeStartArray()
             try! jsonWriter.writeStartObject()
@@ -46,7 +46,7 @@ class JsonWriterTest: QuickSpec {
         it("should write an json array with 2 objects"){
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            let jsonWriter = JsonWriter(outputStream: stream)
             
             try! jsonWriter.writeStartArray()
             try! jsonWriter.writeStartObject()
@@ -65,7 +65,7 @@ class JsonWriterTest: QuickSpec {
         it("should write an Object with two properties"){
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            let jsonWriter = JsonWriter(outputStream: stream)
             
             try! jsonWriter.writeStartObject()
             try! jsonWriter.writeField("a", value: "b")
@@ -80,11 +80,11 @@ class JsonWriterTest: QuickSpec {
         it("should write Bool and Number values"){
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            let jsonWriter = JsonWriter(outputStream: stream)
             
             try! jsonWriter.writeStartObject()
             try! jsonWriter.writeField("a", value: true)
-            try! jsonWriter.writeField("c", value: 23)
+            try! jsonWriter.writeField("c", value: Int(23))
             try! jsonWriter.writeEndObject()
             
             let jsonString = self.getStringFormStream(stream)
@@ -96,7 +96,7 @@ class JsonWriterTest: QuickSpec {
             let date = NSDate()
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            let jsonWriter = JsonWriter(outputStream: stream)
             
             try! jsonWriter.writeStartObject()
             try! jsonWriter.writeField("a", value: date)
@@ -111,7 +111,7 @@ class JsonWriterTest: QuickSpec {
         it ("should write nil values") {
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            let jsonWriter = JsonWriter(outputStream: stream)
             
             let testValue:NSNumber? = nil
             
@@ -127,20 +127,123 @@ class JsonWriterTest: QuickSpec {
         it ("should write array values") {
             let stream = NSOutputStream.outputStreamToMemory()
             
-            let jsonWriter = JsonWriter(outputStream: stream, autoOpenStream: true)
+            let jsonWriter = JsonWriter(outputStream: stream)
             
             try! jsonWriter.writeStartObject()
-            try! jsonWriter.writeFieldWithJsonObject("a", value: ["a", "b"])
+            try! jsonWriter.writeFieldWithObject("a", value: ["a", "b"])
             try! jsonWriter.writeEndObject()
             
             let jsonString = self.getStringFormStream(stream)
             
             expect(jsonString) == "{\"a\":[\"a\",\"b\"]}"
         }
+        
+        it ("should write dictionaries") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            let date = NSDate()
+            let jsonDate = NSNumber(double:date.timeIntervalSince1970*1000).integerValue
+            
+            let dict: Dictionary<String, AnyObject> =  ["a":"b", "d":date]
+
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeFieldWithObject("a", value: dict)
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":{\"d\":\(jsonDate),\"a\":\"b\"}}"
+        }
+        
+        it ("should write dict with numbers") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeFieldWithObject("a", value: ["a":123])
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":{\"a\":123}}"
+        }
+        
+        it ("should write dict with bool - true value") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeFieldWithObject("a", value: ["a":true])
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":{\"a\":true}}"
+        }
+        
+        it ("should write dict with bool - false value") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeFieldWithObject("a", value: ["a":false])
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":{\"a\":false}}"
+        }
+        
+        it ("should write dict with double") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeFieldWithObject("a", value: ["a":Double(1.6)])
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":{\"a\":1.6}}"
+        }
+        
+        it ("should write dict with sub array") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeFieldWithObject("a", value: ["a", "b"])
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":[\"a\",\"b\"]}"
+        }
+        
+        it ("should write dict with sub array dict vaues") {
+            let stream = NSOutputStream.outputStreamToMemory()
+            
+            let jsonWriter = JsonWriter(outputStream: stream)
+            
+            try! jsonWriter.writeStartObject()
+            try! jsonWriter.writeFieldWithObject("a", value: [["a":1], ["b":2]])
+            try! jsonWriter.writeEndObject()
+            
+            let jsonString = self.getStringFormStream(stream)
+            
+            expect(jsonString) == "{\"a\":[{\"a\":1},{\"b\":2}]}"
+        }
     }
     
     internal func getStringFormStream(stream: NSOutputStream) -> String {
-         stream.close()
+        stream.close()
         let data = stream.propertyForKey(NSStreamDataWrittenToMemoryStreamKey)
         
         return NSString(data: data as! NSData, encoding: NSUTF8StringEncoding) as! String
