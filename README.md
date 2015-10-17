@@ -107,8 +107,8 @@ This will output all the data that are available through HealthKit in JSON forma
         "data":[
             {
                 "objects":[
-                    {"uuid":"902253AC-9358-4DCE-96BF-BD69F44B24B1","type":"HKQuantityTypeIdentifierBloodPressureSystolic"},
-                    {"uuid":"69D2D315-D441-4F1F-811F-84CCC66F5E34","type":"HKQuantityTypeIdentifierBloodPressureDiastolic"}
+                    {"uuid":"902253AC-9358-4DCE-96BF-BD69F44B24B1", "type":"HKQuantityTypeIdentifierBloodPressureSystolic"},
+                    {"uuid":"69D2D315-D441-4F1F-811F-84CCC66F5E34", "type":"HKQuantityTypeIdentifierBloodPressureDiastolic"}
                 ],
                 "uuid":"795E68E5-6235-4F7F-8A0D-FE6525AA0A5E",
                 "edate":1444645440000,
