@@ -23,12 +23,10 @@ exporter.export(
     exportConfiguration: configuration,
     
     onProgress: {
-        (message: String?, progressInPercent: NSNumber?)->Void in
+        (message: String, progressInPercent: NSNumber?) -> Void in
         
         dispatch_async(dispatch_get_main_queue(), {
-            if let unwrpMessage = message {
-                print(unwrpMessage)
-            }
+            print(message)
         })
     },
     
