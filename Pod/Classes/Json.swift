@@ -90,10 +90,10 @@ class JsonWriterContext {
 
 internal class JsonWriter {
     
-    var outputStream: NSOutputStream
+    var outputStream: OutputStream
     var writerContext = JsonWriterContext()
     
-    internal init (outputStream: NSOutputStream) {
+    internal init (outputStream: OutputStream) {
         self.outputStream = outputStream
     }
     
@@ -304,18 +304,19 @@ internal class JsonWriter {
     }
     
     func openStreamIfNeeded(){
-        if outputStream.streamStatus != NSStreamStatus.Open {
+        if !outputStream.isOpen() {
            outputStream.open()
         }
     }
     
     func write(theString: String) {
-        let data = stringToData(theString)
-        outputStream.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
+        outputStream.write(theString)
+
     }
     
-    func stringToData(theString: String) -> NSData {
-        return theString.dataUsingEncoding(NSUTF8StringEncoding)!
+    func getJsonString() -> String {
+        close()
+        return outputStream.getDataAsString()
     }
 }
 

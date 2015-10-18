@@ -31,13 +31,13 @@ public class JsonSingleFileExportTarget : ExportTarget {
     
     private(set) public var outputFileName: String
     private(set) var overwriteIfExist = false
-    private(set) var outputStream: NSOutputStream?
+
     private(set) var jsonWriter: JsonWriter
     
     public init(outputFileName: String, overwriteIfExist:Bool){
         self.outputFileName = outputFileName
-        self.outputStream = NSOutputStream.init(toFileAtPath: outputFileName, append: false)!
-        self.jsonWriter = JsonWriter(outputStream: outputStream!)
+        let outputStream = FileOutputStream.init(fileAtPath: outputFileName)
+        self.jsonWriter = JsonWriter(outputStream: outputStream)
         self.overwriteIfExist = overwriteIfExist
     }
     

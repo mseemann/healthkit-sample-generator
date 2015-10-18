@@ -20,6 +20,7 @@
 		1EB0395E90DC786D257E35F4BB737D6B /* EndWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2573055CDD988719A774B9A78C2B2 /* EndWith.swift */; };
 		1FE799F6E3BF45982DEB8D03BD84D125 /* World.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2314F9D831C73EA35E0E19E09E97C2 /* World.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2241BD9DF0F7D0711B0E7225D4974BBD /* MatcherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268D6308FD81E6D31EB2B5EB9648544 /* MatcherProtocols.swift */; };
+		2F4D1F631BD40323000290C4 /* Streams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F621BD40323000290C4 /* Streams.swift */; settings = {ASSET_TAGS = (); }; };
 		34DCFCCAA82FE906F481ACD5A6797422 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C163EB363ABEA376EA74FBF8C1BCACB9 /* Filter.swift */; };
 		35046BFF06F9602D2A04AE23115E7952 /* BeGreaterThanOrEqualTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFA48AD4CBF2294E94626E2803758E1 /* BeGreaterThanOrEqualTo.swift */; };
 		3689360651A699DC84CD3A88F843A2EF /* Quick-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 09ED86DD95111B4BA74888E09DB678C5 /* Quick-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -161,6 +162,7 @@
 		2A7AB4BFDA57F45CCF189DFA5305EB6D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C29D0140F99F570B9C3CF9B2CAEB2D6 /* DSL.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DSL.m; path = Nimble/objc/DSL.m; sourceTree = "<group>"; };
 		2D7A20C09F57F76DE513CA0E69DC58CD /* DSL+Wait.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DSL+Wait.swift"; path = "Nimble/DSL+Wait.swift"; sourceTree = "<group>"; };
+		2F4D1F621BD40323000290C4 /* Streams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Streams.swift; sourceTree = "<group>"; };
 		2F66B2F667E5F1FC43A5803846F29CE3 /* Quick.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Quick.xcconfig; sourceTree = "<group>"; };
 		31971283FA8916C9C34FAFEA055DAA40 /* Pods-HealthKitSampleGenerator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HealthKitSampleGenerator_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		326A8B8239D07F9F25E079DFB644B266 /* BeNil.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeNil.swift; path = Nimble/Matchers/BeNil.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				DFB28B2FAE44AB4E2BE66C700397ED89 /* ExportTarget.swift */,
 				403D9805AFC751E3121D9FB80B10FE11 /* Json.swift */,
 				67C43F1E5DF3BDA4D0CFEC27B154AFF3 /* Util.swift */,
+				2F4D1F621BD40323000290C4 /* Streams.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -848,6 +851,7 @@
 				9FB2D0E154AE25A2A6161535427B775F /* HealthKitSampleGenerator-dummy.m in Sources */,
 				77FE0F01F71CC269524F221493026FF1 /* Json.swift in Sources */,
 				CEC841E036524F06CA4F1CA09BDAC491 /* Util.swift in Sources */,
+				2F4D1F631BD40323000290C4 /* Streams.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1146,6 +1150,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/Quick/Quick-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Quick/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1173,6 +1178,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/Nimble/Nimble-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Nimble/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1213,6 +1219,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/Nimble/Nimble-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Nimble/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1301,6 +1308,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/Quick/Quick-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Quick/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
