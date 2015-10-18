@@ -75,7 +75,7 @@ This will output all the data that are available through HealthKit in JSON forma
         {
             "creationDate":1445100082916,
             "profileName":"output",
-            "version":"1.0.1",
+            "version":"0.2.0",
             "type": "JsonSingleFileExportTarget"
         },
     "userData":
