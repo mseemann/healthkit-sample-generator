@@ -74,8 +74,9 @@ This will output all the data that are available through HealthKit in JSON forma
     "metaData":
         {
             "creationDate":1445100082916,
-            "profileName":"output"m
+            "profileName":"output"
             "version":"1.0.1"
+            "type": "JsonSingleFileExportTarget"
         },
     "userData":
         {
