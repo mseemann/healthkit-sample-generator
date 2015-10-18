@@ -68,6 +68,7 @@ public class JsonSingleFileExportTarget : ExportTarget {
         try jsonWriter.writeField("creationDate", value: creationDate)
         try jsonWriter.writeField("profileName", value: profileName)
         try jsonWriter.writeField("version", value: version)
+        try jsonWriter.writeField("type", value: String(JsonSingleFileExportTarget))
         
         try jsonWriter.writeEndObject()
     }

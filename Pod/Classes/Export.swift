@@ -238,7 +238,7 @@ public class HealthKitDataExporter {
         
     }
     
-    func getDataExporters(exportConfiguration: ExportConfiguration, typeMap: [HKQuantityType : HKUnit]) -> [DataExporter]{
+    private func getDataExporters(exportConfiguration: ExportConfiguration, typeMap: [HKQuantityType : HKUnit]) -> [DataExporter]{
         var result : [DataExporter] = []
         
         result.append(MetaDataExporter(exportConfiguration: exportConfiguration))
@@ -248,20 +248,22 @@ public class HealthKitDataExporter {
             result.append(UserDataExporter(exportConfiguration: exportConfiguration))
         }
         
-        // add all QunatityTypes
+        // add all Qunatity types
         for(type, unit) in typeMap {
             result.append(QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type , unit: unit))
         }
         
-        // add all CategoryTYpes
+        // add all Category types
         for categoryType in healthKitCategoryTypes {
             result.append(CategoryTypeDataExporter(exportConfiguration: exportConfiguration, type: categoryType))
         }
         
+        // add all correlation types
         for correlationType in healthKitCorrelationTypes {
             result.append(CorrelationTypeDataExporter(exportConfiguration: exportConfiguration, type: correlationType))
         }
         
+        // appen the workout data type
         result.append(WorkoutDataExporter(exportConfiguration: exportConfiguration))
         
         return result
