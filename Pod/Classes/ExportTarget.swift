@@ -21,7 +21,6 @@ public protocol ExportTarget {
     func startWriteQuantityType(type:HKQuantityType, unit:HKUnit) throws -> Void
     func startWriteType(type:HKSampleType) throws -> Void
     func startWriteDatas() throws -> Void
-    
     func endWriteDatas() throws -> Void
     func endWriteType() throws -> Void
     

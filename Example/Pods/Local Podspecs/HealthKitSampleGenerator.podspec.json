@@ -1,7 +1,7 @@
 {
   "name": "HealthKitSampleGenerator",
   "version": "0.2.0",
-  "summary": "A Generator for HealthKit Sample Data.",
+  "summary": "Export/Import/Sample Generator for HealthKit Data (Swift + UI)",
   "homepage": "https://github.com/mseemann/healthkit-sample-generator",
   "license": "MIT",
   "authors": {
