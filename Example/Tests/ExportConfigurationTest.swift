@@ -23,13 +23,15 @@ class ExportConfigurationTest: QuickSpec {
             expect(predicate).to(beNil())
         }
         
-//        it ("should return a predicate that restricts to this app") {
-//            let exportConfig = HealthDataFullExportConfiguration(profileName: "x", exportType: .ADDED_BY_THIS_APP)
-//            
-//            let predicate = exportConfig.getPredicate()
-//        
-//            expect(predicate?.predicateFormat).to(contain("HKSource"))
-//        }
+        #if !TRAVIS
+        it ("should return a predicate that restricts to this app") {
+            let exportConfig = HealthDataFullExportConfiguration(profileName: "x", exportType: .ADDED_BY_THIS_APP)
+            
+            let predicate = exportConfig.getPredicate()
+        
+            expect(predicate?.predicateFormat).to(contain("HKSource"))
+        }
+        #endif
         
         it("should return a predicate that restricts to this metadata additions") {
             
