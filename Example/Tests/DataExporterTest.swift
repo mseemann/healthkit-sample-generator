@@ -64,8 +64,7 @@ class DataExporterTest: QuickSpec {
                 
                 let date = NSDate(timeIntervalSince1970: (dateOfBirth?.doubleValue)! / 1000)
                 
-                print(try! self.healthStore.dateOfBirth())
-                expect(date)  == (try! self.healthStore.dateOfBirth())
+                expect(try! self.healthStore.dateOfBirth())  == date
                 
                 expect(biologicalSex)       == HKBiologicalSex.Male.rawValue
                 expect(bloodType)           == HKBloodType.APositive.rawValue
