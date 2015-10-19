@@ -38,11 +38,24 @@ class DataExporterTest: QuickSpec {
                 let metaDataKeyAndDict = JsonReader.toJsonObject(target.getJsonString()) as! Dictionary<String, AnyObject>
                 let metaDataDict:Dictionary<String, AnyObject> = metaDataKeyAndDict["metaData"] as! Dictionary<String, AnyObject>
                 
-                expect(metaDataDict["creationDate"] as? NSNumber).to(beCloseTo(NSDate().timeIntervalSince1970 * 1000, within:1000))
+                expect(metaDataDict["creationDate"] as? NSNumber).notTo(beNil())
                 expect(metaDataDict["profileName"] as? String)  == profileName
                 expect(metaDataDict["version"] as? String)      == "0.2.0"
                 expect(metaDataDict["type"] as? String)         == "JsonSingleDocExportTarget"
 
+            }
+            
+            it ("should export the user data") {
+                let exporter = UserDataExporter(exportConfiguration: exportConfiguration)
+                
+                let target = JsonSingleDocInMemExportTarget()
+                try! target.startExport()
+                
+                try! exporter.export(self.healthStore, exportTargets: [target])
+                
+                try! target.endExport()
+                
+                print(target.getJsonString())
             }
         }
     }
