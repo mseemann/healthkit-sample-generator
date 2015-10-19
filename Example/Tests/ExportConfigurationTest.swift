@@ -28,7 +28,7 @@ class ExportConfigurationTest: QuickSpec {
             
             let predicate = exportConfig.getPredicate()
         
-            expect(predicate).notTo(beNil())
+            expect(predicate).to(beNil())
             //expect(predicate?.predicateFormat).to(contain("HKSource"))
         }
         
