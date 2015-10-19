@@ -57,8 +57,6 @@ class DataExporterTest: QuickSpec {
                 
                 let userDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:"userData")
                 
-                print(userDataDict)
-                
                 let dateOfBirth         = userDataDict["dateOfBirth"] as? NSNumber
                 let biologicalSex       = userDataDict["biologicalSex"] as? Int
                 let bloodType           = userDataDict["bloodType"] as? Int
