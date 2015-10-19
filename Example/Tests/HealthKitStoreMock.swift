@@ -52,6 +52,12 @@ class HealthKitStoreMock: HKHealthStore {
     override func fitzpatrickSkinType() throws -> HKFitzpatrickSkinTypeObject {
         return HKFitzpatrickSkinTypeObjectMock()
     }
+    
+    
+    override func executeQuery(query: HKQuery) {
+
+
+    }
 }
 
 

@@ -16,14 +16,15 @@ class DataExporterTest: QuickSpec {
     
     let healthStore = HealthKitStoreMock()
     
+    let profileName = "testName"
+
+    
     override func spec() {
+ 
+        let exportConfiguration = HealthDataFullExportConfiguration(profileName: self.profileName, exportType: HealthDataToExportType.ALL)
         
-        describe("MetaDataExport") {
-            
-            let profileName = "testName"
-            
-            let exportConfiguration = HealthDataFullExportConfiguration(profileName: profileName, exportType: HealthDataToExportType.ALL)
-            
+        describe("MetaData and UserData Export") {
+        
             
             it ("should export the meta data") {
             
@@ -39,7 +40,7 @@ class DataExporterTest: QuickSpec {
                 let metaDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:"metaData")
                 
                 expect(metaDataDict["creationDate"] as? NSNumber).notTo(beNil())
-                expect(metaDataDict["profileName"] as? String)  == profileName
+                expect(metaDataDict["profileName"] as? String)  == self.profileName
                 expect(metaDataDict["version"] as? String)      == "0.2.0"
                 expect(metaDataDict["type"] as? String)         == "JsonSingleDocExportTarget"
 
@@ -70,6 +71,24 @@ class DataExporterTest: QuickSpec {
                 expect(bloodType)           == HKBloodType.APositive.rawValue
                 expect(fitzpatrickSkinType) == HKFitzpatrickSkinType.I.rawValue
                 
+            }
+        }
+        
+        describe("QuantityType Exports") {
+            
+            it("should export quantity data") {
+                let type  = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!
+                
+                let exporter = QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type, unit: HKUnit(fromString: "kg"))
+                
+                let target = JsonSingleDocInMemExportTarget()
+                try! target.startExport()
+                
+                try! exporter.export(self.healthStore, exportTargets: [target])
+                
+                try! target.endExport()
+                
+                print(target.getJsonString())
             }
         }
     }
