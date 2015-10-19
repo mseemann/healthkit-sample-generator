@@ -75,14 +75,15 @@ class DataExporterTest: QuickSpec {
         }
         
         describe("QuantityType Exports") {
+        
+            let type  = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!
+            let strUnit = "kg"
+            let unit = HKUnit(fromString: strUnit)
+            
+            let exporter = QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type, unit: unit)
             
             it("should export quantity data") {
-                let type  = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!
-                let strUnit = "kg"
-                let unit = HKUnit(fromString: strUnit)
-                
-                let exporter = QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type, unit: unit)
-                
+
                 let target = JsonSingleDocInMemExportTarget()
                 try! target.startExport()
                 
@@ -120,14 +121,22 @@ class DataExporterTest: QuickSpec {
                 expect(uuid).notTo(beNil())
                 expect(value) == quantity.doubleValueForUnit(unit)
             }
+            
+            it ("should handle healthkit query errors") {
+                
+                exporter.writeResults([], exportTargets: [], error: NSError(domain: "", code: 0, userInfo: [:]))
+                expect{try exporter.rethrowCollectedErrors()}.to(throwError())
+            }
         }
 
     
         describe("CategoryTypeDataExporter") {
+            
+            let type = HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierAppleStandHour)!
+            
+            let exporter = CategoryTypeDataExporter(exportConfiguration: exportConfiguration, type: type)
+            
             it ("should export category types"){
-                let type = HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierAppleStandHour)!
-                
-                let exporter = CategoryTypeDataExporter(exportConfiguration: exportConfiguration, type: type)
                 
                 let target = JsonSingleDocInMemExportTarget()
                 try! target.startExport()
@@ -143,8 +152,6 @@ class DataExporterTest: QuickSpec {
                 try! target.endWriteType()
                 
                 try! target.endExport()
-                
-                print(target.getJsonString())
                 
                 let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKCategoryTypeIdentifierAppleStandHour))
                 
@@ -163,6 +170,13 @@ class DataExporterTest: QuickSpec {
                 expect(uuid).notTo(beNil())
                 expect(value) == 1
             
+            }
+            
+            
+            it ("should handle healthkit query errors") {
+                
+                exporter.writeResults([], exportTargets: [], error: NSError(domain: "", code: 0, userInfo: [:]))
+                expect{try exporter.rethrowCollectedErrors()}.to(throwError())
             }
         }
         
