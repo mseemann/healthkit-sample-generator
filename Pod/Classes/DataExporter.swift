@@ -55,7 +55,6 @@ internal class UserDataExporter: BaseDataExporter, DataExporter {
     internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         var userData = Dictionary<String, AnyObject>()
         
-        
         if let birthDay = try? healthStore.dateOfBirth() {
             userData["dateOfBirth"] = birthDay
         }
@@ -73,7 +72,7 @@ internal class UserDataExporter: BaseDataExporter, DataExporter {
         }
         
         for exportTarget in exportTargets {
-            try exportTarget.writeUserDataDictionary(userData)
+            try exportTarget.writeUserData(userData)
         }
     }
 }

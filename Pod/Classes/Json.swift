@@ -93,15 +93,21 @@ internal class JsonWriter {
     var outputStream: OutputStream
     var writerContext = JsonWriterContext()
     
+    /**
+        Creates a JsonWriter Object that writes to the provided OutputStream
+        @parameter outputStream The stream the Json data will be written to. If not open - the stream will be opened.
+    */
     internal init (outputStream: OutputStream) {
         self.outputStream = outputStream
+        if !outputStream.isOpen() {
+            outputStream.open()
+        }
     }
     
     /**
         Starts writing a new Array (e.g. '[').
     */
     internal func writeStartArray() throws {
-        openStreamIfNeeded()
         let status = writerContext.willStartArray()
         writeCommaOrColon(status)
         writerContext = writerContext.createArrayContext()
@@ -112,7 +118,6 @@ internal class JsonWriter {
         Writes the end of a json array (e.g. ']').
     */
     internal func writeEndArray() throws {
-        openStreamIfNeeded()
         writerContext = writerContext.parent!
         write("]")
     }
@@ -121,7 +126,6 @@ internal class JsonWriter {
         Starts writing a new Object (e.g. '{')
     */
     internal func writeStartObject() throws {
-        openStreamIfNeeded()
         let status = writerContext.willStartObject()
         writeCommaOrColon(status)
         writerContext = writerContext.createObjectContext()
@@ -132,7 +136,6 @@ internal class JsonWriter {
         Writed the end of a json object (e.g. '}')
     */
     internal func writeEndObject() throws {
-        openStreamIfNeeded()
         writerContext = writerContext.parent!
         write("}")
     }
@@ -141,7 +144,6 @@ internal class JsonWriter {
         Strats writing a field name - a json string in quotation marks.
     */
     internal func writeFieldName(name: String) throws {
-        openStreamIfNeeded()
         let status = writerContext.willWriteField()
         writeCommaOrColon(status)
         writerContext.writeField()
@@ -160,7 +162,6 @@ internal class JsonWriter {
     
     */
     internal func writeString(text: String?) throws {
-        openStreamIfNeeded()
         if let v = text {
             let escapedV = v.stringByReplacingOccurrencesOfString("\"", withString: "\\")
             let status = writerContext.willWriteValue()
@@ -173,7 +174,6 @@ internal class JsonWriter {
     }
     
     internal func writeNumber(number: NSNumber?) throws {
-        openStreamIfNeeded()
         if let v = number {
             let status = writerContext.willWriteValue()
             writeCommaOrColon(status)
@@ -190,7 +190,6 @@ internal class JsonWriter {
     }
     
     internal func writeBool(value: Bool?) throws {
-        openStreamIfNeeded()
         if let v = value {
             let status = writerContext.willWriteValue()
             writeCommaOrColon(status)
@@ -202,7 +201,6 @@ internal class JsonWriter {
     }
     
     internal func writeDate(value: NSDate?) throws {
-        openStreamIfNeeded()
         if let date = value {
             let number = NSNumber(double:date.timeIntervalSince1970*1000).integerValue
             try writeNumber(number)
@@ -212,7 +210,6 @@ internal class JsonWriter {
     }
     
     internal func writeNull() throws {
-        openStreamIfNeeded()
         let status = writerContext.willWriteValue()
         writeCommaOrColon(status)
         writerContext.writeValue()
@@ -223,7 +220,6 @@ internal class JsonWriter {
         serailze an array or a dictionary to json.
     */
     internal func writeObject(anyObject: AnyObject) throws {
-        openStreamIfNeeded()
         if let array = anyObject as? [AnyObject] {
             try writeStartArray()
             for element in array {
@@ -303,12 +299,6 @@ internal class JsonWriter {
         outputStream.close()
     }
     
-    func openStreamIfNeeded(){
-        if !outputStream.isOpen() {
-           outputStream.open()
-        }
-    }
-    
     func write(theString: String) {
         outputStream.write(theString)
 
@@ -326,5 +316,14 @@ extension NSNumber {
         let boolID = CFBooleanGetTypeID()
         let numID = CFGetTypeID(self)
         return numID == boolID
+    }
+}
+
+internal class JsonReader {
+    
+    static func toJsonObject(jsonString: String) -> AnyObject {
+        let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
+        let result = try! NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+        return result
     }
 }

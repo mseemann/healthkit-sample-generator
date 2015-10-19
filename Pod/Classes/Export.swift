@@ -92,7 +92,7 @@ public class HealthKitDataExporter {
         return queue
     }()
     
-    let healthStore = HKHealthStore()
+    let healthStore: HKHealthStore
     
     let healthKitTypesToRead: Set<HKObjectType> = Set(arrayLiteral:
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierDateOfBirth)!,
@@ -194,7 +194,9 @@ public class HealthKitDataExporter {
         HKObjectType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierFood)!
     )
     
-    public init() { }
+    public init(healthStore: HKHealthStore) {
+        self.healthStore = healthStore
+    }
     
     public func export(exportTargets exportTargets: [ExportTarget], exportConfiguration: ExportConfiguration, onProgress: ExportProgress, onCompletion: ExportCompletion) -> Void {
         for exportTarget in exportTargets {

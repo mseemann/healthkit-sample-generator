@@ -16,7 +16,7 @@ public protocol ExportTarget {
     
     func writeMetaData(creationDate creationDate: NSDate, profileName: String, version: String) throws -> Void
     
-    func writeUserDataDictionary(userData: Dictionary <String, AnyObject>) throws -> Void
+    func writeUserData(userData: Dictionary <String, AnyObject>) throws -> Void
     
     func startWriteQuantityType(type:HKQuantityType, unit:HKUnit) throws -> Void
     func startWriteType(type:HKSampleType) throws -> Void
@@ -27,29 +27,12 @@ public protocol ExportTarget {
     func writeDictionary(entry:Dictionary <String, AnyObject>) throws -> Void
 }
 
-public class JsonSingleFileExportTarget : ExportTarget {
+public class JsonSingleDocExportTarget  {
     
-    private(set) public var outputFileName: String
-    private(set) var overwriteIfExist = false
-
     private(set) var jsonWriter: JsonWriter
     
-    public init(outputFileName: String, overwriteIfExist:Bool){
-        self.outputFileName = outputFileName
-        let outputStream = FileOutputStream.init(fileAtPath: outputFileName)
+    init(outputStream: OutputStream){
         self.jsonWriter = JsonWriter(outputStream: outputStream)
-        self.overwriteIfExist = overwriteIfExist
-    }
-    
-    public func isValid() -> Bool {
-        var valid = true
-        
-        // if the outputFileName already exists, the state is only valid, if overwrite is allowed
-        if NSFileManager.defaultManager().fileExistsAtPath(outputFileName) {
-            valid = valid && overwriteIfExist
-        }
-        
-        return valid
     }
     
     public func startExport() throws -> Void {
@@ -68,12 +51,12 @@ public class JsonSingleFileExportTarget : ExportTarget {
         try jsonWriter.writeField("creationDate", value: creationDate)
         try jsonWriter.writeField("profileName", value: profileName)
         try jsonWriter.writeField("version", value: version)
-        try jsonWriter.writeField("type", value: String(JsonSingleFileExportTarget))
+        try jsonWriter.writeField("type", value: String(JsonSingleDocExportTarget))
         
         try jsonWriter.writeEndObject()
     }
     
-    public func writeUserDataDictionary(userData: Dictionary <String, AnyObject>) throws {
+    public func writeUserData(userData: Dictionary <String, AnyObject>) throws {
         try jsonWriter.writeFieldWithObject("userData", value: userData)
     }
     
@@ -100,5 +83,44 @@ public class JsonSingleFileExportTarget : ExportTarget {
     
     public func writeDictionary(entry:Dictionary <String, AnyObject>) throws -> Void {
         try jsonWriter.writeObject(entry)
+    }
+}
+
+public class JsonSingleDocAsFileExportTarget : JsonSingleDocExportTarget, ExportTarget{
+    
+    private(set) public var outputFileName: String
+    private(set) var overwriteIfExist = false
+    
+    public init(outputFileName: String, overwriteIfExist:Bool){
+        self.outputFileName = outputFileName
+        let outputStream = FileOutputStream.init(fileAtPath: outputFileName)
+        self.overwriteIfExist = overwriteIfExist
+        super.init(outputStream: outputStream)
+    }
+    
+    public func isValid() -> Bool {
+        var valid = true
+        
+        // if the outputFileName already exists, the state is only valid, if overwrite is allowed
+        if NSFileManager.defaultManager().fileExistsAtPath(outputFileName) {
+            valid = valid && overwriteIfExist
+        }
+        
+        return valid
+    }
+}
+
+public class JsonSingleDocInMemExportTarget: JsonSingleDocExportTarget, ExportTarget {
+    
+    public init(){
+        super.init(outputStream: MemOutputStream())
+    }
+    
+    public func isValid() -> Bool {
+        return true
+    }
+    
+    public func getJsonString() -> String {
+        return jsonWriter.getJsonString()
     }
 }

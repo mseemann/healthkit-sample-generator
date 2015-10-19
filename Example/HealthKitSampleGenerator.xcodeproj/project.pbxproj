@@ -10,6 +10,8 @@
 		2519807D2C1089FBBE7DAB86 /* Pods_HealthKitSampleGenerator_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */; };
 		2F4D1F611BD3FA94000290C4 /* ExportTargetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F5F1BD3FA6F000290C4 /* ExportTargetTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F4D1F651BD41374000290C4 /* OutputStreamTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */; settings = {ASSET_TAGS = (); }; };
+		2F4D1F671BD4D312000290C4 /* HealthKitStoreMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */; settings = {ASSET_TAGS = (); }; };
+		2F4D1F691BD4DD64000290C4 /* DataExporterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F8DF7D11BD2BC67000F797F /* FileNameUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F90C57F1BC3051500587117 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F90C57E1BC3051500587117 /* HealthKit.framework */; };
 		2F90C5811BC44BE500587117 /* UIControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F90C5801BC44BE500587117 /* UIControls.swift */; settings = {ASSET_TAGS = (); }; };
@@ -39,6 +41,8 @@
 		2629469B90C63E0981BD4420 /* HealthKitSampleGenerator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HealthKitSampleGenerator.podspec; path = ../HealthKitSampleGenerator.podspec; sourceTree = "<group>"; };
 		2F4D1F5F1BD3FA6F000290C4 /* ExportTargetTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportTargetTest.swift; sourceTree = "<group>"; };
 		2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputStreamTest.swift; sourceTree = "<group>"; };
+		2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitStoreMock.swift; sourceTree = "<group>"; };
+		2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExporterTest.swift; sourceTree = "<group>"; };
 		2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileNameUtilTest.swift; sourceTree = "<group>"; };
 		2F90C57D1BC3051500587117 /* HealthKitSampleGenerator_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HealthKitSampleGenerator_Example.entitlements; sourceTree = "<group>"; };
 		2F90C57E1BC3051500587117 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
@@ -153,6 +157,8 @@
 				2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */,
 				2F4D1F5F1BD3FA6F000290C4 /* ExportTargetTest.swift */,
 				2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */,
+				2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */,
+				2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -405,7 +411,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F4D1F691BD4DD64000290C4 /* DataExporterTest.swift in Sources */,
 				2F8DF7D11BD2BC67000F797F /* FileNameUtilTest.swift in Sources */,
+				2F4D1F671BD4D312000290C4 /* HealthKitStoreMock.swift in Sources */,
 				2F9E30631BC2AA940005DF72 /* JsonWriterTest.swift in Sources */,
 				2F4D1F651BD41374000290C4 /* OutputStreamTest.swift in Sources */,
 				2F4D1F611BD3FA94000290C4 /* ExportTargetTest.swift in Sources */,

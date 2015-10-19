@@ -1,6 +1,7 @@
 //: Playground - noun: a place where people can play
 
 import Foundation
+import HealthKit
 import HealthKitSampleGenerator
 
 
@@ -14,7 +15,8 @@ let target          = JsonSingleFileExportTarget(outputFileName: outputFileName,
 
 let configuration   = HealthDataFullExportConfiguration(profileName: "Profilname", exportType: HealthDataToExportType.ALL)
 
-let exporter        =  HealthKitDataExporter()
+let healthStore     = HKHealthStore()
+let exporter        = HealthKitDataExporter(healthStore: healthStore)
 
 exporter.export(
     

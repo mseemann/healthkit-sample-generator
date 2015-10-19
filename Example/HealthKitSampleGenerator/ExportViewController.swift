@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import HealthKit
 import HealthKitSampleGenerator
 
 class ExportViewController : UIViewController, UITextFieldDelegate {
@@ -21,6 +22,8 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tvExportDescription: UITextView!
     @IBOutlet weak var tvExportMessages:    UITextView!
     @IBOutlet weak var pvExportProgress:    UIProgressView!
+    
+    let healthStore  = HKHealthStore()
     
     var exportConfigurationValid = false {
         didSet {
@@ -43,7 +46,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
         }
     }
     
-    var exportTarget : JsonSingleFileExportTarget? {
+    var exportTarget : JsonSingleDocAsFileExportTarget? {
         didSet {
             if let target = exportTarget {
                 tvOutputFileName.text = target.outputFileName
@@ -87,7 +90,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
         exportInProgress = true
         self.pvExportProgress.progress = 0.0
         
-        HealthKitDataExporter().export(
+        HealthKitDataExporter(healthStore:healthStore).export(
             
             exportTargets: [exportTarget!],
             exportConfiguration: exportConfiguration!,
@@ -127,7 +130,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
         let documentsUrl    = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         let outputFileName  = documentsUrl.URLByAppendingPathComponent(fileName+".json.hsg").path!
         
-        exportTarget = JsonSingleFileExportTarget(
+        exportTarget = JsonSingleDocAsFileExportTarget(
             outputFileName: outputFileName,
             overwriteIfExist: swOverwriteIfExist.on)
         
