@@ -24,7 +24,7 @@ class ExportConfigurationTest: QuickSpec {
         }
         
         // run not in TRAVIS-CI - it will fail. may be because of HKSource call - i don't know
-        #if TRAVIS
+        #if !TRAVIS
         it ("should return a predicate that restricts to this app") {
             let exportConfig = HealthDataFullExportConfiguration(profileName: "x", exportType: .ADDED_BY_THIS_APP)
             
