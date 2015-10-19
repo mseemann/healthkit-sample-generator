@@ -130,8 +130,6 @@ class JsonWriterTest: QuickSpec {
             try! jw.writeFieldWithObject("a", value: dict)
             try! jw.writeEndObject()
             
-            print(jw.getJsonString())
-            
             expect(jw.getJsonString()) == "{\"a\":{\"d\":\(jsonDate),\"a\":\"b\"}}"
         }
         

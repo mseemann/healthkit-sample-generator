@@ -42,5 +42,6 @@ public struct HealthDataFullExportConfiguration : ExportConfiguration {
     
     public init(profileName:String, exportType: HealthDataToExportType){
         self.profileName = profileName
+        self.exportType = exportType
     }
 }
