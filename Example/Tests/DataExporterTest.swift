@@ -77,18 +77,50 @@ class DataExporterTest: QuickSpec {
         describe("QuantityType Exports") {
             
             it("should export quantity data") {
-//                let type  = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!
-//                
-//                let exporter = QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type, unit: HKUnit(fromString: "kg"))
-//                
-//                let target = JsonSingleDocInMemExportTarget()
-//                try! target.startExport()
-//                
-//                try! exporter.export(self.healthStore, exportTargets: [target])
-//                
-//                try! target.endExport()
-//                
-//                print(target.getJsonString())
+                let type  = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!
+                let strUnit = "kg"
+                let unit = HKUnit(fromString: strUnit)
+                
+                let exporter = QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type, unit: unit)
+                
+                let target = JsonSingleDocInMemExportTarget()
+                try! target.startExport()
+                
+                try! target.startWriteQuantityType(type, unit:unit)
+                try! target.startWriteDatas()
+                
+                let quantity = HKQuantity(unit: unit, doubleValue: 70)
+                let sample = HKQuantitySample(type: type, quantity: quantity, startDate: NSDate(), endDate: NSDate())
+                
+                try! exporter.writeResults([sample], exportTargets: [target])
+                try! target.endWriteDatas()
+                try! target.endWriteType()
+                
+                try! target.endExport()
+                
+                print(target.getJsonString())
+                
+                let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKQuantityTypeIdentifierBodyMass))
+                
+               
+                let unitValue = sampleDict["unit"]
+                expect(unitValue as? String) == strUnit
+                
+                let dataArray = sampleDict["data"] as? [AnyObject]
+                
+                expect(dataArray?.count) == 1
+                
+                let savedSample = dataArray?.first as! Dictionary<String, AnyObject>
+             
+                
+                let edate   = savedSample["edate"] as! NSNumber
+                let sdate   = savedSample["sdate"] as! NSNumber
+                let uuid    = savedSample["uuid"] as! String
+                let value   = savedSample["value"] as! NSNumber
+                
+                expect(edate).to(beCloseTo(sdate, within: 1000))
+                expect(uuid).notTo(beNil())
+                expect(value) == quantity.doubleValueForUnit(unit)
             }
         }
     }

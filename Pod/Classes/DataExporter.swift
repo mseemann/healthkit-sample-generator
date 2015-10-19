@@ -93,6 +93,18 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
         super.init(exportConfiguration: exportConfiguration)
     }
     
+    func writeResults(results: [HKSample]?, exportTargets: [ExportTarget]) throws -> Void {
+        for sample in results as! [HKQuantitySample] {
+            
+            let value = sample.quantity.doubleValueForUnit(self.unit)
+            
+            for exportTarget in exportTargets {
+                let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":value]
+                try exportTarget.writeDictionary(dict);
+            }
+        }
+    }
+    
     func anchorQuery(healthStore: HKHealthStore, exportTargets: [ExportTarget], anchor : HKQueryAnchor?) throws -> (anchor:HKQueryAnchor?, count:Int?) {
         
         let semaphore = dispatch_semaphore_create(0)
@@ -108,15 +120,7 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
                 self.healthQueryError = error
             } else {
                 do {
-                    for sample in results as! [HKQuantitySample] {
-                        
-                        let value = sample.quantity.doubleValueForUnit(self.unit)
-                        
-                        for exportTarget in exportTargets {
-                            let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":value]
-                            try exportTarget.writeDictionary(dict);
-                        }
-                    }
+                    try self.writeResults(results, exportTargets: exportTargets)
                 } catch let err {
                     self.exportError = err
                 }
