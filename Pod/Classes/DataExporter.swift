@@ -93,14 +93,22 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
         super.init(exportConfiguration: exportConfiguration)
     }
     
-    func writeResults(results: [HKSample]?, exportTargets: [ExportTarget]) throws -> Void {
-        for sample in results as! [HKQuantitySample] {
-            
-            let value = sample.quantity.doubleValueForUnit(self.unit)
-            
-            for exportTarget in exportTargets {
-                let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":value]
-                try exportTarget.writeDictionary(dict);
+    func writeResults(results: [HKSample]?, exportTargets: [ExportTarget], error: NSError?) -> Void {
+        if error != nil {
+            self.healthQueryError = error
+        } else {
+            do {
+                for sample in results as! [HKQuantitySample] {
+                    
+                    let value = sample.quantity.doubleValueForUnit(self.unit)
+                    
+                    for exportTarget in exportTargets {
+                        let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":value]
+                        try exportTarget.writeDictionary(dict);
+                    }
+                }
+            } catch let err {
+                self.exportError = err
             }
         }
     }
@@ -116,19 +124,12 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
             anchor: anchor ,
             limit: queryCountLimit) { (query, results, deleted, newAnchor, error) -> Void in
 
-            if error != nil {
-                self.healthQueryError = error
-            } else {
-                do {
-                    try self.writeResults(results, exportTargets: exportTargets)
-                } catch let err {
-                    self.exportError = err
-                }
+                self.writeResults(results, exportTargets: exportTargets, error: error)
+         
+                resultAnchor = newAnchor
+                resultCount = results?.count
+                dispatch_semaphore_signal(semaphore)
             }
-            resultAnchor = newAnchor
-            resultCount = results?.count
-            dispatch_semaphore_signal(semaphore)
-        }
         
         healthStore.executeQuery(query)
         
@@ -172,12 +173,20 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
         super.init(exportConfiguration: exportConfiguration)
     }
     
-    func writeResults(results: [HKCategorySample], exportTargets: [ExportTarget]) throws -> Void {
-        for sample in results {
-            
-            for exportTarget in exportTargets {
-                let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":sample.value]
-                try exportTarget.writeDictionary(dict);
+    func writeResults(results: [HKCategorySample], exportTargets: [ExportTarget], error: NSError?) -> Void {
+        if error != nil {
+            self.healthQueryError = error
+        } else {
+            do {
+                for sample in results {
+                    
+                    for exportTarget in exportTargets {
+                        let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":sample.value]
+                        try exportTarget.writeDictionary(dict);
+                    }
+                }
+            } catch let err {
+                self.exportError = err
             }
         }
     }
@@ -193,20 +202,12 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
             anchor: anchor ,
             limit: queryCountLimit) { (query, results, deleted, newAnchor, error) -> Void in
                 
-                if error != nil {
-                    self.healthQueryError = error
-                } else {
-                    do {
-                        try self.writeResults(results as! [HKCategorySample], exportTargets: exportTargets)
-                    } catch let err {
-                        self.exportError = err
-                    }
-                }
-                
+                self.writeResults(results as! [HKCategorySample], exportTargets: exportTargets, error: error)
+
                 resultAnchor = newAnchor
                 resultCount = results?.count
                 dispatch_semaphore_signal(semaphore)
-        }
+            }
         
         healthStore.executeQuery(query)
         

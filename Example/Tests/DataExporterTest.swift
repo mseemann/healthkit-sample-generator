@@ -92,7 +92,7 @@ class DataExporterTest: QuickSpec {
                 let quantity = HKQuantity(unit: unit, doubleValue: 70)
                 let sample = HKQuantitySample(type: type, quantity: quantity, startDate: NSDate(), endDate: NSDate())
                 
-                try! exporter.writeResults([sample], exportTargets: [target])
+                exporter.writeResults([sample], exportTargets: [target], error: nil)
                 try! target.endWriteDatas()
                 try! target.endWriteType()
                 
@@ -136,7 +136,7 @@ class DataExporterTest: QuickSpec {
                 
                 let sample = HKCategorySample(type: type, value: 1, startDate: NSDate(), endDate: NSDate())
                 
-                try! exporter.writeResults([sample], exportTargets: [target])
+                exporter.writeResults([sample], exportTargets: [target], error: nil)
                 
                 
                 try! target.endWriteDatas()
