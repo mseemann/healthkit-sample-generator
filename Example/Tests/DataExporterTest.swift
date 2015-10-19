@@ -62,7 +62,10 @@ class DataExporterTest: QuickSpec {
                 let bloodType           = userDataDict["bloodType"] as? Int
                 let fitzpatrickSkinType = userDataDict["fitzpatrickSkinType"] as? Int
                 
-                let date = NSDate(timeIntervalSince1970: (dateOfBirth?.doubleValue)! / 1000)
+                print(dateOfBirth)
+                print(dateOfBirth?.doubleValue)
+                
+                let date = NSDate(timeIntervalSince1970: (dateOfBirth?.doubleValue)! / 1000.0)
                 
                 expect(try! self.healthStore.dateOfBirth())  == date
                 

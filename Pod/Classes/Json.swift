@@ -202,7 +202,7 @@ internal class JsonWriter {
     
     internal func writeDate(value: NSDate?) throws {
         if let date = value {
-            let number = NSNumber(double:date.timeIntervalSince1970*1000).integerValue
+            let number = NSNumber(double:date.timeIntervalSince1970*1000)
             try writeNumber(number)
         } else {
             try writeNull()
