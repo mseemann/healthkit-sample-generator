@@ -9,6 +9,7 @@
 import XCTest
 import Quick
 import Nimble
+import HealthKit
 @testable import HealthKitSampleGenerator
 
 class DataExporterTest: QuickSpec {
@@ -34,9 +35,8 @@ class DataExporterTest: QuickSpec {
                 try! exporter.export(self.healthStore, exportTargets: [target])
                 
                 try! target.endExport()
-                
-                let metaDataKeyAndDict = JsonReader.toJsonObject(target.getJsonString()) as! Dictionary<String, AnyObject>
-                let metaDataDict:Dictionary<String, AnyObject> = metaDataKeyAndDict["metaData"] as! Dictionary<String, AnyObject>
+                                
+                let metaDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:"metaData")
                 
                 expect(metaDataDict["creationDate"] as? NSNumber).notTo(beNil())
                 expect(metaDataDict["profileName"] as? String)  == profileName
@@ -55,7 +55,23 @@ class DataExporterTest: QuickSpec {
                 
                 try! target.endExport()
                 
-                print(target.getJsonString())
+                let userDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:"userData")
+                
+                print(userDataDict)
+                
+                let dateOfBirth         = userDataDict["dateOfBirth"] as? NSNumber
+                let biologicalSex       = userDataDict["biologicalSex"] as? Int
+                let bloodType           = userDataDict["bloodType"] as? Int
+                let fitzpatrickSkinType = userDataDict["fitzpatrickSkinType"] as? Int
+                
+                let date = NSDate(timeIntervalSince1970: (dateOfBirth?.doubleValue)! / 1000)
+                
+                expect(date)  == (try! self.healthStore.dateOfBirth())
+                
+                expect(biologicalSex)       == HKBiologicalSex.Male.rawValue
+                expect(bloodType)           == HKBloodType.APositive.rawValue
+                expect(fitzpatrickSkinType) == HKFitzpatrickSkinType.I.rawValue
+                
             }
         }
     }
