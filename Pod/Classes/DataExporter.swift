@@ -172,6 +172,16 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
         super.init(exportConfiguration: exportConfiguration)
     }
     
+    func writeResults(results: [HKCategorySample], exportTargets: [ExportTarget]) throws -> Void {
+        for sample in results {
+            
+            for exportTarget in exportTargets {
+                let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":sample.value]
+                try exportTarget.writeDictionary(dict);
+            }
+        }
+    }
+    
     func anchorQuery(healthStore: HKHealthStore, exportTargets: [ExportTarget], anchor : HKQueryAnchor?) throws -> (anchor:HKQueryAnchor?, count:Int?) {
         
         let semaphore = dispatch_semaphore_create(0)
@@ -187,13 +197,7 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
                     self.healthQueryError = error
                 } else {
                     do {
-                        for sample in results as! [HKCategorySample] {
-                            
-                            for exportTarget in exportTargets {
-                                let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":sample.value]
-                                try exportTarget.writeDictionary(dict);
-                            }
-                        }
+                        try self.writeResults(results as! [HKCategorySample], exportTargets: exportTargets)
                     } catch let err {
                         self.exportError = err
                     }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2519807D2C1089FBBE7DAB86 /* Pods_HealthKitSampleGenerator_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */; };
-		2F4D1F611BD3FA94000290C4 /* ExportTargetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F5F1BD3FA6F000290C4 /* ExportTargetTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F4D1F651BD41374000290C4 /* OutputStreamTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F4D1F671BD4D312000290C4 /* HealthKitStoreMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */; settings = {ASSET_TAGS = (); }; };
 		2F4D1F691BD4DD64000290C4 /* DataExporterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */; settings = {ASSET_TAGS = (); }; };
@@ -40,7 +39,6 @@
 		06B02DACDE03C1B3D7DB2773 /* Pods-HealthKitSampleGenerator_ExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthKitSampleGenerator_ExampleUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HealthKitSampleGenerator_ExampleUITests/Pods-HealthKitSampleGenerator_ExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		162271BC1D58D2A3973BF2B9 /* Pods-HealthKitSampleGenerator_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthKitSampleGenerator_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-HealthKitSampleGenerator_Example/Pods-HealthKitSampleGenerator_Example.release.xcconfig"; sourceTree = "<group>"; };
 		2629469B90C63E0981BD4420 /* HealthKitSampleGenerator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HealthKitSampleGenerator.podspec; path = ../HealthKitSampleGenerator.podspec; sourceTree = "<group>"; };
-		2F4D1F5F1BD3FA6F000290C4 /* ExportTargetTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportTargetTest.swift; sourceTree = "<group>"; };
 		2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputStreamTest.swift; sourceTree = "<group>"; };
 		2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitStoreMock.swift; sourceTree = "<group>"; };
 		2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExporterTest.swift; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */,
 				2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */,
-				2F4D1F5F1BD3FA6F000290C4 /* ExportTargetTest.swift */,
 				2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */,
 				2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */,
 				2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */,
@@ -420,7 +417,6 @@
 				2F4D1F671BD4D312000290C4 /* HealthKitStoreMock.swift in Sources */,
 				2F9E30631BC2AA940005DF72 /* JsonWriterTest.swift in Sources */,
 				2F4D1F651BD41374000290C4 /* OutputStreamTest.swift in Sources */,
-				2F4D1F611BD3FA94000290C4 /* ExportTargetTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -98,8 +98,6 @@ class DataExporterTest: QuickSpec {
                 
                 try! target.endExport()
                 
-                print(target.getJsonString())
-                
                 let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKQuantityTypeIdentifierBodyMass))
                 
                
@@ -123,6 +121,51 @@ class DataExporterTest: QuickSpec {
                 expect(value) == quantity.doubleValueForUnit(unit)
             }
         }
+
+    
+        describe("CategoryTypeDataExporter") {
+            it ("should export category types"){
+                let type = HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierAppleStandHour)!
+                
+                let exporter = CategoryTypeDataExporter(exportConfiguration: exportConfiguration, type: type)
+                
+                let target = JsonSingleDocInMemExportTarget()
+                try! target.startExport()
+                try! target.startWriteType(type)
+                try! target.startWriteDatas()
+                
+                let sample = HKCategorySample(type: type, value: 1, startDate: NSDate(), endDate: NSDate())
+                
+                try! exporter.writeResults([sample], exportTargets: [target])
+                
+                
+                try! target.endWriteDatas()
+                try! target.endWriteType()
+                
+                try! target.endExport()
+                
+                print(target.getJsonString())
+                
+                let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKCategoryTypeIdentifierAppleStandHour))
+                
+                let dataArray = sampleDict["data"] as? [AnyObject]
+                
+                expect(dataArray?.count) == 1
+                
+                let savedSample = dataArray?.first as! Dictionary<String, AnyObject>
+                
+                let edate   = savedSample["edate"] as! NSNumber
+                let sdate   = savedSample["sdate"] as! NSNumber
+                let uuid    = savedSample["uuid"] as! String
+                let value   = savedSample["value"] as! NSNumber
+                
+                expect(edate).to(beCloseTo(sdate, within: 1000))
+                expect(uuid).notTo(beNil())
+                expect(value) == 1
+            
+            }
+        }
+        
     }
     
 }
