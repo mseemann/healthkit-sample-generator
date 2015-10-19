@@ -77,18 +77,18 @@ class DataExporterTest: QuickSpec {
         describe("QuantityType Exports") {
             
             it("should export quantity data") {
-                let type  = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!
-                
-                let exporter = QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type, unit: HKUnit(fromString: "kg"))
-                
-                let target = JsonSingleDocInMemExportTarget()
-                try! target.startExport()
-                
-                try! exporter.export(self.healthStore, exportTargets: [target])
-                
-                try! target.endExport()
-                
-                print(target.getJsonString())
+//                let type  = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!
+//                
+//                let exporter = QuantityTypeDataExporter(exportConfiguration: exportConfiguration, type: type, unit: HKUnit(fromString: "kg"))
+//                
+//                let target = JsonSingleDocInMemExportTarget()
+//                try! target.startExport()
+//                
+//                try! exporter.export(self.healthStore, exportTargets: [target])
+//                
+//                try! target.endExport()
+//                
+//                print(target.getJsonString())
             }
         }
     }
