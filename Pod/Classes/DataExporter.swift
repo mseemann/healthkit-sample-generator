@@ -330,64 +330,64 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
 internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
     internal var message = "exporting workouts data"
 
+    func writeResults(results: [HKWorkout], exportTargets:[ExportTarget], error: NSError?) -> Void {
+        if error != nil {
+            self.healthQueryError = error
+        } else {
+            do {
+                for exportTarget in exportTargets {
+                    try exportTarget.startWriteType(HKObjectType.workoutType())
+                    try exportTarget.startWriteDatas()
+                }
+                
+                for sample in results {
+                    
+                    var dict: Dictionary<String, AnyObject> = [:]
+                    
+                    dict["uuid"]                = sample.UUID.UUIDString
+                    dict["sampleType"]          = sample.sampleType.identifier
+                    dict["workoutActivityType"] = sample.workoutActivityType.rawValue
+                    dict["sDate"]               = sample.startDate
+                    dict["eDate"]               = sample.endDate
+                    dict["duration"]            =  sample.duration // seconds
+                    dict["totalDistance"]       = sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit())
+                    dict["totalEnergyBurned"]   = sample.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit())
+                    
+                    var workoutEvents: [Dictionary<String, AnyObject>] = []
+                    for event in sample.workoutEvents ?? [] {
+                        var workoutEvent: Dictionary<String, AnyObject> = [:]
+                        
+                        workoutEvent["type"] =  event.type.rawValue
+                        workoutEvent["sDate"] = event.date
+                        workoutEvents.append(workoutEvent)
+                    }
+                    
+                    dict["workoutEvents"]       = workoutEvents
+                    
+                    for exportTarget in exportTargets {
+                        try exportTarget.writeDictionary(dict);
+                    }
+                }
+                
+                for exportTarget in exportTargets {
+                    try exportTarget.endWriteDatas()
+                    try exportTarget.endWriteType()
+                }
+                
+            } catch let err {
+                self.exportError = err
+            }
+        }
+    }
+    
+    
     internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         
-
         let semaphore = dispatch_semaphore_create(0)
 
-        let query = HKSampleQuery(sampleType: HKObjectType.workoutType(), predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
-            
-
-            if error != nil {
-                self.healthQueryError = error
-            } else {
-                do {
-                    for exportTarget in exportTargets {
-                        try exportTarget.startWriteType(HKObjectType.workoutType())
-                        try exportTarget.startWriteDatas()
-                    }
-                    
-                    for sample in tmpResult as! [HKWorkout] {
-                        
-                        var dict: Dictionary<String, AnyObject> = [:]
-                        
-                        dict["uuid"]                = sample.UUID.UUIDString
-                        dict["sampleType"]          = sample.sampleType.identifier
-                        dict["workoutActivityType"] = sample.workoutActivityType.rawValue
-                        dict["sDate"]               = sample.startDate
-                        dict["eDate"]               = sample.endDate
-                        dict["duration"]            =  sample.duration // seconds
-                        dict["totalDistance"]       = sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit())
-                        dict["totalEnergyBurned"]   = sample.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit())
-
-                        var workoutEvents: [Dictionary<String, AnyObject>] = []
-                        for event in sample.workoutEvents ?? [] {
-                            var workoutEvent: Dictionary<String, AnyObject> = [:]
-
-                            workoutEvent["type"] =  event.type.rawValue
-                            workoutEvent["startDate"] = event.date
-                            workoutEvents.append(workoutEvent)
-                        }
-
-                        dict["workoutEvents"]       = workoutEvents
-                        
-                        for exportTarget in exportTargets {
-                            try exportTarget.writeDictionary(dict);
-                        }
-                    }
-                    
-                    for exportTarget in exportTargets {
-                        try exportTarget.endWriteDatas()
-                        try exportTarget.endWriteType()
-                    }
-                    
-                } catch let err {
-                    self.exportError = err
-                }
-            }
-            
+        let query = HKSampleQuery(sampleType: HKObjectType.workoutType(), predicate: exportConfiguration.getPredicate(), limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (query, results, error) -> Void in
+            self.writeResults(results as! [HKWorkout], exportTargets:exportTargets, error:error)
             dispatch_semaphore_signal(semaphore)
-        
         }
         
         healthStore.executeQuery(query)

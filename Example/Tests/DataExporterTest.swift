@@ -245,6 +245,89 @@ class DataExporterTest: QuickSpec {
                 expect{try exporter.rethrowCollectedErrors()}.to(throwError())
             }
         }
+        
+        describe("WorkoutDataExporter") {
+            
+            let exporter = WorkoutDataExporter(exportConfiguration: exportConfiguration)
+            
+            it("should export workouts"){
+                let start = NSDate()
+                let pause = start.dateByAddingTimeInterval(60*2) // + 2 minutes
+                let resume = start.dateByAddingTimeInterval(60*3) // + 3 minutes
+                let end = start.dateByAddingTimeInterval(60*10) // + 10 minutes
+
+                print(end)
+                
+                let events : [HKWorkoutEvent] = [HKWorkoutEvent(type: HKWorkoutEventType.Pause, date: pause), HKWorkoutEvent(type: HKWorkoutEventType.Resume, date: resume)]
+                let burned = HKQuantity(unit: HKUnit(fromString: "kcal"), doubleValue: 200.6)
+                let distance = HKQuantity(unit: HKUnit(fromString: "km"), doubleValue: 4.5)
+                
+                let workout = HKWorkout(activityType: HKWorkoutActivityType.Running, startDate: start, endDate: end, workoutEvents: events, totalEnergyBurned: burned, totalDistance: distance, metadata: nil)
+                
+                let target = JsonSingleDocInMemExportTarget()
+                try! target.startExport()
+                
+                exporter.writeResults([workout], exportTargets: [target], error: nil)
+                
+                try! target.endExport()
+                
+                let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKObjectType.workoutType()))
+                
+                print(sampleDict)
+                
+                let dataArray = sampleDict["data"] as? [AnyObject]
+                
+                expect(dataArray?.count) == 1
+                
+                let savedWorkout = dataArray?.first as! Dictionary<String, AnyObject>
+                
+                let uuid = savedWorkout["uuid"] as! String
+                expect(uuid).notTo(beNil())
+
+                let sampleType = savedWorkout["sampleType"] as! String
+                expect(sampleType).to(contain("HKWorkout"))
+                
+                let workoutActivityType = savedWorkout["workoutActivityType"] as! NSNumber
+                expect(workoutActivityType) == HKWorkoutActivityType.Running.rawValue
+                
+                let sDate = savedWorkout["sDate"] as! NSNumber
+                let eDate = savedWorkout["eDate"] as! NSNumber
+                expect(sDate).to(beCloseTo(eDate, within: 60*10*1001))
+                
+                let duration = savedWorkout["duration"] as! NSNumber
+                expect(duration) == 540 // 9 minutes
+                
+                let totalDistance = savedWorkout["totalDistance"] as! NSNumber
+                expect(totalDistance) == 4500 //meters
+                
+                let totalEnergyBurned = savedWorkout["totalEnergyBurned"] as! NSNumber
+                expect(totalEnergyBurned) == 200.6
+                
+                
+                
+                let workoutEvents = savedWorkout["workoutEvents"] as! [AnyObject]
+                
+                let pauseEvent = workoutEvents[0] as! Dictionary<String, AnyObject>
+                let pauseSDate = pauseEvent["sDate"] as! NSNumber
+                expect(pauseSDate).to(beGreaterThan(sDate))
+                
+                let pauseType = pauseEvent["type"] as! NSNumber
+                expect(pauseType) == HKWorkoutEventType.Pause.rawValue
+                
+                let resumeEvent = workoutEvents[1] as! Dictionary<String, AnyObject>
+                let resumeSDate = resumeEvent["sDate"] as! NSNumber
+                expect(resumeSDate).to(beGreaterThan(sDate))
+                
+                let resumeType = resumeEvent["type"] as! NSNumber
+                expect(resumeType) == HKWorkoutEventType.Resume.rawValue
+                
+            }
+            
+            it ("should handle healthkit query errors") {
+                exporter.writeResults([], exportTargets: [], error: NSError(domain: "", code: 0, userInfo: [:]))
+                expect{try exporter.rethrowCollectedErrors()}.to(throwError())
+            }
+        }
     }
     
-}
+  }
