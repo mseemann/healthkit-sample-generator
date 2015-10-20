@@ -23,16 +23,16 @@ class ExportConfigurationTest: QuickSpec {
             expect(predicate).to(beNil())
         }
         
-//        // run not in TRAVIS-CI - it will fail. may be because of HKSource call - i don't know
-//        #if !TRAVIS
-//        it ("should return a predicate that restricts to this app") {
-//            let exportConfig = HealthDataFullExportConfiguration(profileName: "x", exportType: .ADDED_BY_THIS_APP)
-//            
-//            let predicate = exportConfig.getPredicate()
-//        
-//            expect(predicate?.predicateFormat).to(contain("HKSource"))
-//        }
-//        #endif
+        // run not in TRAVIS-CI - it will fail. may be because of HKSource call - i don't know
+        #if !TRAVIS
+        it ("should return a predicate that restricts to this app") {
+            let exportConfig = HealthDataFullExportConfiguration(profileName: "x", exportType: .ADDED_BY_THIS_APP)
+            
+            let predicate = exportConfig.getPredicate()
+        
+            expect(predicate?.predicateFormat).to(contain("HKSource"))
+        }
+        #endif
         
         it("should return a predicate that restricts to this metadata additions") {
             
