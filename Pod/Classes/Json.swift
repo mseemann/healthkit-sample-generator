@@ -329,7 +329,6 @@ internal class JsonReader {
     
     static func toJsonObject(jsonString: String, returnDictForKey: String) -> Dictionary<String, AnyObject> {
         let keyWithDictInDict = JsonReader.toJsonObject(jsonString) as! Dictionary<String, AnyObject>
-        
         return keyWithDictInDict[returnDictForKey] as! Dictionary<String, AnyObject>
     }
 }

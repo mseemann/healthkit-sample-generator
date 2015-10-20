@@ -174,12 +174,77 @@ class DataExporterTest: QuickSpec {
             
             
             it ("should handle healthkit query errors") {
-                
                 exporter.writeResults([], exportTargets: [], error: NSError(domain: "", code: 0, userInfo: [:]))
                 expect{try exporter.rethrowCollectedErrors()}.to(throwError())
             }
         }
         
+        describe("CorrelationTypeDataExporter") {
+            
+            let type = HKObjectType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierBloodPressure)!
+            let exporter = CorrelationTypeDataExporter(exportConfiguration: exportConfiguration, type: type)
+            
+            it ("should export correlation types") {
+                
+                let target = JsonSingleDocInMemExportTarget()
+                try! target.startExport()
+                try! target.startWriteType(type)
+                try! target.startWriteDatas()
+                
+                let type1 = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBloodPressureSystolic)!
+                let type2 = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBloodPressureDiastolic)!
+                
+                let quantity1 = HKQuantity(unit: HKUnit(fromString: "mmHg"), doubleValue: 80)
+                let quantity2 = HKQuantity(unit: HKUnit(fromString: "mmHg"), doubleValue: 120)
+                
+                let samples: [HKSample] = [
+                    HKQuantitySample(type: type1, quantity: quantity1, startDate: NSDate(), endDate: NSDate()),
+                    HKQuantitySample(type: type2, quantity: quantity2, startDate: NSDate(), endDate: NSDate())
+                ]
+
+                let correlation = HKCorrelation(type: type, startDate: NSDate(), endDate: NSDate(), objects: Set(samples))
+                
+                exporter.writeResults([correlation], exportTargets: [target], error: nil)
+                
+                
+                try! target.endWriteDatas()
+                try! target.endWriteType()
+                
+                try! target.endExport()
+                
+                let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKCorrelationTypeIdentifierBloodPressure))
+                
+                let dataArray = sampleDict["data"] as? [AnyObject]
+                
+                expect(dataArray?.count) == 1
+                
+                let savedCorrelation = dataArray?.first as! Dictionary<String, AnyObject>
+                
+                let edate   = savedCorrelation["edate"] as! NSNumber
+                let sdate   = savedCorrelation["sdate"] as! NSNumber
+                let uuid    = savedCorrelation["uuid"] as! String
+                let objects   = savedCorrelation["objects"] as! [AnyObject]
+                
+                expect(edate).to(beCloseTo(sdate, within: 1000))
+                expect(uuid).notTo(beNil())
+                expect(objects.count) == 2
+                
+                for object in objects {
+                    let dictObject = object as! Dictionary<String, AnyObject>
+                    let oUuid = dictObject["uuid"] as! String
+                    let oType = dictObject["type"] as! String
+                    
+                    expect(oUuid).notTo(beNil())
+                    expect(oType).to(contain("HKQuantityTypeIdentifierBloodPressure"))
+                }
+
+            }
+            
+            it ("should handle healthkit query errors") {
+                exporter.writeResults([], exportTargets: [], error: NSError(domain: "", code: 0, userInfo: [:]))
+                expect{try exporter.rethrowCollectedErrors()}.to(throwError())
+            }
+        }
     }
     
 }

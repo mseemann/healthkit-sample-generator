@@ -250,6 +250,35 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
         super.init(exportConfiguration: exportConfiguration)
     }
     
+    func writeResults(results: [HKCorrelation], exportTargets: [ExportTarget], error: NSError?) -> Void {
+        if error != nil {
+            self.healthQueryError = error
+        } else {
+            do {
+                for sample in results  {
+                    
+                    var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate]
+                    var subSampleArray:[AnyObject] = []
+                    
+                    for subsample in sample.objects {
+                        subSampleArray.append([
+                            "type": subsample.sampleType.identifier,
+                            "uuid": subsample.UUID.UUIDString
+                            ])
+                    }
+                    
+                    dict["objects"] = subSampleArray
+                    
+                    for exportTarget in exportTargets {
+                        try exportTarget.writeDictionary(dict);
+                    }
+                    
+                }
+            } catch let err {
+                self.exportError = err
+            }
+        }
+    }
     
     func anchorQuery(healthStore: HKHealthStore, exportTargets: [ExportTarget], anchor : HKQueryAnchor?) throws -> (anchor:HKQueryAnchor?, count:Int?) {
         
@@ -261,35 +290,7 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
             predicate: exportConfiguration.getPredicate(),
             anchor: anchor ,
             limit: queryCountLimit) { (query, results, deleted, newAnchor, error) -> Void in
-                
-                if error != nil {
-                    self.healthQueryError = error
-                } else {
-                    do {
-                        for sample in results as! [HKCorrelation] {
-                            
-                            var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate]
-                            var subSampleArray:[AnyObject] = []
-
-                            for subsample in sample.objects {
-                                subSampleArray.append([
-                                    "type": subsample.sampleType.identifier,
-                                    "uuid": subsample.UUID.UUIDString
-                                    ])
-                            }
-                            
-                            dict["objects"] = subSampleArray
-                            
-                            for exportTarget in exportTargets {
-                                try exportTarget.writeDictionary(dict);
-                            }
-
-                        }
-                    } catch let err {
-                        self.exportError = err
-                    }
-                }
-                
+                self.writeResults(results as! [HKCorrelation], exportTargets: exportTargets, error: error)
                 resultAnchor = newAnchor
                 resultCount = results?.count
                 dispatch_semaphore_signal(semaphore)
