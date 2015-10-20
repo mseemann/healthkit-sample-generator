@@ -103,7 +103,10 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
                     let value = sample.quantity.doubleValueForUnit(self.unit)
                     
                     for exportTarget in exportTargets {
-                        let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":value]
+                        var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "value":value]
+                        if sample.startDate != sample.endDate {
+                            dict["edate"] = sample.endDate
+                        }
                         try exportTarget.writeDictionary(dict);
                     }
                 }
@@ -179,7 +182,10 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
                 for sample in results {
                     
                     for exportTarget in exportTargets {
-                        let dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate, "value":sample.value]
+                        var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "value":sample.value]
+                        if sample.startDate != sample.endDate {
+                            dict["edate"] = sample.endDate
+                        }
                         try exportTarget.writeDictionary(dict);
                     }
                 }
@@ -253,7 +259,10 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
             do {
                 for sample in results  {
                     
-                    var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "edate":sample.endDate]
+                    var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate]
+                    if sample.startDate != sample.endDate {
+                        dict["edate"] = sample.endDate
+                    }
                     var subSampleArray:[AnyObject] = []
                     
                     for subsample in sample.objects {
@@ -342,8 +351,10 @@ internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
                     dict["sampleType"]          = sample.sampleType.identifier
                     dict["workoutActivityType"] = sample.workoutActivityType.rawValue
                     dict["sDate"]               = sample.startDate
-                    dict["eDate"]               = sample.endDate
-                    dict["duration"]            =  sample.duration // seconds
+                    if sample.startDate != sample.endDate {
+                        dict["eDate"]               = sample.endDate
+                    }
+                    dict["duration"]            = sample.duration // seconds
                     dict["totalDistance"]       = sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit())
                     dict["totalEnergyBurned"]   = sample.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit())
                     

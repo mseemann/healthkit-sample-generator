@@ -90,8 +90,9 @@ class DataExporterTest: QuickSpec {
                 try! target.startWriteQuantityType(type, unit:unit)
                 try! target.startWriteDatas()
                 
+                let date = NSDate()
                 let quantity = HKQuantity(unit: unit, doubleValue: 70)
-                let sample = HKQuantitySample(type: type, quantity: quantity, startDate: NSDate(), endDate: NSDate())
+                let sample = HKQuantitySample(type: type, quantity: quantity, startDate: date, endDate: date)
                 
                 exporter.writeResults([sample], exportTargets: [target], error: nil)
                 try! target.endWriteDatas()
@@ -112,14 +113,15 @@ class DataExporterTest: QuickSpec {
                 let savedSample = dataArray?.first as! Dictionary<String, AnyObject>
              
                 
-                let edate   = savedSample["edate"] as! NSNumber
+               
                 let sdate   = savedSample["sdate"] as! NSNumber
                 let uuid    = savedSample["uuid"] as! String
                 let value   = savedSample["value"] as! NSNumber
                 
-                expect(edate).to(beCloseTo(sdate, within: 1000))
+                expect(sdate).to(beCloseTo(date.timeIntervalSince1970 * 1000, within: 1000))
                 expect(uuid).notTo(beNil())
                 expect(value) == quantity.doubleValueForUnit(unit)
+                expect(savedSample["edate"]).to(beNil())
             }
             
             it ("should handle healthkit query errors") {
@@ -143,7 +145,9 @@ class DataExporterTest: QuickSpec {
                 try! target.startWriteType(type)
                 try! target.startWriteDatas()
                 
-                let sample = HKCategorySample(type: type, value: 1, startDate: NSDate(), endDate: NSDate())
+                let date = NSDate()
+                
+                let sample = HKCategorySample(type: type, value: 1, startDate: date, endDate: date)
                 
                 exporter.writeResults([sample], exportTargets: [target], error: nil)
                 
@@ -160,15 +164,16 @@ class DataExporterTest: QuickSpec {
                 expect(dataArray?.count) == 1
                 
                 let savedSample = dataArray?.first as! Dictionary<String, AnyObject>
-                
-                let edate   = savedSample["edate"] as! NSNumber
+            
                 let sdate   = savedSample["sdate"] as! NSNumber
                 let uuid    = savedSample["uuid"] as! String
                 let value   = savedSample["value"] as! NSNumber
                 
-                expect(edate).to(beCloseTo(sdate, within: 1000))
+                expect(sdate).to(beCloseTo(date.timeIntervalSince1970 * 1000, within: 1000))
                 expect(uuid).notTo(beNil())
                 expect(value) == 1
+                
+                expect(savedSample["edate"]).to(beNil())
             
             }
             
@@ -197,12 +202,14 @@ class DataExporterTest: QuickSpec {
                 let quantity1 = HKQuantity(unit: HKUnit(fromString: "mmHg"), doubleValue: 80)
                 let quantity2 = HKQuantity(unit: HKUnit(fromString: "mmHg"), doubleValue: 120)
                 
+                let date = NSDate()
+                
                 let samples: [HKSample] = [
-                    HKQuantitySample(type: type1, quantity: quantity1, startDate: NSDate(), endDate: NSDate()),
-                    HKQuantitySample(type: type2, quantity: quantity2, startDate: NSDate(), endDate: NSDate())
+                    HKQuantitySample(type: type1, quantity: quantity1, startDate: date, endDate: date),
+                    HKQuantitySample(type: type2, quantity: quantity2, startDate: date, endDate: date)
                 ]
 
-                let correlation = HKCorrelation(type: type, startDate: NSDate(), endDate: NSDate(), objects: Set(samples))
+                let correlation = HKCorrelation(type: type, startDate: date, endDate: date, objects: Set(samples))
                 
                 exporter.writeResults([correlation], exportTargets: [target], error: nil)
                 
@@ -220,14 +227,15 @@ class DataExporterTest: QuickSpec {
                 
                 let savedCorrelation = dataArray?.first as! Dictionary<String, AnyObject>
                 
-                let edate   = savedCorrelation["edate"] as! NSNumber
+                
                 let sdate   = savedCorrelation["sdate"] as! NSNumber
                 let uuid    = savedCorrelation["uuid"] as! String
                 let objects   = savedCorrelation["objects"] as! [AnyObject]
                 
-                expect(edate).to(beCloseTo(sdate, within: 1000))
+                expect(sdate).to(beCloseTo(date.timeIntervalSince1970 * 1000, within: 1000))
                 expect(uuid).notTo(beNil())
                 expect(objects.count) == 2
+                expect(savedCorrelation["edate"]).to(beNil())
                 
                 for object in objects {
                     let dictObject = object as! Dictionary<String, AnyObject>
