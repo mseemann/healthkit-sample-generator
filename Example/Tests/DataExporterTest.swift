@@ -41,7 +41,7 @@ class DataExporterTest: QuickSpec {
                 
                 expect(metaDataDict["creationDate"] as? NSNumber).notTo(beNil())
                 expect(metaDataDict["profileName"] as? String)  == self.profileName
-                expect(metaDataDict["version"] as? String)      == "0.2.0"
+                expect(metaDataDict["version"] as? String)      == "1.0.0"
                 expect(metaDataDict["type"] as? String)         == "JsonSingleDocExportTarget"
 
             }

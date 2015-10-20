@@ -43,7 +43,7 @@ internal class MetaDataExporter : BaseDataExporter, DataExporter {
     
     internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
-            try exportTarget.writeMetaData(creationDate: NSDate(), profileName: exportConfiguration.profileName, version:"0.2.0")
+            try exportTarget.writeMetaData(creationDate: NSDate(), profileName: exportConfiguration.profileName, version:"1.0.0")
         }
     }
 }
