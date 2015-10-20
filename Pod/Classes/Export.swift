@@ -94,13 +94,11 @@ public class HealthKitDataExporter {
     
     let healthStore: HKHealthStore
     
-    let healthKitTypesToRead: Set<HKObjectType> = Set(arrayLiteral:
+    let healthKitCharacteristicsTypes: Set<HKCharacteristicType> = Set(arrayLiteral:
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierDateOfBirth)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBloodType)!,
-        HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierFitzpatrickSkinType)!,
-        
-        HKObjectType.workoutType()
+        HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierFitzpatrickSkinType)!
     )
 
     let healthKitCategoryTypes: Set<HKCategoryType> = Set(arrayLiteral:
@@ -207,9 +205,11 @@ public class HealthKitDataExporter {
         }
 
         
-        var requestAuthorizationTypes: Set<HKObjectType> = Set(healthKitTypesToRead)
+        var requestAuthorizationTypes: Set<HKObjectType> = Set()
+        requestAuthorizationTypes.unionInPlace(healthKitCharacteristicsTypes as Set<HKObjectType>!)
         requestAuthorizationTypes.unionInPlace(healthKitQuantityTypes as Set<HKObjectType>!)
         requestAuthorizationTypes.unionInPlace(healthKitCategoryTypes as Set<HKObjectType>!)
+        requestAuthorizationTypes.insert(HKObjectType.workoutType())
 
  
         healthStore.requestAuthorizationToShareTypes(nil, readTypes: requestAuthorizationTypes) {
