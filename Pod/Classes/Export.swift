@@ -240,7 +240,7 @@ public class HealthKitDataExporter {
         
     }
     
-    private func getDataExporters(exportConfiguration: ExportConfiguration, typeMap: [HKQuantityType : HKUnit]) -> [DataExporter]{
+    internal func getDataExporters(exportConfiguration: ExportConfiguration, typeMap: [HKQuantityType : HKUnit]) -> [DataExporter]{
         var result : [DataExporter] = []
         
         result.append(MetaDataExporter(exportConfiguration: exportConfiguration))

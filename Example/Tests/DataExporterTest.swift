@@ -273,8 +273,6 @@ class DataExporterTest: QuickSpec {
                 
                 let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKObjectType.workoutType()))
                 
-                print(sampleDict)
-                
                 let dataArray = sampleDict["data"] as? [AnyObject]
                 
                 expect(dataArray?.count) == 1

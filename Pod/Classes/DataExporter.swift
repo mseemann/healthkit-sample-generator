@@ -137,9 +137,7 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
         
         try rethrowCollectedErrors()
         
-        let result = (anchor:resultAnchor, count: resultCount)
-        
-        return result
+        return (anchor:resultAnchor, count: resultCount)
     }
     
     
@@ -214,10 +212,8 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
         
         try rethrowCollectedErrors()
-        
-        let result = (anchor:resultAnchor, count: resultCount)
-        
-        return result
+
+        return (anchor:resultAnchor, count: resultCount)
     }
     
     
@@ -302,9 +298,7 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
         
         try rethrowCollectedErrors()
         
-        let result = (anchor:resultAnchor, count: resultCount)
-        
-        return result
+        return (anchor:resultAnchor, count: resultCount)
     }
     
     internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
