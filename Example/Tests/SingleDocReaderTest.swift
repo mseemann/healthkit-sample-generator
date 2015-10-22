@@ -34,7 +34,7 @@ class SigleDocReaderTest: QuickSpec {
             expect(stringFromFile).to(equal(testJH.json))
         }
         
-        it("fuck"){
+        it("should read the metadata - and cancel after that"){
             
         }
     }
