@@ -163,7 +163,7 @@ internal class JsonWriter {
     */
     internal func writeString(text: String?) throws {
         if let v = text {
-            let escapedV = v.stringByReplacingOccurrencesOfString("\"", withString: "\\")
+            let escapedV = v.stringByReplacingOccurrencesOfString("\"", withString: "\"")
             let status = writerContext.willWriteValue()
             writeCommaOrColon(status)
             writerContext.writeValue()
@@ -403,9 +403,19 @@ internal class JsonTokenizer {
         self.jsonHandler = jsonHandler
     }
     
+    internal func removeQuestionMarks(str: String) -> String{
+        var result = str
+        print(result)
+        result.removeAtIndex(result.startIndex)
+        print(result)
+        result.removeAtIndex(result.endIndex.predecessor())
+        print(result)
+        return result
+    }
+    
     internal func writeName(context: JsonReaderContext) {
         print("writeName", context.nameOrObject)
-        let name = context.nameOrObject.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\""))
+        let name = removeQuestionMarks(context.nameOrObject)
         jsonHandler.name(name)
         context.nameOrObject = ""
         context.inNameOrObject = true
@@ -417,7 +427,9 @@ internal class JsonTokenizer {
         context.nameOrObject = ""
         
         if value.hasPrefix("\"") &&  value.hasSuffix("\""){
-            self.jsonHandler.stringValue(value.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"")))
+            let strValue = removeQuestionMarks(value)
+            print(strValue)
+            self.jsonHandler.stringValue(strValue)
         } else if value == "true" {
             self.jsonHandler.boolValue(true)
         } else if value == "false" {
