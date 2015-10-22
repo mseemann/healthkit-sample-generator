@@ -122,7 +122,7 @@ class JsonReaderTest: QuickSpec {
                 self.test(tokenizer, testJH: testJH, jsonString: "{\"a\":[\"\"]}")
             }
             
-            it("should read escaped chars"){
+            it("should read escaped chars"){ //FIXME is this right?
                 self.test(tokenizer, testJH: testJH, jsonString: "{\"a\":[\"\"\"]}")
             }
         }

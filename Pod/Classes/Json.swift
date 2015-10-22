@@ -546,6 +546,20 @@ protocol JsonHandlerProtocol {
     func nullValue()
 }
 
+class AbstractJsonHandler : JsonHandlerProtocol {
+    func startArray(){}
+    func endArray(){}
+    
+    func startObject(){}
+    func endObject(){}
+    
+    func name(name: String){}
+    func stringValue(value: String){}
+    func boolValue(value: Bool){}
+    func numberValue(value: NSNumber){}
+    func nullValue(){}
+}
+
 class JsonOutputJsonHandler: JsonHandlerProtocol {
     
     let memOutputStream : MemOutputStream!
