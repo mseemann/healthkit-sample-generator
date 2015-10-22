@@ -235,5 +235,28 @@ class JsonWriterTest: QuickSpec {
             
             expect(jw.getJsonString()) == "{\"a\":{\"b\":true}}"
         }
+        
+        it("should write two named objects in an object"){
+            let jw = JsonWriter(outputStream: MemOutputStream())
+            
+            try! jw.writeStartObject()
+            
+            try! jw.writeFieldName("m")
+            try! jw.writeStartObject()
+            try! jw.writeField("a", value: 7)
+            try! jw.writeField("b", value: "o")
+            try! jw.writeField("c", value: "1.0.0")
+            try! jw.writeField("d", value: "s")
+            try! jw.writeEndObject()
+            
+            try! jw.writeFieldName("u")
+            try! jw.writeStartObject()
+            try! jw.writeField("d", value: 5)
+            try! jw.writeEndObject()
+            
+            try! jw.writeEndObject()
+            
+            expect(jw.getJsonString()) == "{\"m\":{\"a\":7,\"b\":\"o\",\"c\":\"1.0.0\",\"d\":\"s\"},\"u\":{\"d\":5}}"
+        }
     }
 }

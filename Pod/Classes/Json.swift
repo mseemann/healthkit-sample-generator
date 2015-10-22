@@ -331,4 +331,285 @@ internal class JsonReader {
         let keyWithDictInDict = JsonReader.toJsonObject(jsonString) as! Dictionary<String, AnyObject>
         return keyWithDictInDict[returnDictForKey] as! Dictionary<String, AnyObject>
     }
+    
+    static func readFileAtPath(fileAtPath: String, withJsonHandler jsonHandler: JsonHandlerProtocol) throws -> Void {
+        let inStream = NSInputStream(fileAtPath: fileAtPath)!
+        inStream.open()
+        
+        let tokenizer = JsonTokenizer(jsonHandler:jsonHandler)
+        
+        let bufferSize = 4096
+        var buffer = Array<UInt8>(count: bufferSize, repeatedValue: 0)
+        
+        while inStream.hasBytesAvailable {
+            let bytesRead = inStream.read(&buffer, maxLength: bufferSize)
+            if bytesRead > 0 {
+                let textFileContents = NSString(bytes: &buffer, length: bytesRead, encoding: NSUTF8StringEncoding)!
+                tokenizer.tokenize(textFileContents as String)
+            }
+        }
+    }
+}
+
+internal class JsonReaderContext {
+    var type: JsonContextType
+    var parent: JsonReaderContext?
+    
+    var nameOrObject = "" {
+        didSet {
+           // print("nameOrObject:", nameOrObject)
+        }
+    }
+    
+    var inNameOrObject = false {
+        didSet {
+           // print("in name or object:", inNameOrObject)
+        }
+    }
+    
+    init(){
+        type = .ROOT
+    }
+    
+    convenience init(parent: JsonReaderContext, type: JsonContextType){
+        self.init()
+        self.parent = parent
+        self.type = type
+    }
+    
+    func createArrayContext() -> JsonReaderContext {
+        //print("create array context")
+        return JsonReaderContext(parent: self, type: .ARRAY)
+    }
+    
+    func createObjectContext() -> JsonReaderContext {
+        // print("create object context")
+        return JsonReaderContext(parent: self, type: .OBJECT)
+    }
+}
+
+internal class JsonTokenizer {
+    // TODO escpaped chars  "b", "f", "n", "r", "t", "\\" whitespace
+    let jsonHandler: JsonHandlerProtocol
+    var context = JsonReaderContext()
+
+    
+    init(jsonHandler: JsonHandlerProtocol){
+        self.jsonHandler = jsonHandler
+    }
+    
+    internal func writeName(context: JsonReaderContext) {
+        //print("writeName", context.nameOrObject)
+        let name = context.nameOrObject.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\""))
+        jsonHandler.name(name)
+        context.nameOrObject = ""
+    }
+    
+    internal func writeValue(context: JsonReaderContext){
+        //print("writeValue", context.nameOrObject)
+        let value = context.nameOrObject
+        context.nameOrObject = ""
+        
+        if value.hasPrefix("\"") &&  value.hasSuffix("\""){
+            self.jsonHandler.stringValue(value.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"")))
+        } else if value == "true" {
+            self.jsonHandler.boolValue(true)
+        } else if value == "false" {
+            self.jsonHandler.boolValue(false)
+        } else  if value == "null" {
+            self.jsonHandler.nullValue()
+        } else  {
+            let number = NSNumberFormatter().numberFromString(value)!
+            self.jsonHandler.numberValue(number)
+        }
+    }
+    
+    func tokenize(toTokenize: String) -> Void {
+        for chr in toTokenize.characters {
+            //print(chr)
+            switch chr {
+            case "\"":
+                if !context.inNameOrObject {
+                    context.inNameOrObject = true
+                    context.nameOrObject = ""
+                }
+                context.nameOrObject += String(chr)
+                
+                // else , : ] } decides if it was a name or a value
+            case "{":
+                if !context.inNameOrObject {
+                    context = context.createObjectContext()
+                    jsonHandler.startObject()
+                } else {
+                    if context.nameOrObject.hasPrefix("\"") {
+                        context.nameOrObject += String(chr)
+                    } else  {
+                        context = context.createObjectContext()
+                        jsonHandler.startObject()
+                    }
+                }
+            case "}":
+                if context.inNameOrObject {
+                    if context.nameOrObject.hasPrefix("\"") &&  context.nameOrObject.hasSuffix("\"") {
+                        if context.nameOrObject != "" {
+                            writeValue(context)
+                        }
+                        context = context.parent!
+                        jsonHandler.endObject()
+                        context.inNameOrObject = false
+                    } else if context.nameOrObject.hasPrefix("\"") &&  !context.nameOrObject.hasSuffix("\""){
+                        context.nameOrObject += String(chr)
+                    } else {
+                        if context.nameOrObject != "" {
+                            writeValue(context)
+                        }
+                        context = context.parent!
+                        jsonHandler.endObject()
+                        context.inNameOrObject = false
+                    }
+                } else {
+                    // end of object
+                    if context.nameOrObject != "" {
+                        writeValue(context)
+                    }
+                    context = context.parent!
+                    jsonHandler.endObject()
+                    context.inNameOrObject = false
+                }
+            case "[":
+                if !context.inNameOrObject || context.nameOrObject == "" {
+                    context = context.createArrayContext()
+                    jsonHandler.startArray()
+                } else {
+                    context.nameOrObject += String(chr)
+                }
+            case "]":
+                if context.inNameOrObject {
+                    if context.nameOrObject.hasPrefix("\"") &&  context.nameOrObject.hasSuffix("\"") {
+                        writeValue(context)
+                        context.inNameOrObject = false
+                        context = context.parent!
+                        jsonHandler.endArray()
+                        context.inNameOrObject = false
+                    } else if context.nameOrObject.hasPrefix("\"") &&  !context.nameOrObject.hasSuffix("\""){
+                        context.nameOrObject += String(chr)
+                    } else {
+                        writeValue(context)
+                        context.inNameOrObject = false
+                        context = context.parent!
+                        jsonHandler.endArray()
+                        context.inNameOrObject = false
+                    }
+                } else {
+                    if context.nameOrObject != "" {
+                        writeValue(context)
+                    }
+                    context = context.parent!
+                    jsonHandler.endArray()
+                    context.inNameOrObject = false
+                }
+            case ":":
+                if context.inNameOrObject {
+                    if context.nameOrObject.hasPrefix("\"") &&  context.nameOrObject.hasSuffix("\"") {
+                        writeName(context)
+                        context.inNameOrObject = true
+                    } else if context.nameOrObject.hasPrefix("\"") &&  !context.nameOrObject.hasSuffix("\""){
+                        context.nameOrObject += String(chr)
+                    } else {
+                        writeName(context)
+                        context.inNameOrObject = true
+                    }
+                } else {
+                    writeName(context)
+                    context.inNameOrObject = true
+                }
+            case ",":
+                if context.inNameOrObject  {
+                    if context.nameOrObject.hasPrefix("\"") &&  context.nameOrObject.hasSuffix("\"") {
+                        writeValue(context)
+                    } else if context.nameOrObject.hasPrefix("\"") &&  !context.nameOrObject.hasSuffix("\""){
+                        context.nameOrObject += String(chr)
+                    } else {
+                        writeValue(context)
+                    }
+                } else if context.nameOrObject != "" {
+                    writeValue(context)
+                }
+            default:
+                if context.inNameOrObject {
+                    context.nameOrObject += String(chr)
+                } else {
+                    print("error: may allways be part of name or object")
+                }
+            }
+        }
+    }
+}
+
+protocol JsonHandlerProtocol {
+    func startArray()
+    func endArray()
+    
+    func startObject()
+    func endObject()
+    
+    func name(name: String)
+    func stringValue(value: String)
+    func boolValue(value: Bool)
+    func numberValue(value: NSNumber)
+    func nullValue()
+}
+
+class JsonOutputJsonHandler: JsonHandlerProtocol {
+    
+    let memOutputStream : MemOutputStream!
+    let jw:JsonWriter!
+    
+    var json:String {
+        get {
+            return jw.getJsonString()
+        }
+    }
+    
+    init(){
+        memOutputStream = MemOutputStream()
+        jw = JsonWriter(outputStream: memOutputStream)
+    }
+    
+    func startArray(){
+        try! jw.writeStartArray()
+    }
+    
+    func endArray(){
+        try! jw.writeEndArray()
+    }
+    
+    func startObject() {
+        try! jw.writeStartObject()
+    }
+    
+    func endObject() {
+        try! jw.writeEndObject()
+    }
+    
+    func name(name: String){
+        try! jw.writeFieldName(name)
+    }
+    
+    func stringValue(value: String) {
+        try! jw.writeString(value)
+    }
+    
+    func numberValue(value: NSNumber) {
+        try! jw.writeNumber(value)
+    }
+    
+    func boolValue(value: Bool) {
+        try! jw.writeBool(value)
+    }
+    
+    func nullValue() {
+        try! jw.writeNull()
+    }
+    
 }

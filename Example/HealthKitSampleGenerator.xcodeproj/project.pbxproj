@@ -13,6 +13,9 @@
 		2F4D1F691BD4DD64000290C4 /* DataExporterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F4D1F6B1BD5250C000290C4 /* ExportConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F6A1BD5250C000290C4 /* ExportConfigurationTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F4D1F6D1BD65017000290C4 /* ExportTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F6C1BD65017000290C4 /* ExportTest.swift */; settings = {ASSET_TAGS = (); }; };
+		2F4D1F6F1BD66D57000290C4 /* version-1.0.0.single-doc.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json */; settings = {ASSET_TAGS = (); }; };
+		2F4D1F711BD66D80000290C4 /* SingleDocReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F701BD66D80000290C4 /* SingleDocReaderTest.swift */; settings = {ASSET_TAGS = (); }; };
+		2F4D1F731BD6A38B000290C4 /* JsonReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F721BD6A38B000290C4 /* JsonReaderTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F8DF7D11BD2BC67000F797F /* FileNameUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */; settings = {ASSET_TAGS = (); }; };
 		2F90C57F1BC3051500587117 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F90C57E1BC3051500587117 /* HealthKit.framework */; };
 		2F90C5811BC44BE500587117 /* UIControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F90C5801BC44BE500587117 /* UIControls.swift */; settings = {ASSET_TAGS = (); }; };
@@ -45,6 +48,9 @@
 		2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExporterTest.swift; sourceTree = "<group>"; };
 		2F4D1F6A1BD5250C000290C4 /* ExportConfigurationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportConfigurationTest.swift; sourceTree = "<group>"; };
 		2F4D1F6C1BD65017000290C4 /* ExportTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportTest.swift; sourceTree = "<group>"; };
+		2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "version-1.0.0.single-doc.json"; sourceTree = "<group>"; };
+		2F4D1F701BD66D80000290C4 /* SingleDocReaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleDocReaderTest.swift; sourceTree = "<group>"; };
+		2F4D1F721BD6A38B000290C4 /* JsonReaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonReaderTest.swift; sourceTree = "<group>"; };
 		2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileNameUtilTest.swift; sourceTree = "<group>"; };
 		2F90C57D1BC3051500587117 /* HealthKitSampleGenerator_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HealthKitSampleGenerator_Example.entitlements; sourceTree = "<group>"; };
 		2F90C57E1BC3051500587117 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
@@ -157,6 +163,8 @@
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				2F4D1F6C1BD65017000290C4 /* ExportTest.swift */,
 				2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */,
+				2F4D1F721BD6A38B000290C4 /* JsonReaderTest.swift */,
+				2F4D1F701BD66D80000290C4 /* SingleDocReaderTest.swift */,
 				2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */,
 				2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */,
 				2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */,
@@ -170,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACEA1AFB9204008FA782 /* Info.plist */,
+				2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -300,6 +309,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F4D1F6F1BD66D57000290C4 /* version-1.0.0.single-doc.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,11 +426,13 @@
 			files = (
 				2F4D1F691BD4DD64000290C4 /* DataExporterTest.swift in Sources */,
 				2F4D1F6B1BD5250C000290C4 /* ExportConfigurationTest.swift in Sources */,
+				2F4D1F731BD6A38B000290C4 /* JsonReaderTest.swift in Sources */,
 				2F8DF7D11BD2BC67000F797F /* FileNameUtilTest.swift in Sources */,
 				2F4D1F671BD4D312000290C4 /* HealthKitStoreMock.swift in Sources */,
 				2F9E30631BC2AA940005DF72 /* JsonWriterTest.swift in Sources */,
 				2F4D1F651BD41374000290C4 /* OutputStreamTest.swift in Sources */,
 				2F4D1F6D1BD65017000290C4 /* ExportTest.swift in Sources */,
+				2F4D1F711BD66D80000290C4 /* SingleDocReaderTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
