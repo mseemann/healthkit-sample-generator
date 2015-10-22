@@ -548,7 +548,7 @@ protocol JsonHandlerProtocol {
     func shouldCancelReadingTheJson() -> Bool
 }
 
-class AbstractJsonHandler : JsonHandlerProtocol {
+class DefaultJsonHandler : JsonHandlerProtocol {
     func startArray(){}
     func endArray(){}
     
@@ -566,7 +566,7 @@ class AbstractJsonHandler : JsonHandlerProtocol {
     }
 }
 
-class JsonOutputJsonHandler: AbstractJsonHandler {
+class JsonOutputJsonHandler: DefaultJsonHandler {
     
     let memOutputStream : MemOutputStream!
     let jw:JsonWriter!

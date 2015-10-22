@@ -9,7 +9,7 @@
 import Foundation
 
 // {"metaData":{"creationDate":1445344592172.305,"profileName":"output","version":"1.0.0","type":"JsonSingleDocExportTarget"},
-class MetaDataOutputJsonHandler: AbstractJsonHandler {
+class MetaDataOutputJsonHandler: DefaultJsonHandler {
     
     var name:String?
     var collectProperties = false
