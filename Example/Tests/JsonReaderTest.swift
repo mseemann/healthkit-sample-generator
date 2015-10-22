@@ -110,6 +110,13 @@ class JsonReaderTest: QuickSpec {
                 self.test(tokenizer, testJH: testJH, jsonString: "{\"a\":{\"b\":\"mi\",\"d\":[{\"u\":\"x\",\"v\":1,\"e\":2,\"s\":3}]}}")
             }
             
+            it("should read values/names with json charachters") {
+                self.test(tokenizer, testJH: testJH, jsonString: "{\"a,:{}[]\":[\"t,:{}[]\"]}")
+            }
+            
+            it("should read array of numbers"){
+                self.test(tokenizer, testJH: testJH, jsonString: "{\"a\":[true,2,1,6]}")
+            }
         }
     }
     

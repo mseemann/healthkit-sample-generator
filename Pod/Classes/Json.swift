@@ -353,17 +353,17 @@ internal class JsonReader {
 
 internal class JsonReaderContext {
     var type: JsonContextType
-    var parent: JsonReaderContext?
+    private var parent: JsonReaderContext?
     
     var nameOrObject = "" {
         didSet {
-           // print("nameOrObject:", nameOrObject)
+           print("nameOrObject:", nameOrObject)
         }
     }
     
     var inNameOrObject = false {
         didSet {
-           // print("in name or object:", inNameOrObject)
+           print("in name or object:", inNameOrObject)
         }
     }
     
@@ -378,13 +378,18 @@ internal class JsonReaderContext {
     }
     
     func createArrayContext() -> JsonReaderContext {
-        //print("create array context")
+        print("create array context")
         return JsonReaderContext(parent: self, type: .ARRAY)
     }
     
     func createObjectContext() -> JsonReaderContext {
-        // print("create object context")
+        print("create object context")
         return JsonReaderContext(parent: self, type: .OBJECT)
+    }
+    
+    func popContext() -> JsonReaderContext {
+        parent!.inNameOrObject = false
+        return parent!
     }
 }
 
@@ -399,14 +404,15 @@ internal class JsonTokenizer {
     }
     
     internal func writeName(context: JsonReaderContext) {
-        //print("writeName", context.nameOrObject)
+        print("writeName", context.nameOrObject)
         let name = context.nameOrObject.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\""))
         jsonHandler.name(name)
         context.nameOrObject = ""
+        context.inNameOrObject = true
     }
     
     internal func writeValue(context: JsonReaderContext){
-        //print("writeValue", context.nameOrObject)
+        print("writeValue", context.nameOrObject)
         let value = context.nameOrObject
         context.nameOrObject = ""
         
@@ -424,9 +430,25 @@ internal class JsonTokenizer {
         }
     }
     
+    internal func endObject() {
+        if context.nameOrObject != "" {
+            writeValue(context)
+        }
+        context = context.popContext()
+        jsonHandler.endObject()
+    }
+    
+    internal func endArray() {
+        if context.nameOrObject != "" {
+            writeValue(context)
+        }
+        context = context.popContext()
+        jsonHandler.endArray()
+    }
+    
     func tokenize(toTokenize: String) -> Void {
         for chr in toTokenize.characters {
-            //print(chr)
+            print(chr)
             switch chr {
             case "\"":
                 if !context.inNameOrObject {
@@ -434,94 +456,54 @@ internal class JsonTokenizer {
                     context.nameOrObject = ""
                 }
                 context.nameOrObject += String(chr)
-                
-                // else , : ] } decides if it was a name or a value
             case "{":
-                if !context.inNameOrObject {
+                if context.inNameOrObject && context.nameOrObject.hasPrefix("\"") {
+                    context.nameOrObject += String(chr)
+                } else {
                     context = context.createObjectContext()
                     jsonHandler.startObject()
-                } else {
-                    if context.nameOrObject.hasPrefix("\"") {
-                        context.nameOrObject += String(chr)
-                    } else  {
-                        context = context.createObjectContext()
-                        jsonHandler.startObject()
-                    }
                 }
             case "}":
                 if context.inNameOrObject {
                     if context.nameOrObject.hasPrefix("\"") &&  context.nameOrObject.hasSuffix("\"") {
-                        if context.nameOrObject != "" {
-                            writeValue(context)
-                        }
-                        context = context.parent!
-                        jsonHandler.endObject()
-                        context.inNameOrObject = false
+                        endObject()
                     } else if context.nameOrObject.hasPrefix("\"") &&  !context.nameOrObject.hasSuffix("\""){
                         context.nameOrObject += String(chr)
                     } else {
-                        if context.nameOrObject != "" {
-                            writeValue(context)
-                        }
-                        context = context.parent!
-                        jsonHandler.endObject()
-                        context.inNameOrObject = false
+                        endObject()
                     }
                 } else {
-                    // end of object
-                    if context.nameOrObject != "" {
-                        writeValue(context)
-                    }
-                    context = context.parent!
-                    jsonHandler.endObject()
-                    context.inNameOrObject = false
+                    endObject()
                 }
             case "[":
                 if !context.inNameOrObject || context.nameOrObject == "" {
                     context = context.createArrayContext()
                     jsonHandler.startArray()
+                    context.inNameOrObject = true
                 } else {
                     context.nameOrObject += String(chr)
                 }
             case "]":
                 if context.inNameOrObject {
                     if context.nameOrObject.hasPrefix("\"") &&  context.nameOrObject.hasSuffix("\"") {
-                        writeValue(context)
-                        context.inNameOrObject = false
-                        context = context.parent!
-                        jsonHandler.endArray()
-                        context.inNameOrObject = false
+                        endArray()
                     } else if context.nameOrObject.hasPrefix("\"") &&  !context.nameOrObject.hasSuffix("\""){
                         context.nameOrObject += String(chr)
                     } else {
-                        writeValue(context)
-                        context.inNameOrObject = false
-                        context = context.parent!
-                        jsonHandler.endArray()
-                        context.inNameOrObject = false
+                       endArray()
                     }
                 } else {
-                    if context.nameOrObject != "" {
-                        writeValue(context)
-                    }
-                    context = context.parent!
-                    jsonHandler.endArray()
-                    context.inNameOrObject = false
+                    endArray()
                 }
             case ":":
                 if context.inNameOrObject {
                     if context.nameOrObject.hasPrefix("\"") &&  context.nameOrObject.hasSuffix("\"") {
                         writeName(context)
-                        context.inNameOrObject = true
                     } else if context.nameOrObject.hasPrefix("\"") &&  !context.nameOrObject.hasSuffix("\""){
                         context.nameOrObject += String(chr)
                     } else {
                         writeName(context)
-                        context.inNameOrObject = true
                     }
-                } else {
-                    writeName(context)
-                    context.inNameOrObject = true
                 }
             case ",":
                 if context.inNameOrObject  {
@@ -532,8 +514,6 @@ internal class JsonTokenizer {
                     } else {
                         writeValue(context)
                     }
-                } else if context.nameOrObject != "" {
-                    writeValue(context)
                 }
             default:
                 if context.inNameOrObject {
