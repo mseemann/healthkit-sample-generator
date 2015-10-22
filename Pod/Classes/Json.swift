@@ -544,6 +544,8 @@ protocol JsonHandlerProtocol {
     func boolValue(value: Bool)
     func numberValue(value: NSNumber)
     func nullValue()
+    
+    func shouldCancelReadingTheJson() -> Bool
 }
 
 class AbstractJsonHandler : JsonHandlerProtocol {
@@ -558,9 +560,13 @@ class AbstractJsonHandler : JsonHandlerProtocol {
     func boolValue(value: Bool){}
     func numberValue(value: NSNumber){}
     func nullValue(){}
+    
+    func shouldCancelReadingTheJson() -> Bool {
+        return false;
+    }
 }
 
-class JsonOutputJsonHandler: JsonHandlerProtocol {
+class JsonOutputJsonHandler: AbstractJsonHandler {
     
     let memOutputStream : MemOutputStream!
     let jw:JsonWriter!
@@ -571,44 +577,44 @@ class JsonOutputJsonHandler: JsonHandlerProtocol {
         }
     }
     
-    init(){
+    override init(){
         memOutputStream = MemOutputStream()
         jw = JsonWriter(outputStream: memOutputStream)
     }
     
-    func startArray(){
+    override func startArray(){
         try! jw.writeStartArray()
     }
     
-    func endArray(){
+    override func endArray(){
         try! jw.writeEndArray()
     }
     
-    func startObject() {
+    override func startObject() {
         try! jw.writeStartObject()
     }
     
-    func endObject() {
+    override func endObject() {
         try! jw.writeEndObject()
     }
     
-    func name(name: String){
+    override func name(name: String){
         try! jw.writeFieldName(name)
     }
     
-    func stringValue(value: String) {
+    override func stringValue(value: String) {
         try! jw.writeString(value)
     }
     
-    func numberValue(value: NSNumber) {
+    override func numberValue(value: NSNumber) {
         try! jw.writeNumber(value)
     }
     
-    func boolValue(value: Bool) {
+    override func boolValue(value: Bool) {
         try! jw.writeBool(value)
     }
     
-    func nullValue() {
+    override func nullValue() {
         try! jw.writeNull()
     }
     

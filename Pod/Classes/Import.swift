@@ -8,12 +8,13 @@
 
 import Foundation
 
-// {"metaData":{"creationDate":1445344592172.305,"profileName":"out\"put","version":"1.0.0","type":"JsonSingleDocExportTarget"},
+// {"metaData":{"creationDate":1445344592172.305,"profileName":"output","version":"1.0.0","type":"JsonSingleDocExportTarget"},
 class MetaDataOutputJsonHandler: AbstractJsonHandler {
     
     var name:String?
     var collectProperties = false
     var metaDataDict:Dictionary<String,AnyObject> = [:]
+    var cancel = false
     
     func getMetaData() -> Dictionary<String,AnyObject> {
         return metaDataDict
@@ -29,15 +30,13 @@ class MetaDataOutputJsonHandler: AbstractJsonHandler {
     
     override func endObject() {
         if collectProperties {
-            // FIXME cancel handler - all done
-            print(metaDataDict)
             collectProperties = false
+            cancel = true
         }
     }
     
     override func stringValue(value: String){
         if collectProperties {
-            print(value)
             metaDataDict[name!] = value
         }
     }
@@ -45,5 +44,9 @@ class MetaDataOutputJsonHandler: AbstractJsonHandler {
         if collectProperties {
             metaDataDict[name!] = value
         }
+    }
+    
+    override func shouldCancelReadingTheJson() -> Bool {
+        return cancel;
     }
 }
