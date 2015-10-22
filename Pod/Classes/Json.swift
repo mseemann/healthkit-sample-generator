@@ -357,13 +357,13 @@ internal class JsonReaderContext {
     
     var nameOrObject = "" {
         didSet {
-           print("nameOrObject:", nameOrObject)
+           //print("nameOrObject:", nameOrObject)
         }
     }
     
     var inNameOrObject = false {
         didSet {
-           print("in name or object:", inNameOrObject)
+           //print("in name or object:", inNameOrObject)
         }
     }
     
@@ -378,12 +378,12 @@ internal class JsonReaderContext {
     }
     
     func createArrayContext() -> JsonReaderContext {
-        print("create array context")
+        //print("create array context")
         return JsonReaderContext(parent: self, type: .ARRAY)
     }
     
     func createObjectContext() -> JsonReaderContext {
-        print("create object context")
+        //print("create object context")
         return JsonReaderContext(parent: self, type: .OBJECT)
     }
     
@@ -405,16 +405,13 @@ internal class JsonTokenizer {
     
     internal func removeQuestionMarks(str: String) -> String{
         var result = str
-        print(result)
         result.removeAtIndex(result.startIndex)
-        print(result)
         result.removeAtIndex(result.endIndex.predecessor())
-        print(result)
         return result
     }
     
     internal func writeName(context: JsonReaderContext) {
-        print("writeName", context.nameOrObject)
+        //print("writeName", context.nameOrObject)
         let name = removeQuestionMarks(context.nameOrObject)
         jsonHandler.name(name)
         context.nameOrObject = ""
@@ -422,13 +419,12 @@ internal class JsonTokenizer {
     }
     
     internal func writeValue(context: JsonReaderContext){
-        print("writeValue", context.nameOrObject)
+        //print("writeValue", context.nameOrObject)
         let value = context.nameOrObject
         context.nameOrObject = ""
         
         if value.hasPrefix("\"") &&  value.hasSuffix("\""){
             let strValue = removeQuestionMarks(value)
-            print(strValue)
             self.jsonHandler.stringValue(strValue)
         } else if value == "true" {
             self.jsonHandler.boolValue(true)
@@ -460,7 +456,7 @@ internal class JsonTokenizer {
     
     func tokenize(toTokenize: String) -> Void {
         for chr in toTokenize.characters {
-            print(chr)
+            //print(chr)
             switch chr {
             case "\"":
                 if !context.inNameOrObject {
@@ -530,8 +526,6 @@ internal class JsonTokenizer {
             default:
                 if context.inNameOrObject {
                     context.nameOrObject += String(chr)
-                } else {
-                    print("error: may allways be part of name or object")
                 }
             }
         }
