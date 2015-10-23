@@ -24,7 +24,12 @@ class DataExporterTest: QuickSpec {
         let exportConfiguration = HealthDataFullExportConfiguration(profileName: self.profileName, exportType: HealthDataToExportType.ALL)
         
         describe("MetaData and UserData Export") {
-        
+            
+            it("should make sure the JsonSingleDocInMemExportTarget is always valid"){
+                let target = JsonSingleDocInMemExportTarget()
+                
+                expect(target.isValid()) == true
+            }
             
             it ("should export the meta data") {
             

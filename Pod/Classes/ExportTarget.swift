@@ -27,6 +27,7 @@ public protocol ExportTarget {
     func writeDictionary(entry:Dictionary <String, AnyObject>) throws -> Void
 }
 
+
 public class JsonSingleDocExportTarget  {
     
     private(set) var jsonWriter: JsonWriter
