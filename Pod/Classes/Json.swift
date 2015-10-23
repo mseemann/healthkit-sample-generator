@@ -566,7 +566,7 @@ class DefaultJsonHandler : JsonHandlerProtocol {
     }
 }
 
-class JsonOutputJsonHandler: DefaultJsonHandler {
+class JsonStringOutputJsonHandler: DefaultJsonHandler {
     
     let memOutputStream : MemOutputStream!
     let jw:JsonWriter!

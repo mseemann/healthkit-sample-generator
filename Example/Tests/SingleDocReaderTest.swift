@@ -21,13 +21,13 @@ class SigleDocReaderTest: QuickSpec {
             let exist = NSFileManager.defaultManager().fileExistsAtPath(fileAtPath!)
             expect(exist) == true
             
-            let testJH = JsonOutputJsonHandler()
+            let jsonStringOutputHandler = JsonStringOutputJsonHandler()
             
-            try! JsonReader.readFileAtPath(fileAtPath!, withJsonHandler: testJH)
+            try! JsonReader.readFileAtPath(fileAtPath!, withJsonHandler: jsonStringOutputHandler)
 
             let stringFromFile = try! NSString(contentsOfFile: fileAtPath!, encoding: NSUTF8StringEncoding) as String
             
-            expect(stringFromFile).to(equal(testJH.json))
+            expect(stringFromFile).to(equal(jsonStringOutputHandler.json))
         }
         
         it("should read the metadata - and cancel after that"){
