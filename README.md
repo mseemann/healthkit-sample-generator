@@ -9,13 +9,15 @@ Easy to use generator for HealthKit Sample Data that can be used in code and in 
 
 Status: 
 * Export of HealthData 100%
-* Import HelathData 0%
+* Import HelathData 5%
 * Generate HelthData 0%
 
 Next Step:
+* complete import of HealthData
 * improve test coverage
 * improve documentation
 * polish api
+* release version 1.0.0
 
 [![CI Status](http://img.shields.io/travis/mseemann/healthkit-sample-generator.svg?style=flat)](https://travis-ci.org/mseemann/healthkit-sample-generator)
 [![Version](https://img.shields.io/cocoapods/v/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
