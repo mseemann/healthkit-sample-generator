@@ -27,14 +27,17 @@ class ProfilesTableViewController: UITableViewController {
         let documentsUrl    = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         let enumerator = NSFileManager.defaultManager().enumeratorAtPath(documentsUrl.path!)
         for file in enumerator! {
-            profiles.append(HealthkitProfile(fileAtPath:documentsUrl.URLByAppendingPathComponent(file as! String)))
+            let pathUrl = documentsUrl.URLByAppendingPathComponent(file as! String)
+            if NSFileManager.defaultManager().isReadableFileAtPath(pathUrl.path!) && pathUrl.pathExtension == "hsg" {
+                profiles.append(HealthkitProfile(fileAtPath:pathUrl))
+            }
         }
         tableView.reloadData()
     }
     
 }
 
-// TableView Datasource
+// TableView DataSource
 extension ProfilesTableViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -51,11 +54,10 @@ extension ProfilesTableViewController {
         
         cell.textLabel?.text = profile.fileName
         
-        print(profile)
-        
         profile.loadMetaData({ (metaData:HealthkitProfileMetaData) in
 
             NSOperationQueue.mainQueue().addOperationWithBlock(){
+                
                 let from = metaData.creationDate != nil ? self.formatter.stringFromDate(metaData.creationDate!) : "unknown"
                 let profileName = metaData.profileName != nil ? metaData.profileName! : "unknown"
                 
