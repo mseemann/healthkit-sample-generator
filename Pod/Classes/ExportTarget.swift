@@ -86,7 +86,7 @@ public class JsonSingleDocExportTarget  {
     }
 }
 
-public class JsonSingleDocAsFileExportTarget : JsonSingleDocExportTarget, ExportTarget{
+public class JsonSingleDocAsFileExportTarget : JsonSingleDocExportTarget, ExportTarget {
     
     private(set) public var outputFileName: String
     private(set) var overwriteIfExist = false

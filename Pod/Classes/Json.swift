@@ -341,7 +341,7 @@ internal class JsonReader {
         let bufferSize = 4096
         var buffer = Array<UInt8>(count: bufferSize, repeatedValue: 0)
         
-        while inStream.hasBytesAvailable {
+        while inStream.hasBytesAvailable && !jsonHandler.shouldCancelReadingTheJson() {
             let bytesRead = inStream.read(&buffer, maxLength: bufferSize)
             if bytesRead > 0 {
                 let textFileContents = NSString(bytes: &buffer, length: bytesRead, encoding: NSUTF8StringEncoding)!
