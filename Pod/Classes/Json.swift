@@ -423,6 +423,7 @@ internal class JsonTokenizer {
         let value = context.nameOrObject
         context.nameOrObject = ""
         
+        
         if value.hasPrefix("\"") &&  value.hasSuffix("\""){
             let strValue = removeQuestionMarks(value)
             self.jsonHandler.stringValue(strValue)

@@ -15,7 +15,34 @@ class JsonReaderTest: QuickSpec {
     
     override func spec() {
         
-        describe("") {
+        describe("read json and work together with the default handler") {
+            
+            it("should call every method of the jsonHandler"){
+                class TestJsonHandler : DefaultJsonHandler {
+                    var functionCalled = Set<String>()
+                    override func startArray(){super.startArray(); functionCalled.insert("a") }
+                    override func endArray(){super.endArray(); functionCalled.insert("b")}
+                    
+                    override func startObject(){super.startObject(); functionCalled.insert("c")}
+                    override func endObject(){super.endObject(); functionCalled.insert("d")}
+                    
+                    override func name(name: String){super.name(name); functionCalled.insert("e")}
+                    override func stringValue(value: String){super.stringValue(value); functionCalled.insert("f")}
+                    override func boolValue(value: Bool){super.boolValue(value); functionCalled.insert("g")}
+                    override func numberValue(value: NSNumber){super.numberValue(value); functionCalled.insert("h")}
+                    override func nullValue(){super.nullValue(); functionCalled.insert("i")}
+                }
+                
+                let testHandler = TestJsonHandler()
+                
+                let tokenizer = JsonTokenizer(jsonHandler: testHandler)
+                tokenizer.tokenize("{\"a\":[1,true,\"string\",null]}")
+
+                expect(testHandler.functionCalled.count) == 9
+            }
+        }
+        
+        describe("read json and write the same via jsonwriter") {
             var jsonStringOutputHandler:JsonStringOutputJsonHandler!
             var tokenizer:JsonTokenizer!
         
