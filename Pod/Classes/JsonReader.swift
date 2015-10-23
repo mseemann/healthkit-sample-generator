@@ -88,10 +88,13 @@ internal class JsonTokenizer {
     // TODO escpaped chars  "b", "f", "n", "r", "t", "\\" whitespace
     let jsonHandler: JsonHandlerProtocol
     var context = JsonReaderContext()
+    let numberFormatter = NSNumberFormatter()
     
     
     init(jsonHandler: JsonHandlerProtocol){
         self.jsonHandler = jsonHandler
+        // set to en, so that the numbers with . will be parsed correctly
+        self.numberFormatter.locale = NSLocale(localeIdentifier: "EN")
     }
     
     internal func removeQuestionMarks(str: String) -> String{
@@ -125,7 +128,7 @@ internal class JsonTokenizer {
         } else  if value == "null" {
             self.jsonHandler.nullValue()
         } else  {
-            let number = NSNumberFormatter().numberFromString(value)!
+            let number = numberFormatter.numberFromString(value)!
             self.jsonHandler.numberValue(number)
         }
     }

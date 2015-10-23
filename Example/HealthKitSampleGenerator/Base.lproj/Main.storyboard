@@ -235,6 +235,9 @@
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <connections>
+                                    <segue destination="ubF-u6-HfB" kind="show" id="uEA-5w-n1c"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -271,7 +274,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pWk-w1-7IZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-401" y="-1745"/>
+            <point key="canvasLocation" x="-269" y="-1997"/>
+        </scene>
+        <!--Import Profile-->
+        <scene sceneID="T0B-n2-KSG">
+            <objects>
+                <viewController title="Import Profile" id="ubF-u6-HfB" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RhS-x9-0lg"/>
+                        <viewControllerLayoutGuide type="bottom" id="coC-Mq-EXA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1bE-vr-e3L">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sxN-1n-sAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-269" y="-1323"/>
         </scene>
         <!--Profiles-->
         <scene sceneID="bAL-YN-fm4">

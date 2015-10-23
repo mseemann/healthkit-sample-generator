@@ -22,23 +22,32 @@ class ProfilesTableViewController: UITableViewController {
         formatter.timeStyle = NSDateFormatterStyle.MediumStyle
         
         navigationItem.leftBarButtonItem = editButtonItem();
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // make sure the table view is not in editing mode
-        tableView.setEditing(false, animated: false)
         
         profiles.removeAll()
         let documentsUrl    = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         let enumerator = NSFileManager.defaultManager().enumeratorAtPath(documentsUrl.path!)
         for file in enumerator! {
+            print(file)
             let pathUrl = documentsUrl.URLByAppendingPathComponent(file as! String)
             if NSFileManager.defaultManager().isReadableFileAtPath(pathUrl.path!) && pathUrl.pathExtension == "hsg" {
                 profiles.append(HealthkitProfile(fileAtPath:pathUrl))
             }
         }
         tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        // make sure the table view is not in editing mode
+        if tableView.editing {
+            tableView.setEditing(false, animated: true)
+        }
     }
     
 }
