@@ -1,39 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="iH5-IJ-PIg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="iH5-IJ-PIg">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Profile-->
-        <scene sceneID="kbr-pg-aXk">
-            <objects>
-                <viewController title="Profile" id="cBN-zd-gg0" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="XmJ-pY-is4"/>
-                        <viewControllerLayoutGuide type="bottom" id="NYv-0g-PwD"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="nYf-Tz-hOS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLF-qo-owr">
-                                <rect key="frame" x="255" y="283" width="87" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Profile" id="VgN-Zy-ZhG"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="y60-vK-6B0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1713" y="-1444"/>
-        </scene>
         <!--Export-->
         <scene sceneID="eAY-Np-2HO">
             <objects>
@@ -227,6 +198,76 @@
             </objects>
             <point key="canvasLocation" x="-1729" y="-2465"/>
         </scene>
+        <!--Profiles-->
+        <scene sceneID="TdT-Oh-wvE">
+            <objects>
+                <tableViewController title="Profiles" id="fq8-NZ-ca6" customClass="ProfilesTableViewController" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="tRw-WO-C6b">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="profileCell" textLabel="BK2-Fl-7Te" detailTextLabel="46x-mg-uom" style="IBUITableViewCellStyleSubtitle" id="wYT-1L-WBA">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wYT-1L-WBA" id="ZZl-yg-Do9">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BK2-Fl-7Te">
+                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="46x-mg-uom">
+                                            <rect key="frame" x="15" y="25.5" width="30.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fq8-NZ-ca6" id="8f7-Rq-ewb"/>
+                            <outlet property="delegate" destination="fq8-NZ-ca6" id="fA7-0F-DO2"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Profiles" id="h87-g0-wco">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="LgG-9w-LcB"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KKB-fB-Kai" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1054" y="-1734"/>
+        </scene>
+        <!--Profiles-->
+        <scene sceneID="bAL-YN-fm4">
+            <objects>
+                <navigationController title="Profiles" id="dnD-aq-eoh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profiles" id="Ejh-Mg-uOH"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CaF-Oo-OfK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="fq8-NZ-ca6" kind="relationship" relationship="rootViewController" id="aIB-tr-pXq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YSu-By-q2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1764" y="-1734"/>
+        </scene>
         <!--Main Tab Controller-->
         <scene sceneID="qKZ-aP-peG">
             <objects>
@@ -239,7 +280,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="sxH-Cz-h7O" kind="relationship" relationship="viewControllers" id="9c9-Hh-g8j"/>
-                        <segue destination="cBN-zd-gg0" kind="relationship" relationship="viewControllers" id="ilu-Fo-cCQ"/>
+                        <segue destination="dnD-aq-eoh" kind="relationship" relationship="viewControllers" id="KZP-AZ-JR4"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wUn-nd-Prw" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -99,9 +99,6 @@ internal class JsonWriter {
     */
     internal init (outputStream: OutputStream) {
         self.outputStream = outputStream
-        if !outputStream.isOpen() {
-            outputStream.open()
-        }
     }
     
     /**
@@ -300,6 +297,9 @@ internal class JsonWriter {
     }
     
     func write(theString: String) {
+        if !outputStream.isOpen() {
+            outputStream.open()
+        }
         outputStream.write(theString)
 
     }
