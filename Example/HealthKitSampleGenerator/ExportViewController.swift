@@ -128,6 +128,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
         }
         
         let documentsUrl    = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        print(documentsUrl)
         let outputFileName  = documentsUrl.URLByAppendingPathComponent(fileName+".json.hsg").path!
         
         exportTarget = JsonSingleDocAsFileExportTarget(

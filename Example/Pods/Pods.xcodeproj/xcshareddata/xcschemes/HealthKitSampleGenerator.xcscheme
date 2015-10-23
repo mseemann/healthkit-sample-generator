@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0710"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "81FB063EDB1CD7387DD91B82E3D71599"
+               BlueprintIdentifier = "9DB05EFC751028DD93CF970F1102971B"
                BuildableName = "HealthKitSampleGenerator.framework"
                BlueprintName = "HealthKitSampleGenerator"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -43,7 +43,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "81FB063EDB1CD7387DD91B82E3D71599"
+            BlueprintIdentifier = "9DB05EFC751028DD93CF970F1102971B"
             BuildableName = "HealthKitSampleGenerator.framework"
             BlueprintName = "HealthKitSampleGenerator"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -65,7 +65,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "81FB063EDB1CD7387DD91B82E3D71599"
+            BlueprintIdentifier = "9DB05EFC751028DD93CF970F1102971B"
             BuildableName = "HealthKitSampleGenerator.framework"
             BlueprintName = "HealthKitSampleGenerator"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -83,7 +83,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "81FB063EDB1CD7387DD91B82E3D71599"
+            BlueprintIdentifier = "9DB05EFC751028DD93CF970F1102971B"
             BuildableName = "HealthKitSampleGenerator.framework"
             BlueprintName = "HealthKitSampleGenerator"
             ReferencedContainer = "container:Pods.xcodeproj">
