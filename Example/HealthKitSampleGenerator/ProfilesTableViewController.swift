@@ -14,15 +14,21 @@ class ProfilesTableViewController: UITableViewController {
     
     let formatter = NSDateFormatter()
     var profiles:[HealthkitProfile] = []
- 
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         formatter.dateStyle = NSDateFormatterStyle.MediumStyle
         formatter.timeStyle = NSDateFormatterStyle.MediumStyle
+        
+        navigationItem.leftBarButtonItem = editButtonItem();
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        // make sure the table view is not in editing mode
+        tableView.setEditing(false, animated: false)
+        
         profiles.removeAll()
         let documentsUrl    = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         let enumerator = NSFileManager.defaultManager().enumeratorAtPath(documentsUrl.path!)
@@ -68,4 +74,38 @@ extension ProfilesTableViewController {
         return cell
         
     }
+    
+}
+
+// UITableViewDelegate
+extension ProfilesTableViewController {
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            
+            let profile = profiles[indexPath.row]
+            
+            let alert = UIAlertController(
+                            title: "Delete Profile \(profile.fileName)",
+                            message: "Do you really want to delete this prolfile? The file will be deleted! This can not be undone!",
+                            preferredStyle: .Alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes, delete it!", style: .Destructive, handler: { action in
+                do {
+                    try profile.deleteFile()
+                    self.profiles.removeAtIndex(indexPath.row)
+                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation:.Automatic)
+                } catch let error {
+                    let errorAlert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .Alert)
+                    errorAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                    self.presentViewController(errorAlert, animated: true, completion: nil)
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
 }

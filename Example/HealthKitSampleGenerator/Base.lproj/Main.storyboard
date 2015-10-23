@@ -243,12 +243,35 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Profiles" id="h87-g0-wco">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="LgG-9w-LcB"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="LgG-9w-LcB">
+                            <connections>
+                                <segue destination="Wx6-F1-uyb" kind="show" id="xDD-Yf-qyh"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KKB-fB-Kai" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1054" y="-1734"/>
+        </scene>
+        <!--New Profile-->
+        <scene sceneID="1fO-iV-i3b">
+            <objects>
+                <viewController title="New Profile" id="Wx6-F1-uyb" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="We0-wD-Vwp"/>
+                        <viewControllerLayoutGuide type="bottom" id="c9Q-r1-Zgx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6CQ-bS-ZuC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pWk-w1-7IZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-401" y="-1745"/>
         </scene>
         <!--Profiles-->
         <scene sceneID="bAL-YN-fm4">

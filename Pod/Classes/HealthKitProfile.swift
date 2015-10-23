@@ -63,4 +63,7 @@ public class HealthkitProfile : CustomStringConvertible {
         }
     }
     
+    public func deleteFile() throws {
+        try NSFileManager.defaultManager().removeItemAtPath(fileAtPath.path!)
+    }
 }
