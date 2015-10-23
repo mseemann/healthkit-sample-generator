@@ -43,8 +43,8 @@ public class HealthkitProfile : CustomStringConvertible {
         
         fileReadQueu.addOperationWithBlock(){
             
-            let result = HealthkitProfileMetaData()
-            let metaDataOutput = MetaDataOutputJsonHandler()
+            let result          = HealthkitProfileMetaData()
+            let metaDataOutput  = MetaDataOutputJsonHandler()
             
             try! JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: metaDataOutput)
             

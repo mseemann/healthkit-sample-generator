@@ -112,6 +112,35 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2F3C4D7D1BDAAB5600B91D60 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */,
+				2F4D1F721BD6A38B000290C4 /* JsonReaderTest.swift */,
+				2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */,
+				2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		2F3C4D7E1BDAAB5D00B91D60 /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				2F4D1F701BD66D80000290C4 /* SingleDocReaderTest.swift */,
+			);
+			name = Import;
+			sourceTree = "<group>";
+		};
+		2F3C4D7F1BDAAB6200B91D60 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */,
+				2F4D1F6C1BD65017000290C4 /* ExportTest.swift */,
+				2F4D1F6A1BD5250C000290C4 /* ExportConfigurationTest.swift */,
+			);
+			name = Export;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -164,15 +193,10 @@
 			isa = PBXGroup;
 			children = (
 				607FACE91AFB9204008FA782 /* Supporting Files */,
-				2F4D1F6C1BD65017000290C4 /* ExportTest.swift */,
-				2F9E30621BC2AA940005DF72 /* JsonWriterTest.swift */,
-				2F4D1F721BD6A38B000290C4 /* JsonReaderTest.swift */,
-				2F4D1F701BD66D80000290C4 /* SingleDocReaderTest.swift */,
-				2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */,
-				2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */,
+				2F3C4D7F1BDAAB6200B91D60 /* Export */,
+				2F3C4D7E1BDAAB5D00B91D60 /* Import */,
+				2F3C4D7D1BDAAB5600B91D60 /* Util */,
 				2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */,
-				2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */,
-				2F4D1F6A1BD5250C000290C4 /* ExportConfigurationTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
