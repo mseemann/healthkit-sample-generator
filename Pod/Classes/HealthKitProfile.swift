@@ -8,14 +8,14 @@
 
 import Foundation
 
-public class HealthkitProfileMetaData {
+public class HealthKitProfileMetaData {
     private(set) public var profileName: String?
     private(set) public var creationDate: NSDate?
     private(set) public var version: String?
     private(set) public var type: String?
 }
 
-public class HealthkitProfile : CustomStringConvertible {
+public class HealthKitProfile : CustomStringConvertible {
     
     let fileAtPath: NSURL
     private(set) public var fileName: String
@@ -39,11 +39,11 @@ public class HealthkitProfile : CustomStringConvertible {
         }
     }
     
-    public func loadMetaData( callback:(metaData: HealthkitProfileMetaData) -> Void ){
+    public func loadMetaData( callback:(metaData: HealthKitProfileMetaData) -> Void ){
         
         fileReadQueu.addOperationWithBlock(){
             
-            let result          = HealthkitProfileMetaData()
+            let result          = HealthKitProfileMetaData()
             let metaDataOutput  = MetaDataOutputJsonHandler()
             
             try! JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: metaDataOutput)

@@ -13,7 +13,7 @@ import HealthKitSampleGenerator
 class ProfilesTableViewController: UITableViewController {
     
     let formatter = NSDateFormatter()
-    var profiles:[HealthkitProfile] = []
+    var profiles:[HealthKitProfile] = []
 
     
     override func viewDidLoad() {
@@ -29,16 +29,9 @@ class ProfilesTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        profiles.removeAll()
-        let documentsUrl    = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-        let enumerator = NSFileManager.defaultManager().enumeratorAtPath(documentsUrl.path!)
-        for file in enumerator! {
-            print(file)
-            let pathUrl = documentsUrl.URLByAppendingPathComponent(file as! String)
-            if NSFileManager.defaultManager().isReadableFileAtPath(pathUrl.path!) && pathUrl.pathExtension == "hsg" {
-                profiles.append(HealthkitProfile(fileAtPath:pathUrl))
-            }
-        }
+        let documentsUrl = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        profiles = HealthKitProfileReader.readProfilesFromDisk(documentsUrl)
+        
         tableView.reloadData()
     }
     
@@ -69,7 +62,7 @@ extension ProfilesTableViewController {
         
         cell.textLabel?.text = profile.fileName
         
-        profile.loadMetaData({ (metaData:HealthkitProfileMetaData) in
+        profile.loadMetaData({ (metaData:HealthKitProfileMetaData) in
 
             NSOperationQueue.mainQueue().addOperationWithBlock(){
                 

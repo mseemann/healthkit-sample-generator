@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		2519807D2C1089FBBE7DAB86 /* Pods_HealthKitSampleGenerator_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */; };
 		2F3C4D751BDA4F4200B91D60 /* ProfilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C4D741BDA4F4200B91D60 /* ProfilesTableViewController.swift */; };
+		2F3C4D841BDB61FA00B91D60 /* HealthKitProfileReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C4D821BDB61F600B91D60 /* HealthKitProfileReaderTest.swift */; };
 		2F4D1F651BD41374000290C4 /* OutputStreamTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */; };
 		2F4D1F671BD4D312000290C4 /* HealthKitStoreMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */; };
 		2F4D1F691BD4DD64000290C4 /* DataExporterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */; };
 		2F4D1F6B1BD5250C000290C4 /* ExportConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F6A1BD5250C000290C4 /* ExportConfigurationTest.swift */; };
 		2F4D1F6D1BD65017000290C4 /* ExportTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F6C1BD65017000290C4 /* ExportTest.swift */; };
-		2F4D1F6F1BD66D57000290C4 /* version-1.0.0.single-doc.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json */; };
+		2F4D1F6F1BD66D57000290C4 /* version-1.0.0.single-doc.json.hsg in Resources */ = {isa = PBXBuildFile; fileRef = 2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json.hsg */; };
 		2F4D1F711BD66D80000290C4 /* SingleDocReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F701BD66D80000290C4 /* SingleDocReaderTest.swift */; };
 		2F4D1F731BD6A38B000290C4 /* JsonReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F721BD6A38B000290C4 /* JsonReaderTest.swift */; };
 		2F8DF7D11BD2BC67000F797F /* FileNameUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */; };
@@ -45,12 +46,13 @@
 		162271BC1D58D2A3973BF2B9 /* Pods-HealthKitSampleGenerator_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthKitSampleGenerator_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-HealthKitSampleGenerator_Example/Pods-HealthKitSampleGenerator_Example.release.xcconfig"; sourceTree = "<group>"; };
 		2629469B90C63E0981BD4420 /* HealthKitSampleGenerator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HealthKitSampleGenerator.podspec; path = ../HealthKitSampleGenerator.podspec; sourceTree = "<group>"; };
 		2F3C4D741BDA4F4200B91D60 /* ProfilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTableViewController.swift; sourceTree = "<group>"; };
+		2F3C4D821BDB61F600B91D60 /* HealthKitProfileReaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitProfileReaderTest.swift; sourceTree = "<group>"; };
 		2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputStreamTest.swift; sourceTree = "<group>"; };
 		2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitStoreMock.swift; sourceTree = "<group>"; };
 		2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExporterTest.swift; sourceTree = "<group>"; };
 		2F4D1F6A1BD5250C000290C4 /* ExportConfigurationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportConfigurationTest.swift; sourceTree = "<group>"; };
 		2F4D1F6C1BD65017000290C4 /* ExportTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportTest.swift; sourceTree = "<group>"; };
-		2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "version-1.0.0.single-doc.json"; sourceTree = "<group>"; };
+		2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json.hsg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "version-1.0.0.single-doc.json.hsg"; sourceTree = "<group>"; };
 		2F4D1F701BD66D80000290C4 /* SingleDocReaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleDocReaderTest.swift; sourceTree = "<group>"; };
 		2F4D1F721BD6A38B000290C4 /* JsonReaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonReaderTest.swift; sourceTree = "<group>"; };
 		2F8DF7CF1BD2BBDF000F797F /* FileNameUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileNameUtilTest.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				2F4D1F701BD66D80000290C4 /* SingleDocReaderTest.swift */,
+				2F3C4D821BDB61F600B91D60 /* HealthKitProfileReaderTest.swift */,
 			);
 			name = Import;
 			sourceTree = "<group>";
@@ -205,7 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACEA1AFB9204008FA782 /* Info.plist */,
-				2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json */,
+				2F4D1F6E1BD66D57000290C4 /* version-1.0.0.single-doc.json.hsg */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -336,7 +339,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F4D1F6F1BD66D57000290C4 /* version-1.0.0.single-doc.json in Resources */,
+				2F4D1F6F1BD66D57000290C4 /* version-1.0.0.single-doc.json.hsg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +459,7 @@
 				2F4D1F6B1BD5250C000290C4 /* ExportConfigurationTest.swift in Sources */,
 				2F4D1F731BD6A38B000290C4 /* JsonReaderTest.swift in Sources */,
 				2F8DF7D11BD2BC67000F797F /* FileNameUtilTest.swift in Sources */,
+				2F3C4D841BDB61FA00B91D60 /* HealthKitProfileReaderTest.swift in Sources */,
 				2F4D1F671BD4D312000290C4 /* HealthKitStoreMock.swift in Sources */,
 				2F9E30631BC2AA940005DF72 /* JsonWriterTest.swift in Sources */,
 				2F4D1F651BD41374000290C4 /* OutputStreamTest.swift in Sources */,

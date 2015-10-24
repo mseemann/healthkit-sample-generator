@@ -15,7 +15,7 @@ import Nimble
 class SigleDocReaderTest: QuickSpec {
 
     override func spec() {
-        let fileAtPath = NSBundle(forClass: self.dynamicType).pathForResource("version-1.0.0.single-doc", ofType: "json")
+        let fileAtPath = NSBundle(forClass: self.dynamicType).pathForResource("version-1.0.0.single-doc.json", ofType: "hsg")
 
         it("should read a single doc json file from version 1.0.0") {
             let exist = NSFileManager.defaultManager().fileExistsAtPath(fileAtPath!)
