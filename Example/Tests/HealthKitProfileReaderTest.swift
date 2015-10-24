@@ -45,8 +45,8 @@ class HealthKitProfileReaderTest: QuickSpec {
                     type            = metaData.type
                 }
              
-                waitUntil(timeout:3) { done in
-                    NSThread.sleepForTimeInterval(2)
+                waitUntil { done in
+                    NSThread.sleepForTimeInterval(0.5)
                     done()
                 }
                 
