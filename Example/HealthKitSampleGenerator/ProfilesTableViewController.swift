@@ -62,7 +62,7 @@ extension ProfilesTableViewController {
         
         cell.textLabel?.text = profile.fileName
         
-        profile.loadMetaData({ (metaData:HealthKitProfileMetaData) in
+        profile.loadMetaData(true) { (metaData:HealthKitProfileMetaData) in
 
             NSOperationQueue.mainQueue().addOperationWithBlock(){
                 
@@ -72,7 +72,7 @@ extension ProfilesTableViewController {
                 cell.detailTextLabel?.text = "\(profileName) from: \(from)"
             }
 
-        })
+        }
         return cell
         
     }

@@ -39,27 +39,33 @@ public class HealthKitProfile : CustomStringConvertible {
         }
     }
     
-    public func loadMetaData( callback:(metaData: HealthKitProfileMetaData) -> Void ){
+    internal func loadMetaData() -> HealthKitProfileMetaData{
+        let result          = HealthKitProfileMetaData()
+        let metaDataOutput  = MetaDataOutputJsonHandler()
         
-        fileReadQueu.addOperationWithBlock(){
-            
-            let result          = HealthKitProfileMetaData()
-            let metaDataOutput  = MetaDataOutputJsonHandler()
-            
-            try! JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: metaDataOutput)
-            
-            let metaData = metaDataOutput.getMetaData()
-            
-            if let dateTime = metaData["creationDate"] as? NSNumber {
-                result.creationDate = NSDate(timeIntervalSince1970: dateTime.doubleValue/1000)
+        try! JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: metaDataOutput)
+        
+        let metaData = metaDataOutput.getMetaData()
+        
+        if let dateTime = metaData["creationDate"] as? NSNumber {
+            result.creationDate = NSDate(timeIntervalSince1970: dateTime.doubleValue/1000)
+        }
+        
+        result.profileName  = metaData["profileName"] as? String
+        result.version      = metaData["version"] as? String
+        result.type         = metaData["type"] as? String
+        
+        return result
+    }
+    
+    public func loadMetaData(asynchronous:Bool, callback:(metaData: HealthKitProfileMetaData) -> Void ){
+        
+        if asynchronous {
+            fileReadQueu.addOperationWithBlock(){
+                callback(metaData: self.loadMetaData())
             }
-            
-            result.profileName  = metaData["profileName"] as? String
-            result.version      = metaData["version"] as? String
-            result.type         = metaData["type"] as? String
-            
-            
-            callback(metaData: result)
+        } else {
+            callback(metaData: loadMetaData())
         }
     }
     

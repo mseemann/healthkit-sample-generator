@@ -31,27 +31,15 @@ class HealthKitProfileReaderTest: QuickSpec {
             
             it("should read the profile metadata"){
                 let profile = profiles[0]
-                var creationDate:NSDate?
-                var profileName:String?
-                var version:String?
-                var type:String?
                 
                 let testDate = NSDate(timeIntervalSince1970: 1445344592172.305/1000 )
                 
-                profile.loadMetaData(){ (metaData:HealthKitProfileMetaData) in
-                    NSOperationQueue.mainQueue().addOperationWithBlock(){
-                        creationDate    = metaData.creationDate
-                        profileName     = metaData.profileName
-                        version         = metaData.version
-                        type            = metaData.type
-                    }
+                profile.loadMetaData(false){ (metaData:HealthKitProfileMetaData) in
+                    expect(metaData.creationDate) == testDate
+                    expect(metaData.profileName) == "output"
+                    expect(metaData.version) == "1.0.0"
+                    expect(metaData.type)   == "JsonSingleDocExportTarget"
                 }
-
-                
-                expect(creationDate).toEventually(equal(testDate), timeout: 5)
-                expect(profileName) .toEventually(equal("output"), timeout: 5)
-                expect(version)     .toEventually(equal("1.0.0"), timeout: 5)
-                expect(type)        .toEventually(equal("JsonSingleDocExportTarget"), timeout: 5)
             }
             
             it("shoudl delete a profile"){
