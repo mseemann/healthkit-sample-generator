@@ -43,10 +43,10 @@ class HealthKitProfileReaderTest: QuickSpec {
                     type            = metaData.type
                 }
              
-                expect(creationDate).toNotEventually(beNil(), timeout: 2)
-                expect(profileName) .toEventually(equal("output"), timeout: 2)
-                expect(version)     .toEventually(equal("1.0.0"), timeout: 2)
-                expect(type)        .toEventually(equal("JsonSingleDocExportTarget"), timeout: 2)
+                expect(creationDate).toNotEventually(beNil(), timeout: 5)
+                expect(profileName) .toEventually(equal("output"), timeout: 5)
+                expect(version)     .toEventually(equal("1.0.0"), timeout: 5)
+                expect(type)        .toEventually(equal("JsonSingleDocExportTarget"), timeout: 5)
             }
             
             it("shoudl delete a profile"){
