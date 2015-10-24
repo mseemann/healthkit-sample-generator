@@ -37,17 +37,20 @@ class HealthKitProfileReaderTest: QuickSpec {
                 var type:String?
                 
                 let testDate = NSDate(timeIntervalSince1970: 1445344592172.305/1000 )
-                print(testDate)
                 
                 profile.loadMetaData(){ (metaData:HealthKitProfileMetaData) in
                     creationDate    = metaData.creationDate
                     profileName     = metaData.profileName
                     version         = metaData.version
                     type            = metaData.type
-                    print(creationDate)
                 }
              
-                expect(creationDate).toEventually(equal(testDate), timeout: 15)
+                waitUntil(timeout:3) { done in
+                    NSThread.sleepForTimeInterval(2)
+                    done()
+                }
+                
+                expect(creationDate) == testDate
                 expect(profileName) .toEventually(equal("output"), timeout: 5)
                 expect(version)     .toEventually(equal("1.0.0"), timeout: 5)
                 expect(type)        .toEventually(equal("JsonSingleDocExportTarget"), timeout: 5)
