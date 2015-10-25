@@ -15,7 +15,6 @@ public class HealthKitProfileReader {
         var profiles:[HealthKitProfile] = []
         let enumerator = NSFileManager.defaultManager().enumeratorAtPath(folder.path!)
         for file in enumerator! {
-            print(file)
             let pathUrl = folder.URLByAppendingPathComponent(file as! String)
             if NSFileManager.defaultManager().isReadableFileAtPath(pathUrl.path!) && pathUrl.pathExtension == "hsg" {
                 profiles.append(HealthKitProfile(fileAtPath:pathUrl))

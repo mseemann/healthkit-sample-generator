@@ -6,197 +6,22 @@
     </dependencies>
     <scenes>
         <!--Export-->
-        <scene sceneID="eAY-Np-2HO">
+        <scene sceneID="ptZ-WK-87q">
             <objects>
-                <viewController title="Export" id="sxH-Cz-h7O" customClass="ExportViewController" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pEL-Ow-7ku"/>
-                        <viewControllerLayoutGuide type="bottom" id="nuN-Uf-zaP"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="KU0-sR-pt9">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="om5-xh-e3w">
-                                <rect key="frame" x="20" y="28" width="560" height="357"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profilename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQm-gD-klT">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="19"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="19" id="m5f-BY-UA9"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="specify a name for the profile" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Jhs-pz-uYo" customClass="BaselineTextField" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="25" width="560" height="31"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="3hc-Gq-1I2"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="sxH-Cz-h7O" id="W2u-pP-iJs"/>
-                                        </connections>
-                                    </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Q8q-8n-ekW">
-                                        <rect key="frame" x="0.0" y="62" width="560" height="31"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export-File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGJ-wJ-Ufh">
-                                                <rect key="frame" x="0.0" y="0.0" width="189.5" height="31"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Usu-SQ-fe7">
-                                                <rect key="frame" x="193" y="0.0" width="366.5" height="31"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="overwrite if exist" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7a-aJ-xOp">
-                                                        <rect key="frame" x="0.0" y="0.0" width="312.5" height="31"/>
-                                                        <animations/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdp-Dy-FqO">
-                                                        <rect key="frame" x="317" y="0.0" width="51" height="31"/>
-                                                        <animations/>
-                                                        <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <connections>
-                                                            <action selector="swOverwriteIfExistChanged:" destination="sxH-Cz-h7O" eventType="valueChanged" id="P7v-kI-OtW"/>
-                                                        </connections>
-                                                    </switch>
-                                                </subviews>
-                                                <animations/>
-                                            </stackView>
-                                        </subviews>
-                                        <animations/>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="740" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="5oT-qN-foT">
-                                        <rect key="frame" x="0.0" y="99" width="560" height="109"/>
-                                        <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="240" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ux-oo-or9">
-                                                <rect key="frame" x="0.0" y="0.0" width="560" height="109"/>
-                                                <animations/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="109" id="3Ly-er-dj5"/>
-                                                </constraints>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textView>
-                                        </subviews>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstItem="5Ux-oo-or9" firstAttribute="leading" secondItem="5oT-qN-foT" secondAttribute="leading" id="562-yc-PgE"/>
-                                        </constraints>
-                                    </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data to export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2e-zM-GoU">
-                                        <rect key="frame" x="0.0" y="214" width="560" height="20"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="2xT-pI-G53"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hm9-Tl-d1J">
-                                        <rect key="frame" x="0.0" y="240" width="560" height="29"/>
-                                        <animations/>
-                                        <segments>
-                                            <segment title="All"/>
-                                            <segment title="Added by this App"/>
-                                            <segment title="Generated by this App"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="scEpxortDataTypeChanged:" destination="sxH-Cz-h7O" eventType="valueChanged" id="PAi-9E-3QC"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fWi-lh-Kva">
-                                        <rect key="frame" x="0.0" y="274" width="560" height="75"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="75" id="fkb-PK-OSu"/>
-                                        </constraints>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IPY-UG-PXh">
-                                        <rect key="frame" x="0.0" y="355" width="560" height="2"/>
-                                        <animations/>
-                                    </progressView>
-                                </subviews>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstItem="Jhs-pz-uYo" firstAttribute="top" secondItem="kQm-gD-klT" secondAttribute="bottom" constant="6" id="RtU-58-SWd"/>
-                                </constraints>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="1Tg-qC-7EZ">
-                                <rect key="frame" x="205" y="421" width="191" height="30"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGr-rR-ng7">
-                                        <rect key="frame" x="0.0" y="0.0" width="164" height="30"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="rcX-Y9-dCW"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <state key="normal" title="Export HealthKit Data"/>
-                                        <connections>
-                                            <action selector="doExport:" destination="sxH-Cz-h7O" eventType="touchUpInside" id="MJ9-Lr-rpQ"/>
-                                        </connections>
-                                    </button>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6pj-OF-47h">
-                                        <rect key="frame" x="171" y="0.0" width="20" height="30"/>
-                                        <animations/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <animations/>
-                            </stackView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uRv-Ue-HIe">
-                                <rect key="frame" x="20" y="473" width="560" height="70"/>
-                                <animations/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
+                <navigationController id="4MM-OJ-z11" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Export" id="ALb-Gs-Kft"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4CV-qz-Qzu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="uRv-Ue-HIe" firstAttribute="leading" secondItem="KU0-sR-pt9" secondAttribute="leadingMargin" id="0yx-m4-CQv"/>
-                            <constraint firstItem="om5-xh-e3w" firstAttribute="centerX" secondItem="KU0-sR-pt9" secondAttribute="centerX" id="7AN-WS-o02"/>
-                            <constraint firstItem="uRv-Ue-HIe" firstAttribute="trailing" secondItem="KU0-sR-pt9" secondAttribute="trailingMargin" id="Lb1-CL-Kya"/>
-                            <constraint firstItem="nuN-Uf-zaP" firstAttribute="top" secondItem="uRv-Ue-HIe" secondAttribute="bottom" constant="8" id="OI2-sl-NOB"/>
-                            <constraint firstItem="1Tg-qC-7EZ" firstAttribute="centerX" secondItem="KU0-sR-pt9" secondAttribute="centerX" id="Pe1-AH-uKi"/>
-                            <constraint firstItem="uRv-Ue-HIe" firstAttribute="top" secondItem="1Tg-qC-7EZ" secondAttribute="bottom" constant="22" id="Xr3-NS-2bV"/>
-                            <constraint firstItem="1Tg-qC-7EZ" firstAttribute="top" secondItem="om5-xh-e3w" secondAttribute="bottom" constant="36" id="YiV-KC-iew"/>
-                            <constraint firstItem="om5-xh-e3w" firstAttribute="leading" secondItem="KU0-sR-pt9" secondAttribute="leadingMargin" id="jEq-J0-qP9"/>
-                            <constraint firstItem="om5-xh-e3w" firstAttribute="top" secondItem="pEL-Ow-7ku" secondAttribute="bottom" constant="8" symbolic="YES" id="krX-iD-lXz"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Export" id="tT0-qq-KbR"/>
+                    </navigationBar>
                     <connections>
-                        <outlet property="avExporting" destination="6pj-OF-47h" id="SZU-cL-ZUZ"/>
-                        <outlet property="btnExport" destination="VGr-rR-ng7" id="zwQ-fB-5Xq"/>
-                        <outlet property="pvExportProgress" destination="IPY-UG-PXh" id="OrV-Wq-lC9"/>
-                        <outlet property="scExportType" destination="Hm9-Tl-d1J" id="HTS-sz-zpw"/>
-                        <outlet property="swOverwriteIfExist" destination="vdp-Dy-FqO" id="jSI-J5-et4"/>
-                        <outlet property="tfProfileName" destination="Jhs-pz-uYo" id="rXI-gh-D84"/>
-                        <outlet property="tvExportDescription" destination="fWi-lh-Kva" id="URv-4k-Rq0"/>
-                        <outlet property="tvExportMessages" destination="uRv-Ue-HIe" id="ZKQ-IY-Ldj"/>
-                        <outlet property="tvOutputFileName" destination="5Ux-oo-or9" id="RZD-kO-yD4"/>
+                        <segue destination="xCG-4I-ejI" kind="relationship" relationship="rootViewController" id="z5U-IR-qFt"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3rf-z3-1nj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AyP-hc-2Tz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1729" y="-2465"/>
+            <point key="canvasLocation" x="-1737" y="-2349"/>
         </scene>
         <!--Profiles-->
         <scene sceneID="TdT-Oh-wvE">
@@ -255,7 +80,203 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KKB-fB-Kai" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1054" y="-1734"/>
+            <point key="canvasLocation" x="-1014" y="-1682"/>
+        </scene>
+        <!--Export HealthKit Data-->
+        <scene sceneID="zfB-fH-p5B">
+            <objects>
+                <viewController id="xCG-4I-ejI" customClass="ExportViewController" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xir-5x-hiz"/>
+                        <viewControllerLayoutGuide type="bottom" id="kHI-oi-e14"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6wp-dZ-8z5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="KjZ-6M-ZGC">
+                                <rect key="frame" x="20" y="72" width="560" height="259"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name of the profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NoS-yv-jB1">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="20"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="19" id="B1q-uA-miY"/>
+                                            <constraint firstAttribute="height" constant="20" id="BZ7-ne-atx"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="B1q-uA-miY"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="specify a name of the profile" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bu7-mx-xcw" customClass="BaselineTextField" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="26" width="560" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="KgB-y1-sfk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="KgB-y1-sfk"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="delegate" destination="6wp-dZ-8z5" id="yy5-Qx-5JF"/>
+                                        </connections>
+                                    </textField>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="g6Z-xR-o0r">
+                                        <rect key="frame" x="0.0" y="62" width="560" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Export-File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ov-pZ-GrN">
+                                                <rect key="frame" x="0.0" y="0.0" width="190" height="31"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="fA1-gg-89Y">
+                                                <rect key="frame" x="194" y="0.0" width="367" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="overwrite if exist" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jka-3M-DQm">
+                                                        <rect key="frame" x="0.0" y="0.0" width="313" height="31"/>
+                                                        <animations/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yDt-6A-LHx">
+                                                        <rect key="frame" x="318" y="0.0" width="51" height="31"/>
+                                                        <animations/>
+                                                        <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <connections>
+                                                            <action selector="swOverwriteIfExistChanged:" destination="xCG-4I-ejI" eventType="valueChanged" id="LFW-hz-Hlp"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                                <animations/>
+                                            </stackView>
+                                        </subviews>
+                                        <animations/>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68p-jz-hD1">
+                                        <rect key="frame" x="0.0" y="99" width="560" height="15"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data to export" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0O-Gl-wIl">
+                                        <rect key="frame" x="0.0" y="120" width="560" height="20"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="IbU-ow-2tj"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3AX-xS-t4T">
+                                        <rect key="frame" x="0.0" y="146" width="560" height="29"/>
+                                        <animations/>
+                                        <segments>
+                                            <segment title="All"/>
+                                            <segment title="Added by this App"/>
+                                            <segment title="Generated by this App"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="scEpxortDataTypeChanged:" destination="xCG-4I-ejI" eventType="valueChanged" id="t5Y-lr-KZb"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5B-XR-ahR">
+                                        <rect key="frame" x="0.0" y="180" width="560" height="15"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="L8d-wM-ShY">
+                                        <rect key="frame" x="0.0" y="200" width="560" height="2"/>
+                                        <animations/>
+                                    </progressView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gA-Ty-Wvg">
+                                        <rect key="frame" x="0.0" y="208" width="560" height="15"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="aZC-kQ-7ON">
+                                        <rect key="frame" x="0.0" y="229" width="560" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvt-aZ-kz8">
+                                                <rect key="frame" x="0.0" y="0.0" width="533" height="30"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="oz6-Xz-ox9"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <state key="normal" title="Export HealthKit Data"/>
+                                                <connections>
+                                                    <action selector="doExport:" destination="xCG-4I-ejI" eventType="touchUpInside" id="MIN-u4-MLh"/>
+                                                </connections>
+                                            </button>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0N6-RH-uiq">
+                                                <rect key="frame" x="540" y="5" width="20" height="20"/>
+                                                <animations/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <animations/>
+                                    </stackView>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstItem="bu7-mx-xcw" firstAttribute="top" secondItem="KjZ-6M-ZGC" secondAttribute="top" constant="20" symbolic="YES" id="lf8-ka-NR7"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="lf8-ka-NR7"/>
+                                    </mask>
+                                </variation>
+                            </stackView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="KjZ-6M-ZGC" secondAttribute="trailing" constant="20" symbolic="YES" id="17N-n2-xYA"/>
+                            <constraint firstItem="KjZ-6M-ZGC" firstAttribute="leading" secondItem="6wp-dZ-8z5" secondAttribute="leading" constant="20" symbolic="YES" id="EWk-hF-xSM"/>
+                            <constraint firstItem="KjZ-6M-ZGC" firstAttribute="top" secondItem="Xir-5x-hiz" secondAttribute="bottom" constant="8" symbolic="YES" id="JS8-tR-NaZ"/>
+                            <constraint firstItem="KjZ-6M-ZGC" firstAttribute="top" secondItem="Xir-5x-hiz" secondAttribute="bottom" id="QKD-Tg-kss"/>
+                            <constraint firstItem="kHI-oi-e14" firstAttribute="top" secondItem="KjZ-6M-ZGC" secondAttribute="bottom" id="sIp-rZ-V1Q"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="QKD-Tg-kss"/>
+                                <exclude reference="sIp-rZ-V1Q"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Export HealthKit Data" id="vxL-CR-7bM"/>
+                    <connections>
+                        <outlet property="avExporting" destination="0N6-RH-uiq" id="N2v-6w-pAb"/>
+                        <outlet property="btnExport" destination="hvt-aZ-kz8" id="7Qj-QA-JiX"/>
+                        <outlet property="lbExportDescription" destination="b5B-XR-ahR" id="idL-SX-Bur"/>
+                        <outlet property="lbExportMessages" destination="2gA-Ty-Wvg" id="0yF-eP-T32"/>
+                        <outlet property="lbOutputFileName" destination="68p-jz-hD1" id="aY7-th-oRL"/>
+                        <outlet property="pvExportProgress" destination="L8d-wM-ShY" id="GJL-5D-zfF"/>
+                        <outlet property="scExportType" destination="3AX-xS-t4T" id="SlP-1Q-NHQ"/>
+                        <outlet property="swOverwriteIfExist" destination="yDt-6A-LHx" id="Rbt-CY-67s"/>
+                        <outlet property="tfProfileName" destination="bu7-mx-xcw" id="Iby-5y-4Pv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4sG-3c-S4x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1014" y="-2349"/>
         </scene>
         <!--New Profile-->
         <scene sceneID="1fO-iV-i3b">
@@ -274,7 +295,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pWk-w1-7IZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-269" y="-1997"/>
+            <point key="canvasLocation" x="-229" y="-1997"/>
         </scene>
         <!--Import Profile-->
         <scene sceneID="T0B-n2-KSG">
@@ -287,13 +308,108 @@
                     <view key="view" contentMode="scaleToFill" id="1bE-vr-e3L">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="UY0-Fz-lBl">
+                                <rect key="frame" x="20" y="64" width="560" height="93"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profilename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymO-Hj-I1p">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="20"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="19" id="lS5-TR-CB9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="lS5-TR-CB9"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="specify a name for the profile" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="VHS-Yn-Cj9" customClass="BaselineTextField" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="26" width="560" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="bRE-sO-F7Z"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="bRE-sO-F7Z"/>
+                                            </mask>
+                                        </variation>
+                                    </textField>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="e8e-41-g6h">
+                                        <rect key="frame" x="0.0" y="62" width="560" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current HealthData" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pzw-UK-tko">
+                                                <rect key="frame" x="0.0" y="0.0" width="251" height="31"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hyZ-5a-Jx2">
+                                                <rect key="frame" x="255" y="0.0" width="306" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="delete befor import" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vuo-yB-beh">
+                                                        <rect key="frame" x="0.0" y="0.0" width="252" height="31"/>
+                                                        <animations/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Io-Ui-DHu">
+                                                        <rect key="frame" x="257" y="0.0" width="51" height="31"/>
+                                                        <animations/>
+                                                        <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </switch>
+                                                </subviews>
+                                                <animations/>
+                                            </stackView>
+                                        </subviews>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="jFR-5P-fzL"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="jFR-5P-fzL"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstItem="VHS-Yn-Cj9" firstAttribute="top" secondItem="ymO-Hj-I1p" secondAttribute="bottom" constant="6" id="xrD-Ma-tnk"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="xrD-Ma-tnk"/>
+                                    </mask>
+                                </variation>
+                            </stackView>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="UY0-Fz-lBl" secondAttribute="trailing" id="mwd-3M-PJO"/>
+                            <constraint firstItem="UY0-Fz-lBl" firstAttribute="leading" secondItem="1bE-vr-e3L" secondAttribute="leadingMargin" id="q4m-91-CVm"/>
+                            <constraint firstItem="coC-Mq-EXA" firstAttribute="top" secondItem="UY0-Fz-lBl" secondAttribute="bottom" id="wDq-56-qgX"/>
+                            <constraint firstItem="UY0-Fz-lBl" firstAttribute="top" secondItem="RhS-x9-0lg" secondAttribute="bottom" id="y02-Wj-Htr"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="wDq-56-qgX"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sxN-1n-sAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-269" y="-1323"/>
+            <point key="canvasLocation" x="-229" y="-1323"/>
         </scene>
         <!--Profiles-->
         <scene sceneID="bAL-YN-fm4">
@@ -311,7 +427,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YSu-By-q2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1764" y="-1734"/>
+            <point key="canvasLocation" x="-1748" y="-1682"/>
         </scene>
         <!--Main Tab Controller-->
         <scene sceneID="qKZ-aP-peG">
@@ -324,7 +440,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="sxH-Cz-h7O" kind="relationship" relationship="viewControllers" id="9c9-Hh-g8j"/>
+                        <segue destination="4MM-OJ-z11" kind="relationship" relationship="viewControllers" id="AQO-7d-9gs"/>
                         <segue destination="dnD-aq-eoh" kind="relationship" relationship="viewControllers" id="KZP-AZ-JR4"/>
                     </connections>
                 </tabBarController>
