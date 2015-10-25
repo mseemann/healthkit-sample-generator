@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import HealthKitSampleGenerator
+import HealthKit
 
 class ImportProfileViewController : UIViewController {
     
@@ -22,6 +23,7 @@ class ImportProfileViewController : UIViewController {
     @IBOutlet weak var lbImportProgress: UILabel!
     @IBOutlet weak var aiImporting: UIActivityIndicatorView!
     
+    let healthStore  = HKHealthStore()
     
     var profile: HealthKitProfile?
     
@@ -29,6 +31,8 @@ class ImportProfileViewController : UIViewController {
         didSet {
             pvImportProgress.hidden = !importing
             aiImporting.hidden = !importing
+            navigationItem.hidesBackButton = importing
+            swDeleteExistingData.enabled = !importing
         }
     }
     
@@ -59,6 +63,33 @@ class ImportProfileViewController : UIViewController {
     @IBAction func doImport(sender: AnyObject) {
         importing = true
         lbImportProgress.text = "Start import"
+        if let importProfile = profile {
+            HealthKitProfileImporter(healthStore: healthStore).importProfile(
+                importProfile,
+                deleteExistingData: swDeleteExistingData.selected,
+                onProgress: {(message: String, progressInPercent: NSNumber?)->Void in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.lbImportProgress.text = message
+                        if let progress = progressInPercent {
+                            self.pvImportProgress.progress = progress.floatValue
+                        }
+                    })
+                },
+                
+                onCompletion: {(error: ErrorType?)-> Void in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if let exportError = error {
+                            self.lbImportProgress.text = "Import error: \(exportError)"
+                            print(exportError)
+                        } else {
+                            self.lbImportProgress.text = "Import done"
+                        }
+                        
+                        self.importing = false
+                    })
+                }
+            )
+        }
     }
     
 }
