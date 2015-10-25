@@ -61,7 +61,7 @@
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
-                                    <segue destination="ubF-u6-HfB" kind="show" id="uEA-5w-n1c"/>
+                                    <segue destination="ubF-u6-HfB" kind="show" identifier="detailView" id="uEA-5w-n1c"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -300,7 +300,7 @@
         <!--Import Profile-->
         <scene sceneID="T0B-n2-KSG">
             <objects>
-                <viewController title="Import Profile" id="ubF-u6-HfB" sceneMemberID="viewController">
+                <viewController title="Import Profile" id="ubF-u6-HfB" customClass="ImportProfileViewController" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RhS-x9-0lg"/>
                         <viewControllerLayoutGuide type="bottom" id="coC-Mq-EXA"/>
@@ -310,59 +310,158 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="UY0-Fz-lBl">
-                                <rect key="frame" x="20" y="64" width="560" height="93"/>
+                                <rect key="frame" x="20" y="72" width="560" height="231.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profilename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymO-Hj-I1p">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="20"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="19" id="lS5-TR-CB9"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="lS5-TR-CB9"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="specify a name for the profile" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="VHS-Yn-Cj9" customClass="BaselineTextField" customModule="HealthKitSampleGenerator_Example" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="26" width="560" height="30"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="bRE-sO-F7Z"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="bRE-sO-F7Z"/>
-                                            </mask>
-                                        </variation>
-                                    </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="e8e-41-g6h">
-                                        <rect key="frame" x="0.0" y="62" width="560" height="31"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="8Va-1n-uku">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="17"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current HealthData" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pzw-UK-tko">
-                                                <rect key="frame" x="0.0" y="0.0" width="251" height="31"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name of profile:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwQ-RO-0sY">
+                                                <rect key="frame" x="0.0" y="0.0" width="286" height="17"/>
                                                 <animations/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="the Prile Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nro-bT-OGO">
+                                                <rect key="frame" x="290" y="0.0" width="270" height="17"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="Mgc-G2-5D8"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Mgc-G2-5D8"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fsd-1a-btP">
+                                        <rect key="frame" x="0.0" y="23" width="560" height="17"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Creation date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJk-A5-N9W">
+                                                <rect key="frame" x="0.0" y="0.0" width="341.5" height="17"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/02/15" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voI-y5-dn2">
+                                                <rect key="frame" x="345" y="0.0" width="214.5" height="17"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="tSF-mQ-I8J"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="tSF-mQ-I8J"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="J6P-ko-kIa">
+                                        <rect key="frame" x="0.0" y="46" width="560" height="17"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZp-KV-NXM">
+                                                <rect key="frame" x="0.0" y="0.0" width="340" height="17"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8D-49-Q7c">
+                                                <rect key="frame" x="344" y="0.0" width="216" height="17"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="Gpf-os-mtO"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Gpf-os-mtO"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="cTT-Co-ays">
+                                        <rect key="frame" x="0.0" y="69" width="560" height="17"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iH0-il-uAB">
+                                                <rect key="frame" x="0.0" y="0.0" width="109" height="17"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="759" text="Single Json Document" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6S-uE-t0Q">
+                                                <rect key="frame" x="113" y="0.0" width="447" height="17"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="00B-Ny-Mvr"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="00B-Ny-Mvr"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SHL-dT-1qg">
+                                        <rect key="frame" x="0.0" y="92" width="560" height="1"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="fGc-tx-oDg"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yO9-Z6-mTp">
+                                        <rect key="frame" x="0.0" y="99" width="560" height="10"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="10" id="vnq-19-U6A"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="e8e-41-g6h">
+                                        <rect key="frame" x="0.0" y="115" width="560" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current HealthData:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pzw-UK-tko">
+                                                <rect key="frame" x="0.0" y="0.0" width="226.5" height="31"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hyZ-5a-Jx2">
-                                                <rect key="frame" x="255" y="0.0" width="306" height="31"/>
+                                                <rect key="frame" x="230" y="0.0" width="329.5" height="31"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="delete befor import" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vuo-yB-beh">
-                                                        <rect key="frame" x="0.0" y="0.0" width="252" height="31"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="delete before import" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vuo-yB-beh">
+                                                        <rect key="frame" x="0.0" y="0.0" width="275.5" height="31"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Io-Ui-DHu">
-                                                        <rect key="frame" x="257" y="0.0" width="51" height="31"/>
+                                                        <rect key="frame" x="280.5" y="0.0" width="51" height="31"/>
                                                         <animations/>
                                                         <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </switch>
@@ -380,16 +479,50 @@
                                             </mask>
                                         </variation>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCk-fP-7su">
+                                        <rect key="frame" x="0.0" y="152" width="560" height="15"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="3Sa-lk-0UD"/>
+                                        </constraints>
+                                    </view>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0rv-xt-Zqb">
+                                        <rect key="frame" x="0.0" y="173" width="560" height="2"/>
+                                        <animations/>
+                                    </progressView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4FN-pY-k6p">
+                                        <rect key="frame" x="0.0" y="181" width="560" height="14.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="u9z-2X-KP4">
+                                        <rect key="frame" x="0.0" y="201" width="560" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYn-tq-8YY">
+                                                <rect key="frame" x="0.0" y="0.0" width="533" height="30"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="Jzi-w4-cOK"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <state key="normal" title="Import HealthKit Data"/>
+                                                <connections>
+                                                    <action selector="doExport:" destination="xCG-4I-ejI" eventType="touchUpInside" id="M7S-Hc-pQw"/>
+                                                    <action selector="doImport:" destination="ubF-u6-HfB" eventType="touchUpInside" id="nTW-8N-KJR"/>
+                                                </connections>
+                                            </button>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="y5d-oj-IE9">
+                                                <rect key="frame" x="540" y="5" width="20" height="20"/>
+                                                <animations/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <animations/>
+                                    </stackView>
                                 </subviews>
                                 <animations/>
-                                <constraints>
-                                    <constraint firstItem="VHS-Yn-Cj9" firstAttribute="top" secondItem="ymO-Hj-I1p" secondAttribute="bottom" constant="6" id="xrD-Ma-tnk"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="xrD-Ma-tnk"/>
-                                    </mask>
-                                </variation>
                             </stackView>
                         </subviews>
                         <animations/>
@@ -398,7 +531,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="UY0-Fz-lBl" secondAttribute="trailing" id="mwd-3M-PJO"/>
                             <constraint firstItem="UY0-Fz-lBl" firstAttribute="leading" secondItem="1bE-vr-e3L" secondAttribute="leadingMargin" id="q4m-91-CVm"/>
                             <constraint firstItem="coC-Mq-EXA" firstAttribute="top" secondItem="UY0-Fz-lBl" secondAttribute="bottom" id="wDq-56-qgX"/>
-                            <constraint firstItem="UY0-Fz-lBl" firstAttribute="top" secondItem="RhS-x9-0lg" secondAttribute="bottom" id="y02-Wj-Htr"/>
+                            <constraint firstItem="UY0-Fz-lBl" firstAttribute="top" secondItem="RhS-x9-0lg" secondAttribute="bottom" constant="8" symbolic="YES" id="y02-Wj-Htr"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -406,6 +539,16 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="aiImporting" destination="y5d-oj-IE9" id="2YL-rE-6Al"/>
+                        <outlet property="lbCreationDate" destination="voI-y5-dn2" id="zEK-bJ-cDR"/>
+                        <outlet property="lbImportProgress" destination="4FN-pY-k6p" id="dx5-ZQ-JBT"/>
+                        <outlet property="lbProfileName" destination="Nro-bT-OGO" id="Y5y-7A-jIH"/>
+                        <outlet property="lbType" destination="z6S-uE-t0Q" id="Atn-Xi-TQ4"/>
+                        <outlet property="lbVersion" destination="l8D-49-Q7c" id="Kin-xh-Hv9"/>
+                        <outlet property="pvImportProgress" destination="0rv-xt-Zqb" id="GIv-Rd-y6h"/>
+                        <outlet property="swDeleteExistingData" destination="0Io-Ui-DHu" id="vBE-4o-UBY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sxN-1n-sAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

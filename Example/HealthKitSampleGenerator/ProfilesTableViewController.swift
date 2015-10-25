@@ -12,18 +12,13 @@ import HealthKitSampleGenerator
 
 class ProfilesTableViewController: UITableViewController {
     
-    let formatter = NSDateFormatter()
+
     var profiles:[HealthKitProfile] = []
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        formatter.timeStyle = NSDateFormatterStyle.MediumStyle
-        
         navigationItem.leftBarButtonItem = editButtonItem();
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -40,6 +35,16 @@ class ProfilesTableViewController: UITableViewController {
         // make sure the table view is not in editing mode
         if tableView.editing {
             tableView.setEditing(false, animated: true)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+        if segue.identifier == "detailView" {
+            let detailViewController = segue.destinationViewController as! ImportProfileViewController
+            if let indexPath = tableView.indexPathForSelectedRow {
+                 detailViewController.profile = profiles[indexPath.row]
+            }
         }
     }
     
@@ -66,7 +71,7 @@ extension ProfilesTableViewController {
 
             NSOperationQueue.mainQueue().addOperationWithBlock(){
                 
-                let from = metaData.creationDate != nil ? self.formatter.stringFromDate(metaData.creationDate!) : "unknown"
+                let from = UIUtil.sharedInstance.formatDate(metaData.creationDate)
                 let profileName = metaData.profileName != nil ? metaData.profileName! : "unknown"
                 
                 cell.detailTextLabel?.text = "\(profileName) from: \(from)"
@@ -109,5 +114,6 @@ extension ProfilesTableViewController {
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
+    
     
 }

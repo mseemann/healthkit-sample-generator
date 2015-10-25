@@ -268,8 +268,6 @@ class DataExporterTest: QuickSpec {
                 let pause = start.dateByAddingTimeInterval(60*2) // + 2 minutes
                 let resume = start.dateByAddingTimeInterval(60*3) // + 3 minutes
                 let end = start.dateByAddingTimeInterval(60*10) // + 10 minutes
-
-                print(end)
                 
                 let events : [HKWorkoutEvent] = [HKWorkoutEvent(type: HKWorkoutEventType.Pause, date: pause), HKWorkoutEvent(type: HKWorkoutEventType.Resume, date: resume)]
                 let burned = HKQuantity(unit: HKUnit(fromString: "kcal"), doubleValue: 200.6)

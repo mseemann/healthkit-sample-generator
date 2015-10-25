@@ -10,6 +10,8 @@
 		2519807D2C1089FBBE7DAB86 /* Pods_HealthKitSampleGenerator_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D4BA7D5ECFAE431FC1D030 /* Pods_HealthKitSampleGenerator_Example.framework */; };
 		2F3C4D751BDA4F4200B91D60 /* ProfilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C4D741BDA4F4200B91D60 /* ProfilesTableViewController.swift */; };
 		2F3C4D841BDB61FA00B91D60 /* HealthKitProfileReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C4D821BDB61F600B91D60 /* HealthKitProfileReaderTest.swift */; };
+		2F3C4D881BDD58CC00B91D60 /* ImportProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C4D871BDD58CC00B91D60 /* ImportProfileViewController.swift */; };
+		2F3C4D8A1BDD5E6D00B91D60 /* UIUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C4D891BDD5E6D00B91D60 /* UIUtil.swift */; };
 		2F4D1F651BD41374000290C4 /* OutputStreamTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */; };
 		2F4D1F671BD4D312000290C4 /* HealthKitStoreMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */; };
 		2F4D1F691BD4DD64000290C4 /* DataExporterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */; };
@@ -47,6 +49,8 @@
 		2629469B90C63E0981BD4420 /* HealthKitSampleGenerator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HealthKitSampleGenerator.podspec; path = ../HealthKitSampleGenerator.podspec; sourceTree = "<group>"; };
 		2F3C4D741BDA4F4200B91D60 /* ProfilesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTableViewController.swift; sourceTree = "<group>"; };
 		2F3C4D821BDB61F600B91D60 /* HealthKitProfileReaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitProfileReaderTest.swift; sourceTree = "<group>"; };
+		2F3C4D871BDD58CC00B91D60 /* ImportProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportProfileViewController.swift; sourceTree = "<group>"; };
+		2F3C4D891BDD5E6D00B91D60 /* UIUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtil.swift; sourceTree = "<group>"; };
 		2F4D1F641BD41374000290C4 /* OutputStreamTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputStreamTest.swift; sourceTree = "<group>"; };
 		2F4D1F661BD4D312000290C4 /* HealthKitStoreMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitStoreMock.swift; sourceTree = "<group>"; };
 		2F4D1F681BD4DD64000290C4 /* DataExporterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExporterTest.swift; sourceTree = "<group>"; };
@@ -179,6 +183,8 @@
 				2F9E30571BBE81630005DF72 /* ExportViewController.swift */,
 				2F90C5801BC44BE500587117 /* UIControls.swift */,
 				2F3C4D741BDA4F4200B91D60 /* ProfilesTableViewController.swift */,
+				2F3C4D871BDD58CC00B91D60 /* ImportProfileViewController.swift */,
+				2F3C4D891BDD5E6D00B91D60 /* UIUtil.swift */,
 			);
 			name = "Example for HealthKitSampleGenerator";
 			path = HealthKitSampleGenerator;
@@ -446,6 +452,8 @@
 				2F9E30561BBE79E30005DF72 /* MainTabController.swift in Sources */,
 				2F3C4D751BDA4F4200B91D60 /* ProfilesTableViewController.swift in Sources */,
 				2F90C5811BC44BE500587117 /* UIControls.swift in Sources */,
+				2F3C4D881BDD58CC00B91D60 /* ImportProfileViewController.swift in Sources */,
+				2F3C4D8A1BDD5E6D00B91D60 /* UIUtil.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				2F9E30581BBE81630005DF72 /* ExportViewController.swift in Sources */,
 			);
