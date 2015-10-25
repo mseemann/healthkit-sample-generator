@@ -68,25 +68,23 @@ class ImportProfileViewController : UIViewController {
                 importProfile,
                 deleteExistingData: swDeleteExistingData.selected,
                 onProgress: {(message: String, progressInPercent: NSNumber?)->Void in
-                    dispatch_async(dispatch_get_main_queue(), {
+                    NSOperationQueue.mainQueue().addOperationWithBlock(){
                         self.lbImportProgress.text = message
                         if let progress = progressInPercent {
                             self.pvImportProgress.progress = progress.floatValue
                         }
-                    })
+                    }
                 },
                 
                 onCompletion: {(error: ErrorType?)-> Void in
-                    dispatch_async(dispatch_get_main_queue(), {
+                    NSOperationQueue.mainQueue().addOperationWithBlock(){
                         if let exportError = error {
                             self.lbImportProgress.text = "Import error: \(exportError)"
                             print(exportError)
-                        } else {
-                            self.lbImportProgress.text = "Import done"
                         }
                         
                         self.importing = false
-                    })
+                    }
                 }
             )
         }

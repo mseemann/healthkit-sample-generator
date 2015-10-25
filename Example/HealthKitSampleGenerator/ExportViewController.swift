@@ -68,7 +68,7 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tfProfileName.text                  = "output"
+        tfProfileName.text                  = "output" + UIUtil.sharedInstance.formatDateForFileName(NSDate())
         tfProfileName.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         tfProfileName.delegate              = self
         

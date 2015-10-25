@@ -21,7 +21,7 @@ public class HealthKitProfile : CustomStringConvertible {
     private(set) public var fileName: String
     private(set) public var fileSize:UInt64?
     
-    let fileReadQueu = NSOperationQueue()
+    let fileReadQueue = NSOperationQueue()
 
     
     public var description: String {
@@ -29,8 +29,8 @@ public class HealthKitProfile : CustomStringConvertible {
     }
     
     public init(fileAtPath: NSURL){
-        fileReadQueu.maxConcurrentOperationCount = 1
-        fileReadQueu.qualityOfService = NSQualityOfService.UserInteractive
+        fileReadQueue.maxConcurrentOperationCount = 1
+        fileReadQueue.qualityOfService = NSQualityOfService.UserInteractive
         self.fileAtPath = fileAtPath
         self.fileName   = self.fileAtPath.lastPathComponent!
         let attr:NSDictionary? = try! NSFileManager.defaultManager().attributesOfItemAtPath(fileAtPath.path!)
@@ -61,7 +61,7 @@ public class HealthKitProfile : CustomStringConvertible {
     public func loadMetaData(asynchronous:Bool, callback:(metaData: HealthKitProfileMetaData) -> Void ){
         
         if asynchronous {
-            fileReadQueu.addOperationWithBlock(){
+            fileReadQueue.addOperationWithBlock(){
                 callback(metaData: self.loadMetaData())
             }
         } else {
