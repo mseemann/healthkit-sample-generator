@@ -9,6 +9,8 @@
 import Foundation
 import HealthKit
 
+// FIXME checkout HKQuery.predicateForObjectsWithNoCorrelation - so taht the correlated types are only exported once!
+
 internal protocol DataExporter {
     var message: String {get}
     func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws -> Void

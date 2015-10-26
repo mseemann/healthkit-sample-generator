@@ -63,13 +63,11 @@ class ExportTest: QuickSpec {
             expect(userDataExporter).to(beNil())
         }
         
-        it("should have the right count of HK-types"){
-            let export = HealthKitDataExporter(healthStore: HealthKitStoreMock())
-            
-            expect(export.healthKitCharacteristicsTypes.count) == 4
-            expect(export.healthKitCategoryTypes.count) == 7
-            expect(export.healthKitQuantityTypes.count) == 68
-            expect(export.healthKitCorrelationTypes.count) == 2
+        it("should have the right count of HK-types"){            
+            expect(HealthKitConstants.healthKitCharacteristicsTypes.count) == 4
+            expect(HealthKitConstants.healthKitCategoryTypes.count) == 7
+            expect(HealthKitConstants.healthKitQuantityTypes.count) == 68
+            expect(HealthKitConstants.healthKitCorrelationTypes.count) == 2
         }
     }
 }

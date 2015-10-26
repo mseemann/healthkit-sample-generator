@@ -310,7 +310,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="UY0-Fz-lBl">
-                                <rect key="frame" x="20" y="72" width="560" height="252"/>
+                                <rect key="frame" x="20" y="72" width="560" height="312.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="8Va-1n-uku">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="17"/>
@@ -344,14 +344,14 @@
                                         <rect key="frame" x="0.0" y="23" width="560" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Creation date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJk-A5-N9W">
-                                                <rect key="frame" x="0.0" y="0.0" width="342" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="341.5" height="17"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/02/15" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voI-y5-dn2">
-                                                <rect key="frame" x="346" y="0.0" width="215" height="17"/>
+                                                <rect key="frame" x="345" y="0.0" width="214.5" height="17"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -444,24 +444,24 @@
                                         <rect key="frame" x="0.0" y="115" width="560" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current HealthData:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pzw-UK-tko">
-                                                <rect key="frame" x="0.0" y="0.0" width="227" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="226.5" height="31"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hyZ-5a-Jx2">
-                                                <rect key="frame" x="231" y="0.0" width="330" height="31"/>
+                                                <rect key="frame" x="230" y="0.0" width="329.5" height="31"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="delete before import" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vuo-yB-beh">
-                                                        <rect key="frame" x="0.0" y="0.0" width="276" height="31"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="275.5" height="31"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Io-Ui-DHu">
-                                                        <rect key="frame" x="281" y="0.0" width="51" height="31"/>
+                                                        <rect key="frame" x="280" y="0.0" width="51" height="31"/>
                                                         <animations/>
                                                         <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </switch>
@@ -480,14 +480,14 @@
                                         </variation>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It is only possible to delete objects from the HealthKit Store  that were added by this App!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhT-xi-yM6">
-                                        <rect key="frame" x="0.0" y="152" width="560" height="15"/>
+                                        <rect key="frame" x="0.0" y="152" width="560" height="14.5"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCk-fP-7su">
-                                        <rect key="frame" x="0.0" y="173" width="560" height="15"/>
+                                        <rect key="frame" x="0.0" y="172" width="560" height="15"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -495,18 +495,21 @@
                                         </constraints>
                                     </view>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0rv-xt-Zqb">
-                                        <rect key="frame" x="0.0" y="194" width="560" height="2"/>
+                                        <rect key="frame" x="0.0" y="193" width="560" height="2"/>
                                         <animations/>
                                     </progressView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4FN-pY-k6p">
-                                        <rect key="frame" x="0.0" y="202" width="560" height="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4FN-pY-k6p">
+                                        <rect key="frame" x="0.0" y="201.5" width="560" height="75"/>
                                         <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="rHz-ks-Mul"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="u9z-2X-KP4">
-                                        <rect key="frame" x="0.0" y="222" width="560" height="30"/>
+                                        <rect key="frame" x="0.0" y="282" width="560" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYn-tq-8YY">
                                                 <rect key="frame" x="0.0" y="0.0" width="533" height="30"/>
