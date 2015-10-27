@@ -68,6 +68,9 @@ class ExportTest: QuickSpec {
             expect(HealthKitConstants.healthKitCategoryTypes.count) == 7
             expect(HealthKitConstants.healthKitQuantityTypes.count) == 68
             expect(HealthKitConstants.healthKitCorrelationTypes.count) == 2
+            
+            let count = 4 + 7 + 68 + 2 + 1
+            expect(HealthKitConstants.allTypes().count) == count
         }
     }
 }

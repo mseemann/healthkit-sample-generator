@@ -92,7 +92,7 @@ class DataExporterTest: QuickSpec {
                 let target = JsonSingleDocInMemExportTarget()
                 try! target.startExport()
                 
-                try! target.startWriteQuantityType(type, unit:unit)
+                try! target.startWriteType(type)
                 try! target.startWriteDatas()
                 
                 let date = NSDate()
@@ -107,10 +107,7 @@ class DataExporterTest: QuickSpec {
                 
                 let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKQuantityTypeIdentifierBodyMass))
                 
-               
-                let unitValue = sampleDict["unit"]
-                expect(unitValue as? String) == strUnit
-                
+            
                 let dataArray = sampleDict["data"] as? [AnyObject]
                 
                 expect(dataArray?.count) == 1
@@ -119,14 +116,17 @@ class DataExporterTest: QuickSpec {
              
                 
                
-                let sdate   = savedSample["sdate"] as! NSNumber
-                let uuid    = savedSample["uuid"] as! String
-                let value   = savedSample["value"] as! NSNumber
+                let sdate       = savedSample["sdate"] as! NSNumber
+                let uuid        = savedSample["uuid"] as! String
+                let value       = savedSample["value"] as! NSNumber
+                let unitValue   = savedSample["unit"] as! String
                 
                 expect(sdate).to(beCloseTo(date.timeIntervalSince1970 * 1000, within: 1000))
                 expect(uuid).notTo(beNil())
                 expect(value) == quantity.doubleValueForUnit(unit)
                 expect(savedSample["edate"]).to(beNil())
+                expect(unitValue) == strUnit
+
             }
             
             it ("should handle healthkit query errors") {
@@ -190,9 +190,12 @@ class DataExporterTest: QuickSpec {
         }
         
         describe("CorrelationTypeDataExporter") {
+            let unit = HKUnit(fromString: "mmHg")
+            let type1 = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBloodPressureSystolic)!
+            let type2 = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBloodPressureDiastolic)!
             
             let type = HKObjectType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierBloodPressure)!
-            let exporter = CorrelationTypeDataExporter(exportConfiguration: exportConfiguration, type: type)
+            let exporter = CorrelationTypeDataExporter(exportConfiguration: exportConfiguration, type: type, typeMap:[type1:unit,type2:unit])
             
             it ("should export correlation types") {
                 
@@ -201,11 +204,10 @@ class DataExporterTest: QuickSpec {
                 try! target.startWriteType(type)
                 try! target.startWriteDatas()
                 
-                let type1 = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBloodPressureSystolic)!
-                let type2 = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBloodPressureDiastolic)!
+
                 
-                let quantity1 = HKQuantity(unit: HKUnit(fromString: "mmHg"), doubleValue: 80)
-                let quantity2 = HKQuantity(unit: HKUnit(fromString: "mmHg"), doubleValue: 120)
+                let quantity1 = HKQuantity(unit: unit, doubleValue: 80)
+                let quantity2 = HKQuantity(unit: unit, doubleValue: 120)
                 
                 let date = NSDate()
                 

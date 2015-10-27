@@ -19,8 +19,7 @@ class ExportConfigurationTest: QuickSpec {
             let exportConfig = HealthDataFullExportConfiguration(profileName: "x", exportType: .ALL)
             
             let predicate = exportConfig.getPredicate()
-            
-            expect(predicate).to(beNil())
+            expect(predicate?.predicateFormat).to(contain("correlation"))
         }
         
         // run not in TRAVIS-CI - it will fail. may be because of HKSource call - i don't know

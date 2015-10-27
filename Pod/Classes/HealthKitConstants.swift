@@ -116,6 +116,7 @@ class HealthKitConstants {
         allTypes.unionInPlace(healthKitCharacteristicsTypes as Set<HKObjectType>!)
         allTypes.unionInPlace(healthKitQuantityTypes as Set<HKObjectType>!)
         allTypes.unionInPlace(healthKitCategoryTypes as Set<HKObjectType>!)
+        allTypes.unionInPlace(healthKitCorrelationTypes as Set<HKObjectType>!)
         allTypes.insert(workoutType)
         return allTypes
     }

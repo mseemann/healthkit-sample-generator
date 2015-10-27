@@ -105,7 +105,7 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
                     let value = sample.quantity.doubleValueForUnit(self.unit)
                     
                     for exportTarget in exportTargets {
-                        var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "value":value]
+                        var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "value":value, "unit":unit.description]
                         if sample.startDate != sample.endDate {
                             dict["edate"] = sample.endDate
                         }
@@ -148,7 +148,7 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
     
     internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
-            try exportTarget.startWriteQuantityType(type, unit:unit)
+            try exportTarget.startWriteType(type)
             try exportTarget.startWriteDatas()
         }
 
@@ -247,10 +247,12 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
     internal var message:String = ""
     var type : HKCorrelationType
     let queryCountLimit = 10000
+    let typeMap: [HKQuantityType : HKUnit]
     
-    internal init(exportConfiguration: ExportConfiguration, type: HKCorrelationType){
+    internal init(exportConfiguration: ExportConfiguration, type: HKCorrelationType, typeMap: [HKQuantityType : HKUnit]){
         self.type = type
         self.message = "exporting \(type)"
+        self.typeMap = typeMap
         super.init(exportConfiguration: exportConfiguration)
     }
     
@@ -267,11 +269,27 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
                     }
                     var subSampleArray:[AnyObject] = []
                     
+                    // possible types are: HKQuantitySamples and HKCategorySamples
                     for subsample in sample.objects {
-                        subSampleArray.append([
-                            "type": subsample.sampleType.identifier,
-                            "uuid": subsample.UUID.UUIDString
-                            ])
+                        
+                        var sampleDict = ["uuid":subsample.UUID.UUIDString, "sdate":subsample.startDate]
+                        if subsample.startDate != subsample.endDate {
+                            sampleDict["edate"] = subsample.endDate
+                        }
+                        sampleDict["type"] = subsample.sampleType.identifier
+                        
+                        if let quantitySample = subsample as? HKQuantitySample {
+                            let unit = self.typeMap[quantitySample.quantityType]!
+                            sampleDict["unit"] = unit.description
+                            sampleDict["value"] = quantitySample.quantity.doubleValueForUnit(unit)
+                            
+                        } else if let categorySample = subsample as? HKCategorySample {
+                            sampleDict["value"] = categorySample.value
+                        } else {
+                            throw ExportError.IllegalArgumentError("unsupported correlation type \(subsample.sampleType.identifier)")
+                        }
+                        
+                        subSampleArray.append(sampleDict)
                     }
                     
                     dict["objects"] = subSampleArray

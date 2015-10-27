@@ -18,7 +18,6 @@ public protocol ExportTarget {
     
     func writeUserData(userData: Dictionary <String, AnyObject>) throws -> Void
     
-    func startWriteQuantityType(type:HKQuantityType, unit:HKUnit) throws -> Void
     func startWriteType(type:HKSampleType) throws -> Void
     func startWriteDatas() throws -> Void
     func endWriteDatas() throws -> Void
@@ -61,11 +60,6 @@ public class JsonSingleDocExportTarget  {
         try jsonWriter.writeFieldWithObject("userData", value: userData)
     }
     
-    public func startWriteQuantityType(type:HKQuantityType, unit:HKUnit) throws -> Void {
-        try jsonWriter.writeObjectFieldStart(String(type))
-        try jsonWriter.writeField("unit", value: unit.description)
-    }
-
     public func startWriteType(type:HKSampleType) throws -> Void {
         try jsonWriter.writeObjectFieldStart(String(type))
     }

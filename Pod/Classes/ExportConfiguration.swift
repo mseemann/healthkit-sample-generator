@@ -17,17 +17,24 @@ public protocol ExportConfiguration {
     var profileName:String {get}
 }
 
+// possible configuration extension: 
+// export correlations even if they are present in the correlation type section
+// export UUID or do not export the UUID
+// export endDate always - even if the endDate and startDate are the same
 
 internal extension ExportConfiguration {
     
     internal func getPredicate() -> NSPredicate? {
+        
+        let predicateNoCorreltion = HKQuery.predicateForObjectsWithNoCorrelation()
+        
         switch exportType {
         case .ALL:
-            return nil
+            return predicateNoCorreltion
         case .ADDED_BY_THIS_APP:
-            return HKQuery.predicateForObjectsFromSource(HKSource.defaultSource())
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [predicateNoCorreltion, HKQuery.predicateForObjectsFromSource(HKSource.defaultSource())])
         case .GENERATED_BY_THIS_APP:
-            return HKQuery.predicateForObjectsWithMetadataKey("GeneratorSource", allowedValues: ["HSG"])
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [predicateNoCorreltion, HKQuery.predicateForObjectsWithMetadataKey("GeneratorSource", allowedValues: ["HSG"])])
         }
         
     }

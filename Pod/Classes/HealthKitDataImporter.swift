@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import HealthKit
 
 // {"metaData":{"creationDate":1445344592172.305,"profileName":"output","version":"1.0.0","type":"JsonSingleDocExportTarget"},
 class MetaDataOutputJsonHandler: DefaultJsonHandler {
@@ -48,5 +49,20 @@ class MetaDataOutputJsonHandler: DefaultJsonHandler {
     
     override func shouldCancelReadingTheJson() -> Bool {
         return cancel;
+    }
+}
+
+class SampleOutputJsonHandler: DefaultJsonHandler {
+    
+    let onSample : (sample: HKSample) -> Void
+    
+    init(onSample: (sample: HKSample) -> Void) {
+        self.onSample = onSample
+    }
+    
+    override func name(name: String) {
+
+            print(name)
+
     }
 }

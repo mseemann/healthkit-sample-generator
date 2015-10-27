@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import HealthKit
 
 public class HealthKitProfileMetaData {
     private(set) public var profileName: String?
@@ -67,6 +68,11 @@ public class HealthKitProfile : CustomStringConvertible {
         } else {
             callback(metaData: loadMetaData())
         }
+    }
+    
+    func importSamples(onSample: (sample: HKSample) -> Void) throws {
+        let sampleImportHandler = SampleOutputJsonHandler(onSample: onSample)
+        try JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: sampleImportHandler)
     }
     
     public func deleteFile() throws {

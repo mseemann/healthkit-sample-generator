@@ -165,7 +165,7 @@ public class HealthKitDataExporter {
         
         // add all correlation types
         for correlationType in HealthKitConstants.healthKitCorrelationTypes {
-            result.append(CorrelationTypeDataExporter(exportConfiguration: exportConfiguration, type: correlationType))
+            result.append(CorrelationTypeDataExporter(exportConfiguration: exportConfiguration, type: correlationType, typeMap:typeMap))
         }
         
         // appen the workout data type

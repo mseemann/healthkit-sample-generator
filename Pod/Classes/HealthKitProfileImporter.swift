@@ -44,11 +44,28 @@ public class HealthKitProfileImporter {
                 
                 // delete all existing data from healthkit store - if requested.
                 if deleteExistingData {
-                    onProgress(message: "Delete HealthKit Data", progressInPercent: 0.0)
-                    HealthKitStoreCleaner(healthStore: self.healthStore).clean(onProgress)
+                    
+                    HealthKitStoreCleaner(healthStore: self.healthStore).clean(){(message:String, progressInPercent: Double?) in
+                        onProgress(message: message, progressInPercent: progressInPercent == nil ? nil : progressInPercent!/2)
+                    }
+               
                 }
-                onProgress(message: "Start importing", progressInPercent: 0.0)
-                
+                onProgress(message: "Start importing", progressInPercent: nil)
+
+                var lastSampleType = ""
+                try! profile.importSamples(){(sample: HKSample) in
+                    print(sample)
+                    
+                    if lastSampleType != String(sample.sampleType) {
+                        lastSampleType = String(sample.sampleType)
+                        onProgress(message: "importing \(lastSampleType)", progressInPercent: nil)
+                    }
+                  
+                    self.healthStore.saveObject(sample){
+                        (success:Bool, error:NSError?) in
+                        print(success, error)
+                    }
+                }
                 
                 onProgress(message: "Import done", progressInPercent: 1.0)
                 

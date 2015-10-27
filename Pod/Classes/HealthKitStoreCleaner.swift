@@ -17,7 +17,7 @@ class HealthKitStoreCleaner {
         self.healthStore = healthStore
     }
     
-    func clean( onProgress: (message: String, progressInPercent: NSNumber?)->Void){
+    func clean( onProgress: (message: String, progressInPercent: Double?)->Void){
         
         let source = HKSource.defaultSource()
         let predicate = HKQuery.predicateForObjectsFromSource(source)
@@ -31,7 +31,7 @@ class HealthKitStoreCleaner {
             onProgress(message: "deleting \(type)", progressInPercent: nil)
             healthStore.deleteObjectsOfType(type, predicate: predicate)
                     {(success: Bool, deletedObjectCount: Int, error:NSError?) in
-
+         
                 onProgress(message: "deleted \(deletedObjectCount) objects  from \(type)", progressInPercent: Double(index)/Double(allTypes.count))
 
                 dispatch_semaphore_signal(semaphore)
