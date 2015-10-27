@@ -33,37 +33,37 @@ public class JsonSingleDocExportTarget  {
         self.jsonWriter = JsonWriter(outputStream: outputStream)
     }
     
-    public func startExport() throws -> Void {
-        try jsonWriter.writeStartObject()
+    public func startExport() -> Void {
+        jsonWriter.writeStartObject()
     }
     
-    public func endExport() throws {
-        try jsonWriter.writeEndObject()
+    public func endExport() {
+        jsonWriter.writeEndObject()
         jsonWriter.close()
     }
     
-    public func writeMetaData(creationDate creationDate: NSDate, profileName: String, version: String) throws {
+    public func writeMetaData(creationDate creationDate: NSDate, profileName: String, version: String) {
         
-        try jsonWriter.writeObjectFieldStart("metaData")
+        jsonWriter.writeObjectFieldStart("metaData")
         
-        try jsonWriter.writeField("creationDate", value: creationDate)
-        try jsonWriter.writeField("profileName", value: profileName)
-        try jsonWriter.writeField("version", value: version)
-        try jsonWriter.writeField("type", value: String(JsonSingleDocExportTarget))
+        jsonWriter.writeField("creationDate", value: creationDate)
+        jsonWriter.writeField("profileName", value: profileName)
+        jsonWriter.writeField("version", value: version)
+        jsonWriter.writeField("type", value: String(JsonSingleDocExportTarget))
         
-        try jsonWriter.writeEndObject()
+        jsonWriter.writeEndObject()
     }
     
     public func writeUserData(userData: Dictionary <String, AnyObject>) throws {
         try jsonWriter.writeFieldWithObject("userData", value: userData)
     }
     
-    public func startWriteType(type:HKSampleType) throws -> Void {
-        try jsonWriter.writeArrayFieldStart(String(type))
+    public func startWriteType(type:HKSampleType) -> Void {
+        jsonWriter.writeArrayFieldStart(String(type))
     }
     
-    public func endWriteType() throws -> Void {
-        try jsonWriter.writeEndArray()
+    public func endWriteType() -> Void {
+        jsonWriter.writeEndArray()
     }
     
     public func writeDictionary(entry:Dictionary <String, AnyObject>) throws -> Void {

@@ -23,6 +23,9 @@ protocol OutputStream {
     func getDataAsString() -> String
 }
 
+/**
+    Abtract Class implementation of the outputstream
+*/
 extension OutputStream {
     
     private func write(buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
@@ -51,6 +54,9 @@ extension OutputStream {
     }
 }
 
+/**
+    A memory output stream. Caution: the resulting json string must fit in the device mem!
+*/
 internal class MemOutputStream : OutputStream {
     
     var outputStream: NSOutputStream
@@ -67,6 +73,9 @@ internal class MemOutputStream : OutputStream {
     }
 }
 
+/**
+    A file output stream. The stream will overwrite any existing file content.
+*/
 internal class FileOutputStream : OutputStream {
     var outputStream: NSOutputStream
     var fileAtPath: String

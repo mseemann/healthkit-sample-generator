@@ -44,7 +44,7 @@ public class HealthKitProfile : CustomStringConvertible {
         let result          = HealthKitProfileMetaData()
         let metaDataOutput  = MetaDataOutputJsonHandler()
         
-        try! JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: metaDataOutput)
+        JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: metaDataOutput)
         
         let metaData = metaDataOutput.getMetaData()
         
@@ -71,8 +71,15 @@ public class HealthKitProfile : CustomStringConvertible {
     }
     
     func importSamples(onSample: (sample: HKSample) -> Void) throws {
-        let sampleImportHandler = SampleOutputJsonHandler(onSample: onSample)
-        try JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: sampleImportHandler)
+        
+        let sampleImportHandler = SampleOutputJsonHandler(){
+            (sampleDict:Dictionary<String, AnyObject>) in
+            
+            print(sampleDict)
+            // transform smapleDict to sample
+        }
+        
+        JsonReader.readFileAtPath(self.fileAtPath.path!, withJsonHandler: sampleImportHandler)
     }
     
     public func deleteFile() throws {

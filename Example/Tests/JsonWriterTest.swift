@@ -18,8 +18,8 @@ class JsonWriterTest: QuickSpec {
 
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartArray()
-            try! jw.writeEndArray()
+            jw.writeStartArray()
+            jw.writeEndArray()
             
             expect(jw.getJsonString()) == "[]"
         }
@@ -28,11 +28,11 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartArray()
-            try! jw.writeStartObject()
-            try! jw.writeField("a", value: "b")
-            try! jw.writeEndObject()
-            try! jw.writeEndArray()
+            jw.writeStartArray()
+            jw.writeStartObject()
+            jw.writeField("a", value: "b")
+            jw.writeEndObject()
+            jw.writeEndArray()
 
             
             expect(jw.getJsonString()) == "[{\"a\":\"b\"}]"
@@ -42,14 +42,14 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartArray()
-            try! jw.writeStartObject()
-            try! jw.writeField("a", value: "b")
-            try! jw.writeEndObject()
-            try! jw.writeStartObject()
-            try! jw.writeField("c", value: "d")
-            try! jw.writeEndObject()
-            try! jw.writeEndArray()
+            jw.writeStartArray()
+            jw.writeStartObject()
+            jw.writeField("a", value: "b")
+            jw.writeEndObject()
+            jw.writeStartObject()
+            jw.writeField("c", value: "d")
+            jw.writeEndObject()
+            jw.writeEndArray()
             
             expect(jw.getJsonString()) == "[{\"a\":\"b\"},{\"c\":\"d\"}]"
         }
@@ -58,10 +58,10 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
-            try! jw.writeField("a", value: "b")
-            try! jw.writeField("c", value: "d")
-            try! jw.writeEndObject()
+            jw.writeStartObject()
+            jw.writeField("a", value: "b")
+            jw.writeField("c", value: "d")
+            jw.writeEndObject()
 
             
             expect(jw.getJsonString()) == "{\"a\":\"b\",\"c\":\"d\"}"
@@ -71,10 +71,10 @@ class JsonWriterTest: QuickSpec {
 
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
-            try! jw.writeField("a", value: true)
-            try! jw.writeField("c", value: Int(23))
-            try! jw.writeEndObject()
+            jw.writeStartObject()
+            jw.writeField("a", value: true)
+            jw.writeField("c", value: Int(23))
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":true,\"c\":23}"
         }
@@ -84,9 +84,9 @@ class JsonWriterTest: QuickSpec {
 
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
-            try! jw.writeField("a", value: date)
-            try! jw.writeEndObject()
+            jw.writeStartObject()
+            jw.writeField("a", value: date)
+            jw.writeEndObject()
             
             let milisecondDate = NSNumber(double:date.timeIntervalSince1970*1000)
             expect(jw.getJsonString()) == "{\"a\":\(milisecondDate)}"
@@ -96,12 +96,12 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
-            try! jw.writeField("a", value: nil as NSNumber!)
-            try! jw.writeField("b", value: nil as String!)
-            try! jw.writeField("c", value: nil as NSDate!)
-            try! jw.writeField("e", value: nil as Bool!)
-            try! jw.writeEndObject()
+            jw.writeStartObject()
+            jw.writeField("a", value: nil as NSNumber!)
+            jw.writeField("b", value: nil as String!)
+            jw.writeField("c", value: nil as NSDate!)
+            jw.writeField("e", value: nil as Bool!)
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":null,\"b\":null,\"c\":null,\"e\":null}"
         }
@@ -110,9 +110,9 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: ["a", "b"])
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":[\"a\",\"b\"]}"
         }
@@ -126,9 +126,9 @@ class JsonWriterTest: QuickSpec {
             
             let dict: Dictionary<String, AnyObject> =  ["a":"b", "d":date]
 
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: dict)
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":{\"d\":\(jsonDate),\"a\":\"b\"}}"
         }
@@ -137,9 +137,9 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: ["a":123])
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":{\"a\":123}}"
         }
@@ -148,9 +148,9 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: ["a":true])
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":{\"a\":true}}"
         }
@@ -159,9 +159,9 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: ["a":false])
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":{\"a\":false}}"
         }
@@ -170,9 +170,9 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: ["a":Double(1.6)])
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":{\"a\":1.6}}"
         }
@@ -184,9 +184,9 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: ["a", "b", 1, date])
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":[\"a\",\"b\",1,\(jsonDate)]}"
         }
@@ -194,9 +194,9 @@ class JsonWriterTest: QuickSpec {
         it ("should write dict with dict of an array") {
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: ["a": ["a","b"]])
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":{\"a\":[\"a\",\"b\"]}}"
         }
@@ -205,9 +205,9 @@ class JsonWriterTest: QuickSpec {
             
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             try! jw.writeFieldWithObject("a", value: [["a":1], ["b":2]])
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":[{\"a\":1},{\"b\":2}]}"
         }
@@ -215,11 +215,11 @@ class JsonWriterTest: QuickSpec {
         it ("should write named array") {
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
-            try! jw.writeArrayFieldStart("a")
-            try! jw.writeString("t")
-            try! jw.writeEndArray()
-            try! jw.writeEndObject()
+            jw.writeStartObject()
+            jw.writeArrayFieldStart("a")
+            jw.writeString("t")
+            jw.writeEndArray()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":[\"t\"]}"
         }
@@ -227,11 +227,11 @@ class JsonWriterTest: QuickSpec {
         it ("should write named objects") {
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
-            try! jw.writeObjectFieldStart("a")
-            try! jw.writeField("b", value: true)
-            try! jw.writeEndObject()
-            try! jw.writeEndObject()
+            jw.writeStartObject()
+            jw.writeObjectFieldStart("a")
+            jw.writeField("b", value: true)
+            jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"a\":{\"b\":true}}"
         }
@@ -239,22 +239,22 @@ class JsonWriterTest: QuickSpec {
         it("should write two named objects in an object"){
             let jw = JsonWriter(outputStream: MemOutputStream())
             
-            try! jw.writeStartObject()
+            jw.writeStartObject()
             
-            try! jw.writeFieldName("m")
-            try! jw.writeStartObject()
-            try! jw.writeField("a", value: 7)
-            try! jw.writeField("b", value: "o")
-            try! jw.writeField("c", value: "1.0.0")
-            try! jw.writeField("d", value: "s")
-            try! jw.writeEndObject()
+            jw.writeFieldName("m")
+            jw.writeStartObject()
+            jw.writeField("a", value: 7)
+            jw.writeField("b", value: "o")
+            jw.writeField("c", value: "1.0.0")
+            jw.writeField("d", value: "s")
+            jw.writeEndObject()
             
-            try! jw.writeFieldName("u")
-            try! jw.writeStartObject()
-            try! jw.writeField("d", value: 5)
-            try! jw.writeEndObject()
+            jw.writeFieldName("u")
+            jw.writeStartObject()
+            jw.writeField("d", value: 5)
+            jw.writeEndObject()
             
-            try! jw.writeEndObject()
+            jw.writeEndObject()
             
             expect(jw.getJsonString()) == "{\"m\":{\"a\":7,\"b\":\"o\",\"c\":\"1.0.0\",\"d\":\"s\"},\"u\":{\"d\":5}}"
         }

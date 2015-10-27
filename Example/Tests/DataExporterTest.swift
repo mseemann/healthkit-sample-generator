@@ -36,11 +36,11 @@ class DataExporterTest: QuickSpec {
                 let exporter = MetaDataExporter(exportConfiguration: exportConfiguration)
                 
                 let target = JsonSingleDocInMemExportTarget()
-                try! target.startExport()
+                target.startExport()
                 
                 try! exporter.export(self.healthStore, exportTargets: [target])
                 
-                try! target.endExport()
+                target.endExport()
                                 
                 let metaDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:"metaData")
                 
@@ -55,11 +55,11 @@ class DataExporterTest: QuickSpec {
                 let exporter = UserDataExporter(exportConfiguration: exportConfiguration)
                 
                 let target = JsonSingleDocInMemExportTarget()
-                try! target.startExport()
+                target.startExport()
                 
                 try! exporter.export(self.healthStore, exportTargets: [target])
                 
-                try! target.endExport()
+                target.endExport()
                 
                 let userDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:"userData")
                 
@@ -90,9 +90,9 @@ class DataExporterTest: QuickSpec {
             it("should export quantity data") {
 
                 let target = JsonSingleDocInMemExportTarget()
-                try! target.startExport()
+                target.startExport()
                 
-                try! target.startWriteType(type)
+                target.startWriteType(type)
                 
                 let date = NSDate()
                 let quantity = HKQuantity(unit: unit, doubleValue: 70)
@@ -100,9 +100,9 @@ class DataExporterTest: QuickSpec {
                 
                 exporter.writeResults([sample], exportTargets: [target], error: nil)
 
-                try! target.endWriteType()
+                target.endWriteType()
                 
-                try! target.endExport()
+                target.endExport()
                 
                 let dataArray = JsonReader.toJsonObject(target.getJsonString(), returnArrayForKey:String(HKQuantityTypeIdentifierBodyMass))
                 
@@ -143,8 +143,8 @@ class DataExporterTest: QuickSpec {
             it ("should export category types"){
                 
                 let target = JsonSingleDocInMemExportTarget()
-                try! target.startExport()
-                try! target.startWriteType(type)
+                target.startExport()
+                target.startWriteType(type)
                 
                 let date = NSDate()
                 
@@ -152,9 +152,9 @@ class DataExporterTest: QuickSpec {
                 
                 exporter.writeResults([sample], exportTargets: [target], error: nil)
                 
-                try! target.endWriteType()
+                target.endWriteType()
                 
-                try! target.endExport()
+                target.endExport()
                 
                 let dataArray = JsonReader.toJsonObject(target.getJsonString(), returnArrayForKey:String(HKCategoryTypeIdentifierAppleStandHour))
                 
@@ -192,8 +192,8 @@ class DataExporterTest: QuickSpec {
             it ("should export correlation types") {
                 
                 let target = JsonSingleDocInMemExportTarget()
-                try! target.startExport()
-                try! target.startWriteType(type)
+                target.startExport()
+                target.startWriteType(type)
 
                 
                 let quantity1 = HKQuantity(unit: unit, doubleValue: 80)
@@ -210,9 +210,9 @@ class DataExporterTest: QuickSpec {
                 
                 exporter.writeResults([correlation], exportTargets: [target], error: nil)
 
-                try! target.endWriteType()
+                target.endWriteType()
                 
-                try! target.endExport()
+                target.endExport()
                 
                 let dataArray = JsonReader.toJsonObject(target.getJsonString(), returnArrayForKey:String(HKCorrelationTypeIdentifierBloodPressure))
                 
@@ -264,11 +264,11 @@ class DataExporterTest: QuickSpec {
                 let workout = HKWorkout(activityType: HKWorkoutActivityType.Running, startDate: start, endDate: end, workoutEvents: events, totalEnergyBurned: burned, totalDistance: distance, metadata: nil)
                 
                 let target = JsonSingleDocInMemExportTarget()
-                try! target.startExport()
+                target.startExport()
                 
                 exporter.writeResults([workout], exportTargets: [target], error: nil)
                 
-                try! target.endExport()
+                target.endExport()
                 
                 let dataArray = JsonReader.toJsonObject(target.getJsonString(), returnArrayForKey:String(HKObjectType.workoutType()))
                 

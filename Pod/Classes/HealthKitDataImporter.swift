@@ -52,17 +52,109 @@ class MetaDataOutputJsonHandler: DefaultJsonHandler {
     }
 }
 
-class SampleOutputJsonHandler: DefaultJsonHandler {
+class SampleOutputJsonHandler: JsonHandlerProtocol {
+
+    class SampleContext : CustomStringConvertible {
+        
+        let type: JsonContextType
+        var parent: SampleContext?
+        var dict:Dictionary<String, AnyObject?> = [:]
+        var name:String? = nil
+        
+        var description: String {
+            return "\(name) \(type) \(dict)"
+        }
+        
+        init(parent: SampleContext? ,type: JsonContextType){
+            self.type = type
+            self.parent = parent
+        }
+        
+        func put(key:String, value: AnyObject?) {
+            print("put: ", key, value)
+            dict[key] = value
+        }
+        
+        func createArrayContext() -> SampleContext {
+            print("create array")
+            return SampleContext(parent: self, type: .ARRAY)
+        }
+        
+        func createObjectContext() -> SampleContext {
+            print("create object")
+            return SampleContext(parent: self, type: .OBJECT)
+        }
+        
+    }
     
-    let onSample : (sample: HKSample) -> Void
     
-    init(onSample: (sample: HKSample) -> Void) {
+    let onSample : (sample: Dictionary<String, AnyObject>) -> Void
+    var lastName = ""
+    var sampleContext: SampleContext? = nil
+    var objectLevel = 0
+    
+    
+    init(onSample: (sample: Dictionary<String, AnyObject>) -> Void) {
         self.onSample = onSample
     }
     
-    override func name(name: String) {
+    func name(name: String) {
+        lastName = name
+    }
+    
+    func startArray() {
+        sampleContext = sampleContext == nil ? nil : sampleContext!.createArrayContext()
+    }
+    
+    func endArray() {
+        sampleContext = sampleContext == nil ? nil : sampleContext!.parent
+    }
+    
+    func startObject() {
+        objectLevel++
+        if objectLevel == 2 {
+            sampleContext = SampleContext(parent: nil, type: .OBJECT)
+            sampleContext!.name = lastName
+        }
+        sampleContext = sampleContext == nil ? nil : sampleContext!.createObjectContext()
+    }
+    
+    func endObject() {
+        
+        if objectLevel == 2 {
+            print(sampleContext!.parent!.name!, sampleContext)
+            sampleContext = nil
+        }
 
-            print(name)
-
+        sampleContext = sampleContext == nil ? nil : sampleContext!.parent
+        objectLevel--
+    }
+    
+    func stringValue(value: String){
+        if sampleContext != nil {
+            sampleContext!.put(lastName, value:value)
+        }
+    }
+    
+    func boolValue(value: Bool){
+        if sampleContext != nil {
+            sampleContext!.put(lastName, value:value)
+        }
+    }
+    
+    func numberValue(value: NSNumber){
+        if sampleContext != nil {
+            sampleContext!.put(lastName, value:value)
+        }
+    }
+    
+    func nullValue(){
+        if sampleContext != nil {
+            sampleContext!.put(lastName, value:nil)
+        }
+    }
+    
+    func shouldCancelReadingTheJson() -> Bool {
+        return false
     }
 }

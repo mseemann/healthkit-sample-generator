@@ -8,25 +8,51 @@
 
 import Foundation
 
+/**
+ The JsonReader supports different ways to read json.
+*/
 internal class JsonReader {
     
+    /**
+        converts a jsonString to an object. 
+        - Parameter jsonString: the json string that should be read.
+        - Returns: an Object of type AnyObject that the json string defines.
+    */
     static func toJsonObject(jsonString: String) -> AnyObject {
         let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
         let result = try! NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
         return result
     }
     
+    /**
+     Converts a jsonString to an object and returns a dictionary for the provided key.
+     - Parameter jsonString: the json string that should be read.
+     - Parameter returnDictForKey: name of the field that should be returned as Dictionary.
+     - Returns: a dictionaray for the key with AnyObject values.
+     */
     static func toJsonObject(jsonString: String, returnDictForKey: String) -> Dictionary<String, AnyObject> {
         let keyWithDictInDict = JsonReader.toJsonObject(jsonString) as! Dictionary<String, AnyObject>
         return keyWithDictInDict[returnDictForKey] as! Dictionary<String, AnyObject>
     }
     
+    /**
+     Converts a jsonString to an object and returns an array for the provided key.
+     - Parameter jsonString: the json string that should be read.
+     - Parameter returnArrayForKey: name of the field that should be returned as an Array.
+     - Returns: an array for the key with AnyObject values.
+     */
     static func toJsonObject(jsonString: String, returnArrayForKey: String) -> [AnyObject] {
         let keyWithDictInDict = JsonReader.toJsonObject(jsonString) as! Dictionary<String, AnyObject>
         return keyWithDictInDict[returnArrayForKey] as! [AnyObject]
     }
     
-    static func readFileAtPath(fileAtPath: String, withJsonHandler jsonHandler: JsonHandlerProtocol) throws -> Void {
+    /**
+        Reads a json from a file and triggers events specified by JsonHandlerProtocol. Main objective: low memory consumtion for very large json files. Besides it is possible to stop the parsing process.
+        - Parameter fileAtPath: The json file that should be read.
+        - Parameter withJsonHandler: an object that implements JsonHandlerProtocol to process the json events.
+     
+    */
+    static func readFileAtPath(fileAtPath: String, withJsonHandler jsonHandler: JsonHandlerProtocol) -> Void {
         let inStream = NSInputStream(fileAtPath: fileAtPath)!
         inStream.open()
         
@@ -47,6 +73,9 @@ internal class JsonReader {
     }
 }
 
+/**
+ JsonReaderContext keeps the state while tokenizing a json steam.
+*/
 internal class JsonReaderContext {
     var type: JsonContextType
     private var parent: JsonReaderContext?
@@ -89,6 +118,10 @@ internal class JsonReaderContext {
     }
 }
 
+/**
+ The JsonTokenizer reads a json from smal parts and triggers the events for the JsonHandlerProtocol. The function tokenize may be calld as often as need to process the complete json string. 
+ There are still some unsupported json features like escaped characters and whitespace.
+*/
 internal class JsonTokenizer {
     // TODO escpaped chars  "b", "f", "n", "r", "t", "\\" whitespace
     let jsonHandler: JsonHandlerProtocol
@@ -102,6 +135,9 @@ internal class JsonTokenizer {
         self.numberFormatter.locale = NSLocale(localeIdentifier: "EN")
     }
     
+    /**
+        removes the question marks from a string.
+    */
     internal func removeQuestionMarks(str: String) -> String{
         var result = str
         result.removeAtIndex(result.startIndex)
@@ -109,6 +145,9 @@ internal class JsonTokenizer {
         return result
     }
     
+    /**
+        outputs a name.
+    */
     internal func writeName(context: JsonReaderContext) {
         //print("writeName", context.nameOrObject)
         let name = removeQuestionMarks(context.nameOrObject)
@@ -117,6 +156,9 @@ internal class JsonTokenizer {
         context.inNameOrObject = true
     }
     
+    /**
+     outputs a value. Value can be a string, a boolean value a null value or a number.
+     */
     internal func writeValue(context: JsonReaderContext){
         //print("writeValue", context.nameOrObject)
         let value = context.nameOrObject
@@ -154,6 +196,9 @@ internal class JsonTokenizer {
         jsonHandler.endArray()
     }
     
+    /**
+        main tokenizer function. The string may have any size.
+    */
     func tokenize(toTokenize: String) -> Void {
         for chr in toTokenize.characters {
             //print(chr)
@@ -232,22 +277,38 @@ internal class JsonTokenizer {
     }
 }
 
+/**
+ Protocoll with function that will be called during the json tokenizing process.
+*/
 protocol JsonHandlerProtocol {
+    // an array starts
     func startArray()
+    // an array ended
     func endArray()
     
+    // an object starts
     func startObject()
+    // an object ended
     func endObject()
     
+    // a name was tokenized
     func name(name: String)
+    // a string value was tokenized
     func stringValue(value: String)
+    // a boolean value was tokenized
     func boolValue(value: Bool)
+    // a number was tokenized
     func numberValue(value: NSNumber)
+    // a null value was tokenized
     func nullValue()
     
+    // return true if you want the tokenizer to stop.
     func shouldCancelReadingTheJson() -> Bool
 }
 
+/**
+ A default impelmentation of the JsonHandlerProtocol. Use this class if you don't need to listen to every json event.
+*/
 class DefaultJsonHandler : JsonHandlerProtocol {
     func startArray(){}
     func endArray(){}
@@ -266,6 +327,9 @@ class DefaultJsonHandler : JsonHandlerProtocol {
     }
 }
 
+/**
+ The JsonStringOutputJsonHandler transforms the json parsing events in a json string. Main purpose: make testing of the reader as easy as possible.
+*/
 class JsonStringOutputJsonHandler: DefaultJsonHandler {
     
     let memOutputStream : MemOutputStream!
@@ -283,39 +347,39 @@ class JsonStringOutputJsonHandler: DefaultJsonHandler {
     }
     
     override func startArray(){
-        try! jw.writeStartArray()
+        jw.writeStartArray()
     }
     
     override func endArray(){
-        try! jw.writeEndArray()
+        jw.writeEndArray()
     }
     
     override func startObject() {
-        try! jw.writeStartObject()
+        jw.writeStartObject()
     }
     
     override func endObject() {
-        try! jw.writeEndObject()
+        jw.writeEndObject()
     }
     
     override func name(name: String){
-        try! jw.writeFieldName(name)
+        jw.writeFieldName(name)
     }
     
     override func stringValue(value: String) {
-        try! jw.writeString(value)
+        jw.writeString(value)
     }
     
     override func numberValue(value: NSNumber) {
-        try! jw.writeNumber(value)
+        jw.writeNumber(value)
     }
     
     override func boolValue(value: Bool) {
-        try! jw.writeBool(value)
+        jw.writeBool(value)
     }
     
     override func nullValue() {
-        try! jw.writeNull()
+        jw.writeNull()
     }
     
 }
