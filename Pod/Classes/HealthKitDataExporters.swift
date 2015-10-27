@@ -9,8 +9,6 @@
 import Foundation
 import HealthKit
 
-// FIXME checkout HKQuery.predicateForObjectsWithNoCorrelation - so taht the correlated types are only exported once!
-
 internal protocol DataExporter {
     var message: String {get}
     func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws -> Void
@@ -149,7 +147,6 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
     internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
             try exportTarget.startWriteType(type)
-            try exportTarget.startWriteDatas()
         }
 
         var result : (anchor:HKQueryAnchor?, count:Int?) = (anchor:nil, count: -1)
@@ -159,7 +156,6 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
         } while result.count != 0 || result.count==queryCountLimit
 
         for exportTarget in exportTargets {
-            try exportTarget.endWriteDatas()
             try exportTarget.endWriteType()
         }
      }
@@ -228,7 +224,6 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
     internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
             try exportTarget.startWriteType(type)
-            try exportTarget.startWriteDatas()
         }
         var result : (anchor:HKQueryAnchor?, count:Int?) = (anchor:nil, count: -1)
         repeat {
@@ -236,7 +231,6 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
         } while result.count != 0 || result.count==queryCountLimit
         
         for exportTarget in exportTargets {
-            try exportTarget.endWriteDatas()
             try exportTarget.endWriteType()
         }
 
@@ -333,7 +327,6 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
     internal func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws {
         for exportTarget in exportTargets {
             try exportTarget.startWriteType(type)
-            try exportTarget.startWriteDatas()
         }
 
         var result : (anchor:HKQueryAnchor?, count:Int?) = (anchor:nil, count: -1)
@@ -342,7 +335,6 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
         } while result.count != 0 || result.count==queryCountLimit
 
         for exportTarget in exportTargets {
-            try exportTarget.endWriteDatas()
             try exportTarget.endWriteType()
         }
 
@@ -360,7 +352,6 @@ internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
             do {
                 for exportTarget in exportTargets {
                     try exportTarget.startWriteType(HKObjectType.workoutType())
-                    try exportTarget.startWriteDatas()
                 }
                 
                 for sample in results {
@@ -395,7 +386,6 @@ internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
                 }
                 
                 for exportTarget in exportTargets {
-                    try exportTarget.endWriteDatas()
                     try exportTarget.endWriteType()
                 }
                 

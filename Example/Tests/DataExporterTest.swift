@@ -93,26 +93,23 @@ class DataExporterTest: QuickSpec {
                 try! target.startExport()
                 
                 try! target.startWriteType(type)
-                try! target.startWriteDatas()
                 
                 let date = NSDate()
                 let quantity = HKQuantity(unit: unit, doubleValue: 70)
                 let sample = HKQuantitySample(type: type, quantity: quantity, startDate: date, endDate: date)
                 
                 exporter.writeResults([sample], exportTargets: [target], error: nil)
-                try! target.endWriteDatas()
+
                 try! target.endWriteType()
                 
                 try! target.endExport()
                 
-                let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKQuantityTypeIdentifierBodyMass))
+                let dataArray = JsonReader.toJsonObject(target.getJsonString(), returnArrayForKey:String(HKQuantityTypeIdentifierBodyMass))
                 
-            
-                let dataArray = sampleDict["data"] as? [AnyObject]
                 
-                expect(dataArray?.count) == 1
+                expect(dataArray.count) == 1
                 
-                let savedSample = dataArray?.first as! Dictionary<String, AnyObject>
+                let savedSample = dataArray.first as! Dictionary<String, AnyObject>
              
                 
                
@@ -148,7 +145,6 @@ class DataExporterTest: QuickSpec {
                 let target = JsonSingleDocInMemExportTarget()
                 try! target.startExport()
                 try! target.startWriteType(type)
-                try! target.startWriteDatas()
                 
                 let date = NSDate()
                 
@@ -156,19 +152,15 @@ class DataExporterTest: QuickSpec {
                 
                 exporter.writeResults([sample], exportTargets: [target], error: nil)
                 
-                
-                try! target.endWriteDatas()
                 try! target.endWriteType()
                 
                 try! target.endExport()
                 
-                let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKCategoryTypeIdentifierAppleStandHour))
+                let dataArray = JsonReader.toJsonObject(target.getJsonString(), returnArrayForKey:String(HKCategoryTypeIdentifierAppleStandHour))
                 
-                let dataArray = sampleDict["data"] as? [AnyObject]
+                expect(dataArray.count) == 1
                 
-                expect(dataArray?.count) == 1
-                
-                let savedSample = dataArray?.first as! Dictionary<String, AnyObject>
+                let savedSample = dataArray.first as! Dictionary<String, AnyObject>
             
                 let sdate   = savedSample["sdate"] as! NSNumber
                 let uuid    = savedSample["uuid"] as! String
@@ -202,8 +194,6 @@ class DataExporterTest: QuickSpec {
                 let target = JsonSingleDocInMemExportTarget()
                 try! target.startExport()
                 try! target.startWriteType(type)
-                try! target.startWriteDatas()
-                
 
                 
                 let quantity1 = HKQuantity(unit: unit, doubleValue: 80)
@@ -219,20 +209,16 @@ class DataExporterTest: QuickSpec {
                 let correlation = HKCorrelation(type: type, startDate: date, endDate: date, objects: Set(samples))
                 
                 exporter.writeResults([correlation], exportTargets: [target], error: nil)
-                
-                
-                try! target.endWriteDatas()
+
                 try! target.endWriteType()
                 
                 try! target.endExport()
                 
-                let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKCorrelationTypeIdentifierBloodPressure))
+                let dataArray = JsonReader.toJsonObject(target.getJsonString(), returnArrayForKey:String(HKCorrelationTypeIdentifierBloodPressure))
                 
-                let dataArray = sampleDict["data"] as? [AnyObject]
+                expect(dataArray.count) == 1
                 
-                expect(dataArray?.count) == 1
-                
-                let savedCorrelation = dataArray?.first as! Dictionary<String, AnyObject>
+                let savedCorrelation = dataArray.first as! Dictionary<String, AnyObject>
                 
                 
                 let sdate   = savedCorrelation["sdate"] as! NSNumber
@@ -284,13 +270,11 @@ class DataExporterTest: QuickSpec {
                 
                 try! target.endExport()
                 
-                let sampleDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:String(HKObjectType.workoutType()))
+                let dataArray = JsonReader.toJsonObject(target.getJsonString(), returnArrayForKey:String(HKObjectType.workoutType()))
                 
-                let dataArray = sampleDict["data"] as? [AnyObject]
+                expect(dataArray.count) == 1
                 
-                expect(dataArray?.count) == 1
-                
-                let savedWorkout = dataArray?.first as! Dictionary<String, AnyObject>
+                let savedWorkout = dataArray.first as! Dictionary<String, AnyObject>
                 
                 let uuid = savedWorkout["uuid"] as! String
                 expect(uuid).notTo(beNil())

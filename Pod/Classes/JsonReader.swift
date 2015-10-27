@@ -21,6 +21,11 @@ internal class JsonReader {
         return keyWithDictInDict[returnDictForKey] as! Dictionary<String, AnyObject>
     }
     
+    static func toJsonObject(jsonString: String, returnArrayForKey: String) -> [AnyObject] {
+        let keyWithDictInDict = JsonReader.toJsonObject(jsonString) as! Dictionary<String, AnyObject>
+        return keyWithDictInDict[returnArrayForKey] as! [AnyObject]
+    }
+    
     static func readFileAtPath(fileAtPath: String, withJsonHandler jsonHandler: JsonHandlerProtocol) throws -> Void {
         let inStream = NSInputStream(fileAtPath: fileAtPath)!
         inStream.open()
