@@ -73,9 +73,9 @@ public class HealthKitProfile : CustomStringConvertible {
     func importSamples(onSample: (sample: HKSample) -> Void) throws {
         
         let sampleImportHandler = SampleOutputJsonHandler(){
-            (sampleDict:Dictionary<String, AnyObject>) in
+            (sampleDict:AnyObject, typeName: String) in
             
-            print(sampleDict)
+            //print(typeName, sampleDict)
             // transform smapleDict to sample
         }
         

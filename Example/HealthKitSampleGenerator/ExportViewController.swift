@@ -75,12 +75,13 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
         scExportType.selectedSegmentIndex   = HealthDataToExportType.allValues.indexOf(HealthDataToExportType.ALL)!
         
         lbExportMessages.text               = ""
+        
+        exportInProgress = false
+        createAndAnalyzeExportConfiguration()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        exportInProgress = false
-        createAndAnalyzeExportConfiguration()
     }
     
     @IBAction func scEpxortDataTypeChanged(sender: AnyObject) {

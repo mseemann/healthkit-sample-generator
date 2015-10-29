@@ -64,8 +64,8 @@ internal class JsonReader {
         while inStream.hasBytesAvailable && !jsonHandler.shouldCancelReadingTheJson() {
             let bytesRead = inStream.read(&buffer, maxLength: bufferSize)
             if bytesRead > 0 {
-                let textFileContents = NSString(bytes: &buffer, length: bytesRead, encoding: NSUTF8StringEncoding)!
-                tokenizer.tokenize(textFileContents as String)
+                let textFileContents = NSString(bytes: &buffer, length: bytesRead, encoding: NSUTF8StringEncoding)
+                tokenizer.tokenize(textFileContents as! String)
             }
         }
         
@@ -126,13 +126,11 @@ internal class JsonTokenizer {
     // TODO escpaped chars  "b", "f", "n", "r", "t", "\\" whitespace
     let jsonHandler: JsonHandlerProtocol
     var context = JsonReaderContext()
-    let numberFormatter = NSNumberFormatter()
+    
     
     
     init(jsonHandler: JsonHandlerProtocol){
         self.jsonHandler = jsonHandler
-        // set to en, so that the numbers with . will be parsed correctly
-        self.numberFormatter.locale = NSLocale(localeIdentifier: "EN")
     }
     
     /**
@@ -161,7 +159,7 @@ internal class JsonTokenizer {
      */
     internal func writeValue(context: JsonReaderContext){
         //print("writeValue", context.nameOrObject)
-        let value = context.nameOrObject
+        let value:String = context.nameOrObject
         context.nameOrObject = ""
         
         
@@ -175,8 +173,20 @@ internal class JsonTokenizer {
         } else  if value == "null" {
             self.jsonHandler.nullValue()
         } else  {
-            let number = numberFormatter.numberFromString(value)!
-            self.jsonHandler.numberValue(number)
+            // TODO: chekout why this code leaks! with this code 1,5GB Mem  used without 13MB after reading a 70MB GB Json file!!
+            // set to en, so that the numbers with . will be parsed correctly
+            //let numberFormatter = NSNumberFormatter()
+            //numberFormatter.locale = NSLocale(localeIdentifier: "EN")
+            //let number = numberFormatter.numberFromString(value)!
+            
+            if let intValue = Int(value) {
+                jsonHandler.numberValue(intValue)
+            } else if let doubleValue = Double(value) {
+                jsonHandler.numberValue(doubleValue)
+            }
+            
+            
+            //self.jsonHandler.numberValue(number)
         }
     }
     

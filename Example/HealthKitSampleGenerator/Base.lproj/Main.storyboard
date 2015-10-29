@@ -204,7 +204,7 @@
                                         <rect key="frame" x="0.0" y="200" width="560" height="2"/>
                                         <animations/>
                                     </progressView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gA-Ty-Wvg">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gA-Ty-Wvg">
                                         <rect key="frame" x="0.0" y="208" width="560" height="15"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>

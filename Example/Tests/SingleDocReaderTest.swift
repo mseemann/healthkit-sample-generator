@@ -23,7 +23,7 @@ class SigleDocReaderTest: QuickSpec {
             
             let jsonStringOutputHandler = JsonStringOutputJsonHandler()
             
-            try! JsonReader.readFileAtPath(fileAtPath!, withJsonHandler: jsonStringOutputHandler)
+            JsonReader.readFileAtPath(fileAtPath!, withJsonHandler: jsonStringOutputHandler)
 
             let stringFromFile = try! NSString(contentsOfFile: fileAtPath!, encoding: NSUTF8StringEncoding) as String
             
@@ -34,7 +34,7 @@ class SigleDocReaderTest: QuickSpec {
 
             let metaDataOutput = MetaDataOutputJsonHandler()
             
-            try! JsonReader.readFileAtPath(fileAtPath!, withJsonHandler: metaDataOutput)
+            JsonReader.readFileAtPath(fileAtPath!, withJsonHandler: metaDataOutput)
             
             let metaData = metaDataOutput.getMetaData()
             
