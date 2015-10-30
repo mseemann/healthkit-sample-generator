@@ -308,11 +308,14 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
             type: type,
             predicate: exportConfiguration.getPredicate(),
             anchor: anchor ,
-            limit: queryCountLimit) { (query, results, deleted, newAnchor, error) -> Void in
+            limit: queryCountLimit) {
+                (query, results, deleted, newAnchor, error) -> Void in
+                
                 self.writeResults(results as! [HKCorrelation], exportTargets: exportTargets, error: error)
                 resultAnchor = newAnchor
                 resultCount = results?.count
                 dispatch_semaphore_signal(semaphore)
+                
         }
         
         healthStore.executeQuery(query)

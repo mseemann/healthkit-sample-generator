@@ -20,12 +20,16 @@ class HealthKitConstants {
     
     static let healthKitCategoryTypes: Set<HKCategoryType> = Set(arrayLiteral:
         HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierSleepAnalysis)!,
-        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierAppleStandHour)!,
         HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierCervicalMucusQuality)!,
         HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierOvulationTestResult)!,
         HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierMenstrualFlow)!,
         HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierIntermenstrualBleeding)!,
         HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierSexualActivity)!
+    )
+    
+    // not writable
+    static let healthKitCategoryLockedTypes: Set<HKCategoryType> = Set(arrayLiteral:
+        HKObjectType.categoryTypeForIdentifier(HKCategoryTypeIdentifierAppleStandHour)!
     )
     
     static let healthKitQuantityTypes: Set<HKQuantityType> = Set(arrayLiteral:
@@ -42,7 +46,6 @@ class HealthKitConstants {
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBasalEnergyBurned)!,
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierActiveEnergyBurned)!,
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierFlightsClimbed)!,
-        HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierNikeFuel)!,
         // Vitals
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!,
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyTemperature)!,
@@ -104,6 +107,11 @@ class HealthKitConstants {
         HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierUVExposure)!
     )
     
+    //not writable
+    static let healthKitQuantityLockedTypes: Set<HKQuantityType> = Set(arrayLiteral:
+                HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierNikeFuel)!
+    )
+    
     static let healthKitCorrelationTypes: Set<HKCorrelationType> = Set(arrayLiteral:
         HKObjectType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierBloodPressure)!,
         HKObjectType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierFood)!
@@ -120,4 +128,24 @@ class HealthKitConstants {
         allTypes.insert(workoutType)
         return allTypes
     }
+    
+    static func authorizationReadTypes() -> Set<HKObjectType> {
+        var authTypes : Set<HKObjectType> = Set()
+        authTypes.unionInPlace(HealthKitConstants.healthKitCharacteristicsTypes as Set<HKObjectType>!)
+        authTypes.unionInPlace(HealthKitConstants.healthKitQuantityTypes as Set<HKObjectType>!)
+        authTypes.unionInPlace(HealthKitConstants.healthKitQuantityLockedTypes as Set<HKObjectType>!)
+        authTypes.unionInPlace(HealthKitConstants.healthKitCategoryTypes as Set<HKObjectType>!)
+        authTypes.unionInPlace(HealthKitConstants.healthKitCategoryLockedTypes as Set<HKObjectType>!)
+        authTypes.insert(HealthKitConstants.workoutType)
+        return authTypes
+    }
+    
+    static func authorizationWriteTypes() -> Set<HKSampleType> {
+         var authTypes : Set<HKSampleType> = Set()
+        authTypes.unionInPlace(HealthKitConstants.healthKitQuantityTypes as Set<HKSampleType>!)
+        authTypes.unionInPlace(HealthKitConstants.healthKitCategoryTypes as Set<HKSampleType>!)
+        authTypes.insert(HealthKitConstants.workoutType)
+        return authTypes
+    }
+
 }

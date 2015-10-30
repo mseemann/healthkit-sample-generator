@@ -17,27 +17,58 @@ class HealthKitStoreCleaner {
         self.healthStore = healthStore
     }
     
+    
+    /**
+     healthStore.deleteObjectsOfType results to
+     Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.healthd.server" UserInfo={NSDebugDescription=connection to service named com.apple.healthd.server
+     in the simulator -> query and delete with healthStore.deleteObjects works :(
+    */
     func clean( onProgress: (message: String, progressInPercent: Double?)->Void){
         
         let source = HKSource.defaultSource()
         let predicate = HKQuery.predicateForObjectsFromSource(source)
         
-        let allTypes = HealthKitConstants.allTypes()
+        let allTypes = HealthKitConstants.authorizationWriteTypes()
         
-        for (index, type) in allTypes.enumerate() {
+        for type in allTypes {
             
             let semaphore = dispatch_semaphore_create(0)
 
             onProgress(message: "deleting \(type)", progressInPercent: nil)
-            healthStore.deleteObjectsOfType(type, predicate: predicate)
-                    {(success: Bool, deletedObjectCount: Int, error:NSError?) in
-         
-                onProgress(message: "deleted \(deletedObjectCount) objects  from \(type)", progressInPercent: Double(index)/Double(allTypes.count))
-
-                dispatch_semaphore_signal(semaphore)
-            }
             
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            let queryCountLimit = 1000
+            var result : (anchor:HKQueryAnchor?, count:Int?) = (anchor:nil, count: -1)
+            repeat {
+                let query = HKAnchoredObjectQuery(
+                    type: type,
+                    predicate: predicate,
+                    anchor: result.anchor,
+                    limit: queryCountLimit) {
+                        (query, results, deleted, newAnchor, error) -> Void in
+                        
+                        if results?.count > 0 {
+                            self.healthStore.deleteObjects(results!){
+                                (success:Bool, error:NSError?) -> Void in
+                                if success {
+                                    print("deleted \(results?.count) from \(type)")
+                                } else {
+                                    print("error deleting from \(type): \(error)")
+                                }
+                                dispatch_semaphore_signal(semaphore)
+                            }
+                        } else {
+                             dispatch_semaphore_signal(semaphore)
+                        }
+
+                        result.anchor = newAnchor
+                        result.count = results?.count
+                }
+                
+                healthStore.executeQuery(query)
+                
+                dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+                
+            } while result.count != 0 || result.count==queryCountLimit
             
         }
         

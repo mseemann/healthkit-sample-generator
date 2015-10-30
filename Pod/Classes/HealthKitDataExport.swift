@@ -107,17 +107,11 @@ public class HealthKitDataExporter {
             }
         }
 
-        
-        var requestAuthorizationTypes: Set<HKObjectType> = Set()
-        requestAuthorizationTypes.unionInPlace(HealthKitConstants.healthKitCharacteristicsTypes as Set<HKObjectType>!)
-        requestAuthorizationTypes.unionInPlace(HealthKitConstants.healthKitQuantityTypes as Set<HKObjectType>!)
-        requestAuthorizationTypes.unionInPlace(HealthKitConstants.healthKitCategoryTypes as Set<HKObjectType>!)
-        requestAuthorizationTypes.insert(HealthKitConstants.workoutType)
 
  
-        healthStore.requestAuthorizationToShareTypes(nil, readTypes: requestAuthorizationTypes) {
+        healthStore.requestAuthorizationToShareTypes(nil, readTypes: HealthKitConstants.authorizationReadTypes()) {
             (success, error) -> Void in
-            
+            /// TODO success error handling
             self.healthStore.preferredUnitsForQuantityTypes(HealthKitConstants.healthKitQuantityTypes) {
                 (typeMap, error) in
         
