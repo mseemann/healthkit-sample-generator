@@ -65,11 +65,11 @@ class ExportTest: QuickSpec {
         
         it("should have the right count of HK-types"){            
             expect(HealthKitConstants.healthKitCharacteristicsTypes.count) == 4
-            expect(HealthKitConstants.healthKitCategoryTypes.count) == 7
-            expect(HealthKitConstants.healthKitQuantityTypes.count) == 68
+            expect(HealthKitConstants.healthKitCategoryTypes.count) == 6
+            expect(HealthKitConstants.healthKitQuantityTypes.count) == 67
             expect(HealthKitConstants.healthKitCorrelationTypes.count) == 2
             
-            let count = 4 + 7 + 68 + 2 + 1
+            let count = 4 + 6 + 67 + 2 + 1
             expect(HealthKitConstants.allTypes().count) == count
         }
     }
