@@ -364,9 +364,9 @@ internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
                     dict["uuid"]                = sample.UUID.UUIDString
                     dict["sampleType"]          = sample.sampleType.identifier
                     dict["workoutActivityType"] = sample.workoutActivityType.rawValue
-                    dict["sDate"]               = sample.startDate
+                    dict["sdate"]               = sample.startDate
                     if sample.startDate != sample.endDate {
-                        dict["eDate"]               = sample.endDate
+                        dict["edate"]               = sample.endDate
                     }
                     dict["duration"]            = sample.duration // seconds
                     dict["totalDistance"]       = sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit())
@@ -377,7 +377,7 @@ internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
                         var workoutEvent: Dictionary<String, AnyObject> = [:]
                         
                         workoutEvent["type"] =  event.type.rawValue
-                        workoutEvent["sDate"] = event.date
+                        workoutEvent["sdate"] = event.date
                         workoutEvents.append(workoutEvent)
                     }
                     

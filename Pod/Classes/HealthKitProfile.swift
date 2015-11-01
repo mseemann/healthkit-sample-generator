@@ -74,24 +74,8 @@ public class HealthKitProfile : CustomStringConvertible {
         
         let sampleImportHandler = SampleOutputJsonHandler(){
             (sampleDict:AnyObject, typeName: String) in
-            
-            var sampleCreator:SampleCreator? = nil
-            
-            if typeName.hasPrefix("HKCharacteristicTypeIdentifier") {
-                // it is not possible to create characteristics
-            } else if typeName.hasPrefix("HKCategoryTypeIdentifier") {
-                sampleCreator = CategorySampleCreator(typeName: typeName)
-            } else if typeName.hasPrefix("HKQuantityTypeIdentifier"){
-                sampleCreator = QuantitySampleCreator(typeName: typeName)
-            } else if typeName.hasPrefix("HKCorrelationTypeIdentifier"){
-                sampleCreator = CorrelationSampleCreator(typeName: typeName)
-            } else if typeName.hasPrefix("HKWorkoutTypeIdentifier"){
-                sampleCreator = WorkoutSampleCreator()
-            } else {
-                print("unsupported", typeName)
-            }
-            
-            if let creator = sampleCreator {
+
+            if let creator = SampleCreatorRegistry.get(typeName) {
                 let sampleOpt:HKSample? = creator.createSample(sampleDict)
                 if let sample = sampleOpt {
                     onSample(sample: sample)

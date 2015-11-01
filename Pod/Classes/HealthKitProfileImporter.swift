@@ -57,20 +57,22 @@ public class HealthKitProfileImporter {
                     onProgress(message: "Start importing", progressInPercent: nil)
 
                     var lastSampleType = ""
-                    try! profile.importSamples(){(sample: HKSample) in
+                    try! profile.importSamples(){
+                        (sample: HKSample) in
                         //print(sample)
                         
                         if lastSampleType != String(sample.sampleType) {
                             lastSampleType = String(sample.sampleType)
                             onProgress(message: "importing \(lastSampleType)", progressInPercent: nil)
                         }
-                      
+                        
                         self.healthStore.saveObject(sample){
                             (success:Bool, error:NSError?) in
                             /// TODO success error handling print(success, error)
                             if !success {
                                 print(error)
                             }
+                            
                         }
                     }
                     
