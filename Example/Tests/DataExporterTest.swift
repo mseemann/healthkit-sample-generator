@@ -285,8 +285,8 @@ class DataExporterTest: QuickSpec {
                 let workoutActivityType = savedWorkout["workoutActivityType"] as! NSNumber
                 expect(workoutActivityType) == HKWorkoutActivityType.Running.rawValue
                 
-                let sDate = savedWorkout["sDate"] as! NSNumber
-                let eDate = savedWorkout["eDate"] as! NSNumber
+                let sDate = savedWorkout["sdate"] as! NSNumber
+                let eDate = savedWorkout["edate"] as! NSNumber
                 expect(sDate).to(beCloseTo(eDate, within: 60*10*1001))
                 
                 let duration = savedWorkout["duration"] as! NSNumber
@@ -303,14 +303,14 @@ class DataExporterTest: QuickSpec {
                 let workoutEvents = savedWorkout["workoutEvents"] as! [AnyObject]
                 
                 let pauseEvent = workoutEvents[0] as! Dictionary<String, AnyObject>
-                let pauseSDate = pauseEvent["sDate"] as! NSNumber
+                let pauseSDate = pauseEvent["sdate"] as! NSNumber
                 expect(pauseSDate).to(beGreaterThan(sDate))
                 
                 let pauseType = pauseEvent["type"] as! NSNumber
                 expect(pauseType) == HKWorkoutEventType.Pause.rawValue
                 
                 let resumeEvent = workoutEvents[1] as! Dictionary<String, AnyObject>
-                let resumeSDate = resumeEvent["sDate"] as! NSNumber
+                let resumeSDate = resumeEvent["sdate"] as! NSNumber
                 expect(resumeSDate).to(beGreaterThan(sDate))
                 
                 let resumeType = resumeEvent["type"] as! NSNumber
