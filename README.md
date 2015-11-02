@@ -144,6 +144,7 @@ data on a real device you need to open iTunes, go to the device app section and 
 are able to save the file on your mac.
 
 ![](screen_export.png?raw=true "Profile export screenshot")
+<img src="export.png?raw=true" alt="Export using the Example App" width="320px" height="auto">
 
 The output format is the same as using the api.
 
