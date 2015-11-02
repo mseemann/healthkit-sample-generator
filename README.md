@@ -152,6 +152,43 @@ This will output all the data that are available through HealthKit in JSON forma
 
 ```
 
+### Import by API
+
+```swift
+// create a profile from an output file
+let profile = HealthKitProfile(fileAtPath:outputUrl)
+
+// or read the profiles from disk
+let profiles = HealthKitProfileReader.readProfilesFromDisk(documentsUrl)
+
+if profiles.count > 0 {
+
+    let importer = HealthKitProfileImporter(healthStore: healthStore)
+
+    importer.importProfile(
+        profiles[0],
+        deleteExistingData: true,
+        onProgress: {
+            (message: String, progressInPercent: NSNumber?)->Void in
+            NSOperationQueue.mainQueue().addOperationWithBlock(){
+                // output progress information
+            }
+        },
+        onCompletion: {
+            (error: ErrorType?)-> Void in
+            NSOperationQueue.mainQueue().addOperationWithBlock(){
+                if let exportError = error {
+                    print(exportError)
+                } else {
+                    //everything went well
+                }
+            }
+        }
+    )
+}
+```
+
+
 ## Requirements
 
 iOS 9.0, XCode 7

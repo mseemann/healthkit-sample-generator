@@ -66,7 +66,8 @@ class ImportProfileViewController : UIViewController {
         importing = true
         lbImportProgress.text = "Start import"
         if let importProfile = profile {
-            HealthKitProfileImporter(healthStore: healthStore).importProfile(
+            let importer = HealthKitProfileImporter(healthStore: healthStore)
+            importer.importProfile(
                 importProfile,
                 deleteExistingData: swDeleteExistingData.on,
                 onProgress: {(message: String, progressInPercent: NSNumber?)->Void in

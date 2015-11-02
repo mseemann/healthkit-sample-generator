@@ -8,7 +8,8 @@ import HealthKitSampleGenerator
 // setup an output file name
 let fm              = NSFileManager.defaultManager()
 let documentsUrl    = fm.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-let outputFileName  = documentsUrl.URLByAppendingPathComponent("export.json").path!
+let outputUrl       = documentsUrl.URLByAppendingPathComponent("export.json")
+let outputFileName  = outputUrl.path!
 
 // create a target for the export - all goes in a single json file
 let target          = JsonSingleDocAsFileExportTarget(outputFileName: outputFileName, overwriteIfExist:true)
@@ -47,3 +48,35 @@ exporter.export(
         })
     }
 )
+
+// create a profile from an output file
+let profile = HealthKitProfile(fileAtPath:outputUrl)
+
+// or read the profiles from disk
+let profiles = HealthKitProfileReader.readProfilesFromDisk(documentsUrl)
+
+if profiles.count > 0 {
+
+    let importer = HealthKitProfileImporter(healthStore: healthStore)
+    
+    importer.importProfile(
+        profiles[0],
+        deleteExistingData: true,
+        onProgress: {(message: String, progressInPercent: NSNumber?)->Void in
+            NSOperationQueue.mainQueue().addOperationWithBlock(){
+                // output progress information
+            }
+        },
+        
+        onCompletion: {(error: ErrorType?)-> Void in
+            NSOperationQueue.mainQueue().addOperationWithBlock(){
+                if let exportError = error {
+                    print(exportError)
+                } else {
+                     //everything went well
+                }
+            }
+        }
+    )
+}
+
