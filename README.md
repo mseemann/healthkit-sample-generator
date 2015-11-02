@@ -8,8 +8,6 @@ Export/Import/Sample Generator for HealthKit Data (Swift + UI)
 [![License](https://img.shields.io/cocoapods/l/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 [![Platform](https://img.shields.io/cocoapods/p/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 
-##Objective: 
-
 Easy to use generator for HealthKit Sample Data that can be used in code and in the simulator. It supports you by exporting the current health data into a json profile, recreates the profile from a json file and is able to create a complete health data profile randomly. So you have reproducable test data to test your code and your ui of your amazing Health-App.
 
 Status: 
@@ -41,6 +39,8 @@ Go to the Profile Tab of the App. There you will see all profiles that are store
 
 
 ### Export using the API
+If you don't want to use the example app or need to integrate the export and import in you own app you can use the Export/Import-API.
+
 ```swift
 
 import Foundation
@@ -92,7 +92,7 @@ exporter.export(
 )
 
 ```
-### Import by API
+### Import using the API
 
 ```swift
 // create a profile from an output file
@@ -128,64 +128,68 @@ if profiles.count > 0 {
 }
 ```
 
-The output format is json:
+The output format in both cases is json. See the following example:
 ```json
 
 {
-"metaData": {
-"creationDate": 1446486924969.1,
-"profileName": "output20151102185522",
-"version": "1.0.0",
-"type": "JsonSingleDocExportTarget"
-},
-"userData": {
-"bloodType": 1,
-"fitzpatrickSkinType": 1,
-"biologicalSex": 2,
-"dateOfBirth": 341967600000
-},
-"HKQuantityTypeIdentifierStepCount": [
-{
-"unit": "count",
-"sdate": 1446486720000,
-"value": 200
-}
-],
-"HKQuantityTypeIdentifierHeartRate": [
-{
-"unit": "count/min",
-"sdate": 1446486720000,
-"value": 62
-}
-],
-"HKQuantityTypeIdentifierFlightsClimbed": [
-{
-"unit": "count",
-"sdate": 1446486600000,
-"value": 1
-}
-],
-"HKQuantityTypeIdentifierBodyMass": [
-{
-"unit": "kg",
-"sdate": 1446486600000,
-"value": 80
-}
-],
-"HKWorkoutTypeIdentifier": [
-{
-"workoutActivityType": 37,
-"totalEnergyBurned": 90,
-"edate": 1446486660000,
-"duration": 840,
-"workoutEvents": [],
-"totalDistance": 3218.688,
-"sdate": 1446485820000
-}
-]
+    "metaData": {
+        "creationDate": 1446486924969.1,
+        "profileName": "output20151102185522",
+        "version": "1.0.0",
+        "type": "JsonSingleDocExportTarget"
+    },
+    "userData": {
+        "bloodType": 1,
+        "fitzpatrickSkinType": 1,
+        "biologicalSex": 2,
+        "dateOfBirth": 341967600000
+    },
+    "HKQuantityTypeIdentifierStepCount": [
+        {
+            "unit": "count",
+            "sdate": 1446486720000,
+            "value": 200
+        }
+    ],
+    "HKQuantityTypeIdentifierHeartRate": [
+        {
+            "unit": "count/min",
+            "sdate": 1446486720000,
+            "value": 62
+        }
+    ],
+    "HKQuantityTypeIdentifierFlightsClimbed": [
+        {
+            "unit": "count",
+            "sdate": 1446486600000,
+            "value": 1
+        }
+    ],
+    "HKQuantityTypeIdentifierBodyMass": [
+        {
+            "unit": "kg",
+            "sdate": 1446486600000,
+            "value": 80
+        }
+    ],
+    "HKWorkoutTypeIdentifier": [
+        {
+            "workoutActivityType": 37,
+            "totalEnergyBurned": 90,
+            "edate": 1446486660000,
+            "duration": 840,
+            "workoutEvents": [],
+            "totalDistance": 3218.688,
+            "sdate": 1446485820000
+        }
+    ]
 }
 
 ```
+Some notes about the export/import format:
+- Every HKSample in heakthkit has a start date and an end date. The end date is only exported if it is different from the start date.
+- You can configure the export to include the uuid of every HKSample. This will increase the export file size!
+- Samples that are part of a correlation are not exported under their own type if they are part of a correlation. For example: the HKCorrelationTypeIdentifierBloodPressure type is a correlation of a HKQuantityTypeIdentifierBloodPressureSystolic and a HKQuantityTypeIdentifierBloodPressureDiastolic. That's why they are not exported as quantity types but they are exported as sub objects under the HKCorrelationTypeIdentifierBloodPressure. The same way HKCorrelationTypeIdentifierFood is handled.
 
 
 ## Requirements
