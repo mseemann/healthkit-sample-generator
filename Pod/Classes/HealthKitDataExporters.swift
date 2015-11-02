@@ -56,19 +56,19 @@ internal class UserDataExporter: BaseDataExporter, DataExporter {
         var userData = Dictionary<String, AnyObject>()
         
         if let birthDay = try? healthStore.dateOfBirth() {
-            userData["dateOfBirth"] = birthDay
+            userData[HealthKitConstants.DATE_OF_BIRTH] = birthDay
         }
         
         if let sex = try? healthStore.biologicalSex() where sex.biologicalSex != HKBiologicalSex.NotSet {
-            userData["biologicalSex"] = sex.biologicalSex.rawValue
+            userData[HealthKitConstants.BIOLOGICAL_SEX] = sex.biologicalSex.rawValue
         }
         
         if let bloodType = try? healthStore.bloodType() where bloodType.bloodType != HKBloodType.NotSet {
-            userData["bloodType"] = bloodType.bloodType.rawValue
+            userData[HealthKitConstants.BLOOD_TYPE] = bloodType.bloodType.rawValue
         }
         
         if let fitzpatrick = try? healthStore.fitzpatrickSkinType() where fitzpatrick.skinType != HKFitzpatrickSkinType.NotSet {
-            userData["fitzpatrickSkinType"] = fitzpatrick.skinType.rawValue
+            userData[HealthKitConstants.FITZPATRICK_SKIN_TYPE] = fitzpatrick.skinType.rawValue
         }
         
         for exportTarget in exportTargets {
@@ -103,9 +103,16 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
                     let value = sample.quantity.doubleValueForUnit(self.unit)
                     
                     for exportTarget in exportTargets {
-                        var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "value":value, "unit":unit.description]
+                        var dict: Dictionary<String, AnyObject> = [:]
+                        if exportConfiguration.exportUuids {
+                            dict[HealthKitConstants.UUID] = sample.UUID.UUIDString
+                        }
+                        dict[HealthKitConstants.S_DATE] = sample.startDate
+                        dict[HealthKitConstants.VALUE] = value
+                        dict[HealthKitConstants.UNIT] = unit.description
+                        
                         if sample.startDate != sample.endDate {
-                            dict["edate"] = sample.endDate
+                            dict[HealthKitConstants.E_DATE] = sample.endDate
                         }
                         try exportTarget.writeDictionary(dict);
                     }
@@ -180,9 +187,14 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
                 for sample in results {
                     
                     for exportTarget in exportTargets {
-                        var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate, "value":sample.value]
+                        var dict: Dictionary<String, AnyObject> = [:]
+                        if exportConfiguration.exportUuids {
+                            dict[HealthKitConstants.UUID] = sample.UUID.UUIDString
+                        }
+                        dict[HealthKitConstants.S_DATE] = sample.startDate
+                        dict[HealthKitConstants.VALUE] = sample.value
                         if sample.startDate != sample.endDate {
-                            dict["edate"] = sample.endDate
+                            dict[HealthKitConstants.E_DATE] = sample.endDate
                         }
                         try exportTarget.writeDictionary(dict);
                     }
@@ -257,28 +269,37 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
             do {
                 for sample in results  {
                     
-                    var dict = ["uuid":sample.UUID.UUIDString, "sdate":sample.startDate]
+                    var dict: Dictionary<String, AnyObject> = [:]
+                    if exportConfiguration.exportUuids {
+                        dict[HealthKitConstants.UUID] = sample.UUID.UUIDString
+                    }
+                    dict[HealthKitConstants.S_DATE] = sample.startDate
                     if sample.startDate != sample.endDate {
-                        dict["edate"] = sample.endDate
+                        dict[HealthKitConstants.E_DATE] = sample.endDate
                     }
                     var subSampleArray:[AnyObject] = []
                     
                     // possible types are: HKQuantitySamples and HKCategorySamples
                     for subsample in sample.objects {
                         
-                        var sampleDict = ["uuid":subsample.UUID.UUIDString, "sdate":subsample.startDate]
-                        if subsample.startDate != subsample.endDate {
-                            sampleDict["edate"] = subsample.endDate
+                        var sampleDict: Dictionary<String, AnyObject> = [:]
+                        if exportConfiguration.exportUuids {
+                            sampleDict[HealthKitConstants.UUID] = subsample.UUID.UUIDString
                         }
-                        sampleDict["type"] = subsample.sampleType.identifier
+
+                        sampleDict[HealthKitConstants.S_DATE] = subsample.startDate
+                        if subsample.startDate != subsample.endDate {
+                            sampleDict[HealthKitConstants.E_DATE] = subsample.endDate
+                        }
+                        sampleDict[HealthKitConstants.TYPE] = subsample.sampleType.identifier
                         
                         if let quantitySample = subsample as? HKQuantitySample {
                             let unit = self.typeMap[quantitySample.quantityType]!
-                            sampleDict["unit"] = unit.description
-                            sampleDict["value"] = quantitySample.quantity.doubleValueForUnit(unit)
+                            sampleDict[HealthKitConstants.UNIT] = unit.description
+                            sampleDict[HealthKitConstants.VALUE] = quantitySample.quantity.doubleValueForUnit(unit)
                             
                         } else if let categorySample = subsample as? HKCategorySample {
-                            sampleDict["value"] = categorySample.value
+                            sampleDict[HealthKitConstants.VALUE] = categorySample.value
                         } else {
                             throw ExportError.IllegalArgumentError("unsupported correlation type \(subsample.sampleType.identifier)")
                         }
@@ -286,7 +307,7 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
                         subSampleArray.append(sampleDict)
                     }
                     
-                    dict["objects"] = subSampleArray
+                    dict[HealthKitConstants.OBJECTS] = subSampleArray
                     
                     for exportTarget in exportTargets {
                         try exportTarget.writeDictionary(dict);
@@ -360,28 +381,28 @@ internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
                 for sample in results {
                     
                     var dict: Dictionary<String, AnyObject> = [:]
-                    
-                    dict["uuid"]                = sample.UUID.UUIDString
-                    dict["sampleType"]          = sample.sampleType.identifier
-                    dict["workoutActivityType"] = sample.workoutActivityType.rawValue
-                    dict["sdate"]               = sample.startDate
-                    if sample.startDate != sample.endDate {
-                        dict["edate"]               = sample.endDate
+                    if exportConfiguration.exportUuids {
+                        dict[HealthKitConstants.UUID]               = sample.UUID.UUIDString
                     }
-                    dict["duration"]            = sample.duration // seconds
-                    dict["totalDistance"]       = sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit())
-                    dict["totalEnergyBurned"]   = sample.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit())
+                    dict[HealthKitConstants.WORKOUT_ACTIVITY_TYPE]  = sample.workoutActivityType.rawValue
+                    dict[HealthKitConstants.S_DATE]                 = sample.startDate
+                    if sample.startDate != sample.endDate {
+                        dict[HealthKitConstants.E_DATE]             = sample.endDate
+                    }
+                    dict[HealthKitConstants.DURATION]               = sample.duration // seconds
+                    dict[HealthKitConstants.TOTAL_DISTANCE]         = sample.totalDistance?.doubleValueForUnit(HKUnit.meterUnit())
+                    dict[HealthKitConstants.TOTAL_ENERGY_BURNED]    = sample.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit())
                     
                     var workoutEvents: [Dictionary<String, AnyObject>] = []
                     for event in sample.workoutEvents ?? [] {
                         var workoutEvent: Dictionary<String, AnyObject> = [:]
                         
-                        workoutEvent["type"] =  event.type.rawValue
-                        workoutEvent["sdate"] = event.date
+                        workoutEvent[HealthKitConstants.TYPE]       =  event.type.rawValue
+                        workoutEvent[HealthKitConstants.S_DATE]     = event.date
                         workoutEvents.append(workoutEvent)
                     }
                     
-                    dict["workoutEvents"]       = workoutEvents
+                    dict[HealthKitConstants.WORKOUT_EVENTS]         = workoutEvents
                     
                     for exportTarget in exportTargets {
                         try exportTarget.writeDictionary(dict);

@@ -42,8 +42,8 @@ extension SampleCreator {
     
     func dictToTimeframe(dict:Dictionary<String, AnyObject>) -> (sDate:NSDate, eDate:NSDate) {
         
-        let startDateNumber = dict["sdate"] as! Double
-        let endDateOptNumber   = dict["edate"] as? Double
+        let startDateNumber = dict[HealthKitConstants.S_DATE] as! Double
+        let endDateOptNumber   = dict[HealthKitConstants.E_DATE] as? Double
         
         let startDate = NSDate(timeIntervalSince1970: startDateNumber/1000)
         var endDate: NSDate? = nil
@@ -56,7 +56,7 @@ extension SampleCreator {
     }
     
     func dictToCategorySample(dict:Dictionary<String, AnyObject>, forType type: HKCategoryType) -> HKCategorySample {
-        let value = dict["value"] as! Int
+        let value = dict[HealthKitConstants.VALUE] as! Int
         let dates = dictToTimeframe(dict)
         
         return HKCategorySample(type: type, value: value, startDate: dates.sDate , endDate: dates.eDate)
@@ -66,8 +66,8 @@ extension SampleCreator {
         
         let dates = dictToTimeframe(dict)
         
-        let value   = dict["value"] as! Double
-        let strUnit = dict["unit"] as? String
+        let value   = dict[HealthKitConstants.VALUE] as! Double
+        let strUnit = dict[HealthKitConstants.UNIT] as? String
         
         let hkUnit = HKUnit(fromString: strUnit!)
         let quantity = HKQuantity(unit: hkUnit, doubleValue: value)
@@ -122,10 +122,10 @@ class CorrelationSampleCreator : SampleCreator {
             
             var objects: Set<HKSample> = []
             
-            if let objectsArray = dict["objects"] as? [AnyObject] {
+            if let objectsArray = dict[HealthKitConstants.OBJECTS] as? [AnyObject] {
                 for object in objectsArray {
                     if let subDict = object as? Dictionary<String, AnyObject> {
-                        let subTypeName = subDict["type"] as? String
+                        let subTypeName = subDict[HealthKitConstants.TYPE] as? String
                         if let creator = SampleCreatorRegistry.get(subTypeName) {
                             let sampleOpt = creator.createSample(subDict)
                             if let sample = sampleOpt {
@@ -156,21 +156,21 @@ class WorkoutSampleCreator : SampleCreator {
         if let dict = sampleDict as? Dictionary<String, AnyObject> {
             let dates = dictToTimeframe(dict)
          
-            let activityTypeRawValue = dict["workoutActivityType"] as? UInt
+            let activityTypeRawValue = dict[HealthKitConstants.WORKOUT_ACTIVITY_TYPE] as? UInt
             let activityType = HKWorkoutActivityType(rawValue: activityTypeRawValue!)
             
-            let duration = dict["duration"] as? NSTimeInterval
-            let totalDistance = dict["totalDistance"] as? Double // always HKUnit.meterUnit()
-            let totalEnergyBurned = dict["totalEnergyBurned"] as? Double //always HKUnit.kilocalorieUnit()
+            let duration = dict[HealthKitConstants.DURATION] as? NSTimeInterval
+            let totalDistance = dict[HealthKitConstants.TOTAL_DISTANCE] as? Double // always HKUnit.meterUnit()
+            let totalEnergyBurned = dict[HealthKitConstants.TOTAL_ENERGY_BURNED] as? Double //always HKUnit.kilocalorieUnit()
             
             var events:[HKWorkoutEvent] = []
             
-            if let workoutEventsArray = dict["workoutEvents"] as? [AnyObject] {
+            if let workoutEventsArray = dict[HealthKitConstants.WORKOUT_EVENTS] as? [AnyObject] {
                 for workoutEvent in workoutEventsArray {
                     if let subDict = workoutEvent as? Dictionary<String, AnyObject> {
-                        let eventTypeRaw = subDict["type"] as? Int
+                        let eventTypeRaw = subDict[HealthKitConstants.TYPE] as? Int
                         let eventType = HKWorkoutEventType(rawValue: eventTypeRaw!)!
-                        let startDateNumber = subDict["sdate"] as! Double
+                        let startDateNumber = subDict[HealthKitConstants.S_DATE] as! Double
                         let startDate = NSDate(timeIntervalSince1970: startDateNumber/1000)
                         events.append(HKWorkoutEvent(type: eventType, date: startDate))
                     }

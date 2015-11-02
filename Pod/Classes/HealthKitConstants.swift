@@ -11,6 +11,29 @@ import HealthKit
 
 class HealthKitConstants {
     
+    static let UUID                     = "uuid"
+    static let WORKOUT_ACTIVITY_TYPE    = "workoutActivityType"
+    static let S_DATE                   = "sdate"
+    static let E_DATE                   = "edate"
+    static let DURATION                 = "duration"
+    static let TOTAL_DISTANCE           = "totalDistance"
+    static let TOTAL_ENERGY_BURNED      = "totalEnergyBurned"
+    static let TYPE                     = "type"
+    static let WORKOUT_EVENTS           = "workoutEvents"
+    static let UNIT                     = "unit"
+    static let VALUE                    = "value"
+    static let OBJECTS                  = "objects"
+    static let DATE_OF_BIRTH            = "dateOfBirth"
+    static let BIOLOGICAL_SEX           = "biologicalSex"
+    static let BLOOD_TYPE               = "bloodType"
+    static let FITZPATRICK_SKIN_TYPE    = "fitzpatrickSkinType"
+    static let META_DATA                = "metaData"
+    static let CREATION_DATE            = "creationDate"
+    static let PROFILE_NAME             = "profileName"
+    static let VERSION                  = "version"
+    static let USER_DATA                = "userData"
+    
+    
     static let healthKitCharacteristicsTypes: Set<HKCharacteristicType> = Set(arrayLiteral:
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierDateOfBirth)!,
         HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex)!,

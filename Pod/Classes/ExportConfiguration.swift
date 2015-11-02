@@ -15,6 +15,7 @@ import HealthKit
 public protocol ExportConfiguration {
     var exportType:HealthDataToExportType {get}
     var profileName:String {get}
+    var exportUuids:Bool {get}
 }
 
 // possible configuration extension: 
@@ -46,6 +47,7 @@ internal extension ExportConfiguration {
 public struct HealthDataFullExportConfiguration : ExportConfiguration {
     public var exportType = HealthDataToExportType.ALL // required
     public var profileName: String // required
+    public var exportUuids = false
     
     public init(profileName:String, exportType: HealthDataToExportType){
         self.profileName = profileName

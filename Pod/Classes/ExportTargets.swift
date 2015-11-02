@@ -44,18 +44,18 @@ public class JsonSingleDocExportTarget  {
     
     public func writeMetaData(creationDate creationDate: NSDate, profileName: String, version: String) {
         
-        jsonWriter.writeObjectFieldStart("metaData")
+        jsonWriter.writeObjectFieldStart(HealthKitConstants.META_DATA)
         
-        jsonWriter.writeField("creationDate", value: creationDate)
-        jsonWriter.writeField("profileName", value: profileName)
-        jsonWriter.writeField("version", value: version)
-        jsonWriter.writeField("type", value: String(JsonSingleDocExportTarget))
+        jsonWriter.writeField(HealthKitConstants.CREATION_DATE, value: creationDate)
+        jsonWriter.writeField(HealthKitConstants.PROFILE_NAME, value: profileName)
+        jsonWriter.writeField(HealthKitConstants.VERSION, value: version)
+        jsonWriter.writeField(HealthKitConstants.TYPE, value: String(JsonSingleDocExportTarget))
         
         jsonWriter.writeEndObject()
     }
     
     public func writeUserData(userData: Dictionary <String, AnyObject>) throws {
-        try jsonWriter.writeFieldWithObject("userData", value: userData)
+        try jsonWriter.writeFieldWithObject(HealthKitConstants.USER_DATA, value: userData)
     }
     
     public func startWriteType(type:HKSampleType) -> Void {

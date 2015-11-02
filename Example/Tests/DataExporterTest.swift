@@ -21,7 +21,8 @@ class DataExporterTest: QuickSpec {
     
     override func spec() {
  
-        let exportConfiguration = HealthDataFullExportConfiguration(profileName: self.profileName, exportType: HealthDataToExportType.ALL)
+        var exportConfiguration = HealthDataFullExportConfiguration(profileName: self.profileName, exportType: HealthDataToExportType.ALL)
+        exportConfiguration.exportUuids = true
         
         describe("MetaData and UserData Export") {
             
@@ -42,12 +43,12 @@ class DataExporterTest: QuickSpec {
                 
                 target.endExport()
                                 
-                let metaDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:"metaData")
+                let metaDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:HealthKitConstants.META_DATA)
                 
-                expect(metaDataDict["creationDate"] as? NSNumber).notTo(beNil())
-                expect(metaDataDict["profileName"] as? String)  == self.profileName
-                expect(metaDataDict["version"] as? String)      == "1.0.0"
-                expect(metaDataDict["type"] as? String)         == "JsonSingleDocExportTarget"
+                expect(metaDataDict[HealthKitConstants.CREATION_DATE] as? NSNumber).notTo(beNil())
+                expect(metaDataDict[HealthKitConstants.PROFILE_NAME] as? String)  == self.profileName
+                expect(metaDataDict[HealthKitConstants.VERSION] as? String)      == "1.0.0"
+                expect(metaDataDict[HealthKitConstants.TYPE] as? String)         == "JsonSingleDocExportTarget"
 
             }
             
@@ -63,10 +64,10 @@ class DataExporterTest: QuickSpec {
                 
                 let userDataDict = JsonReader.toJsonObject(target.getJsonString(), returnDictForKey:"userData")
                 
-                let dateOfBirth         = userDataDict["dateOfBirth"] as? NSNumber
-                let biologicalSex       = userDataDict["biologicalSex"] as? Int
-                let bloodType           = userDataDict["bloodType"] as? Int
-                let fitzpatrickSkinType = userDataDict["fitzpatrickSkinType"] as? Int
+                let dateOfBirth         = userDataDict[HealthKitConstants.DATE_OF_BIRTH] as? NSNumber
+                let biologicalSex       = userDataDict[HealthKitConstants.BIOLOGICAL_SEX] as? Int
+                let bloodType           = userDataDict[HealthKitConstants.BLOOD_TYPE] as? Int
+                let fitzpatrickSkinType = userDataDict[HealthKitConstants.FITZPATRICK_SKIN_TYPE] as? Int
                 
                 let date = NSDate(timeIntervalSince1970: (dateOfBirth?.doubleValue)! / 1000.0)
                 
@@ -113,15 +114,15 @@ class DataExporterTest: QuickSpec {
              
                 
                
-                let sdate       = savedSample["sdate"] as! NSNumber
-                let uuid        = savedSample["uuid"] as! String
-                let value       = savedSample["value"] as! NSNumber
-                let unitValue   = savedSample["unit"] as! String
+                let sdate       = savedSample[HealthKitConstants.S_DATE] as! NSNumber
+                let uuid        = savedSample[HealthKitConstants.UUID] as! String
+                let value       = savedSample[HealthKitConstants.VALUE] as! NSNumber
+                let unitValue   = savedSample[HealthKitConstants.UNIT] as! String
                 
                 expect(sdate).to(beCloseTo(date.timeIntervalSince1970 * 1000, within: 1000))
                 expect(uuid).notTo(beNil())
                 expect(value) == quantity.doubleValueForUnit(unit)
-                expect(savedSample["edate"]).to(beNil())
+                expect(savedSample[HealthKitConstants.E_DATE]).to(beNil())
                 expect(unitValue) == strUnit
 
             }
@@ -162,15 +163,15 @@ class DataExporterTest: QuickSpec {
                 
                 let savedSample = dataArray.first as! Dictionary<String, AnyObject>
             
-                let sdate   = savedSample["sdate"] as! NSNumber
-                let uuid    = savedSample["uuid"] as! String
-                let value   = savedSample["value"] as! NSNumber
+                let sdate   = savedSample[HealthKitConstants.S_DATE] as! NSNumber
+                let uuid    = savedSample[HealthKitConstants.UUID] as! String
+                let value   = savedSample[HealthKitConstants.VALUE] as! NSNumber
                 
                 expect(sdate).to(beCloseTo(date.timeIntervalSince1970 * 1000, within: 1000))
                 expect(uuid).notTo(beNil())
                 expect(value) == 1
                 
-                expect(savedSample["edate"]).to(beNil())
+                expect(savedSample[HealthKitConstants.E_DATE]).to(beNil())
             
             }
             
@@ -221,19 +222,19 @@ class DataExporterTest: QuickSpec {
                 let savedCorrelation = dataArray.first as! Dictionary<String, AnyObject>
                 
                 
-                let sdate   = savedCorrelation["sdate"] as! NSNumber
-                let uuid    = savedCorrelation["uuid"] as! String
-                let objects   = savedCorrelation["objects"] as! [AnyObject]
+                let sdate   = savedCorrelation[HealthKitConstants.S_DATE] as! NSNumber
+                let uuid    = savedCorrelation[HealthKitConstants.UUID] as! String
+                let objects   = savedCorrelation[HealthKitConstants.OBJECTS] as! [AnyObject]
                 
                 expect(sdate).to(beCloseTo(date.timeIntervalSince1970 * 1000, within: 1000))
                 expect(uuid).notTo(beNil())
                 expect(objects.count) == 2
-                expect(savedCorrelation["edate"]).to(beNil())
+                expect(savedCorrelation[HealthKitConstants.E_DATE]).to(beNil())
                 
                 for object in objects {
                     let dictObject = object as! Dictionary<String, AnyObject>
-                    let oUuid = dictObject["uuid"] as! String
-                    let oType = dictObject["type"] as! String
+                    let oUuid = dictObject[HealthKitConstants.UUID] as! String
+                    let oType = dictObject[HealthKitConstants.TYPE] as! String
                     
                     expect(oUuid).notTo(beNil())
                     expect(oType).to(contain("HKQuantityTypeIdentifierBloodPressure"))
@@ -276,44 +277,41 @@ class DataExporterTest: QuickSpec {
                 
                 let savedWorkout = dataArray.first as! Dictionary<String, AnyObject>
                 
-                let uuid = savedWorkout["uuid"] as! String
+                let uuid = savedWorkout[HealthKitConstants.UUID] as! String
                 expect(uuid).notTo(beNil())
-
-                let sampleType = savedWorkout["sampleType"] as! String
-                expect(sampleType).to(contain("HKWorkout"))
                 
-                let workoutActivityType = savedWorkout["workoutActivityType"] as! NSNumber
+                let workoutActivityType = savedWorkout[HealthKitConstants.WORKOUT_ACTIVITY_TYPE] as! NSNumber
                 expect(workoutActivityType) == HKWorkoutActivityType.Running.rawValue
                 
-                let sDate = savedWorkout["sdate"] as! NSNumber
-                let eDate = savedWorkout["edate"] as! NSNumber
+                let sDate = savedWorkout[HealthKitConstants.S_DATE] as! NSNumber
+                let eDate = savedWorkout[HealthKitConstants.E_DATE] as! NSNumber
                 expect(sDate).to(beCloseTo(eDate, within: 60*10*1001))
                 
-                let duration = savedWorkout["duration"] as! NSNumber
+                let duration = savedWorkout[HealthKitConstants.DURATION] as! NSNumber
                 expect(duration) == 540 // 9 minutes
                 
-                let totalDistance = savedWorkout["totalDistance"] as! NSNumber
+                let totalDistance = savedWorkout[HealthKitConstants.TOTAL_DISTANCE] as! NSNumber
                 expect(totalDistance) == 4500 //meters
                 
-                let totalEnergyBurned = savedWorkout["totalEnergyBurned"] as! NSNumber
+                let totalEnergyBurned = savedWorkout[HealthKitConstants.TOTAL_ENERGY_BURNED] as! NSNumber
                 expect(totalEnergyBurned) == 200.6
                 
                 
                 
-                let workoutEvents = savedWorkout["workoutEvents"] as! [AnyObject]
+                let workoutEvents = savedWorkout[HealthKitConstants.WORKOUT_EVENTS] as! [AnyObject]
                 
                 let pauseEvent = workoutEvents[0] as! Dictionary<String, AnyObject>
-                let pauseSDate = pauseEvent["sdate"] as! NSNumber
+                let pauseSDate = pauseEvent[HealthKitConstants.S_DATE] as! NSNumber
                 expect(pauseSDate).to(beGreaterThan(sDate))
                 
-                let pauseType = pauseEvent["type"] as! NSNumber
+                let pauseType = pauseEvent[HealthKitConstants.TYPE] as! NSNumber
                 expect(pauseType) == HKWorkoutEventType.Pause.rawValue
                 
                 let resumeEvent = workoutEvents[1] as! Dictionary<String, AnyObject>
-                let resumeSDate = resumeEvent["sdate"] as! NSNumber
+                let resumeSDate = resumeEvent[HealthKitConstants.S_DATE] as! NSNumber
                 expect(resumeSDate).to(beGreaterThan(sDate))
                 
-                let resumeType = resumeEvent["type"] as! NSNumber
+                let resumeType = resumeEvent[HealthKitConstants.TYPE] as! NSNumber
                 expect(resumeType) == HKWorkoutEventType.Resume.rawValue
                 
             }
