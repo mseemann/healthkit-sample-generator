@@ -71,69 +71,61 @@ exporter.export(
 
 This will output all the data that are available through HealthKit in JSON format:
 ```json
+
 {
-    "metaData":
-        {
-            "creationDate":1445100082916,
-            "profileName":"output",
-            "version":"0.2.0",
-            "type": "JsonSingleFileExportTarget"
-        },
-    "userData":
-        {
-            "dateOfBirth":340066800000
-        },
-    "HKQuantityTypeIdentifierHeartRate":
-        {
-            "unit":"count/min",
-            "data":[
-                {
-                    "uuid":"DE34D02C-FD86-4FAD-B1A6-01CDA151A2D2",
-                    "value":60,
-                    "edate":1444242420000,
-                    "sdate":1444242420000
-                }
-            ]
-        },
-    "HKQuantityTypeIdentifierStepCount":{"unit":"count","data":[]},
-    "HKQuantityTypeIdentifierBodyMass":
-        {
-            "unit":"kg",
-            "data":[
-                {"uuid":"92D2E4B9-463F-4DB1-8E44-B46BEC371DCA","value":71,"edate":1444407300000,"sdate":1444407300000},
-                {"uuid":"E9AECC54-41B6-4F73-BFF0-5B5499F54128","value":78,"edate":1444573020000,"sdate":1444573020000}
-            ]
-        },
-    "HKCorrelationTypeIdentifierBloodPressure":
-        {
-        "data":[
-            {
-                "objects":[
-                    {"uuid":"902253AC-9358-4DCE-96BF-BD69F44B24B1", "type":"HKQuantityTypeIdentifierBloodPressureSystolic"},
-                    {"uuid":"69D2D315-D441-4F1F-811F-84CCC66F5E34", "type":"HKQuantityTypeIdentifierBloodPressureDiastolic"}
-                ],
-                "uuid":"795E68E5-6235-4F7F-8A0D-FE6525AA0A5E",
-                "edate":1444645440000,
-                "sdate":1444645440000
-            }
-            ]
-        },
-    "HKWorkoutTypeIdentifier":{
-        "data":[
-            {
-                "uuid":"CC5C108D-5114-4BC4-99A6-BEC84C8D87EF",
-                "sampleType":"HKWorkoutTypeIdentifier",
-                "workoutActivityType":37,
-                "totalEnergyBurned":1000,
-                "eDate":1444398720000,
-                "sDate":1444395120000,
-                "duration":3600,
-                "workoutEvents":[],
-                "totalDistance":1609.344
-            }
-        ]
-    }
+   "metaData": {
+      "creationDate": 1446486924969.1,
+      "profileName": "output20151102185522",
+      "version": "1.0.0",
+      "type": "JsonSingleDocExportTarget"
+},
+   "userData": {
+      "bloodType": 1,
+      "fitzpatrickSkinType": 1,
+      "biologicalSex": 2,
+      "dateOfBirth": 341967600000
+},
+"HKQuantityTypeIdentifierStepCount": [
+   {
+      "unit": "count",
+      "sdate": 1446486720000,
+      "value": 200
+   }
+],
+"HKQuantityTypeIdentifierHeartRate": [
+   {
+      "unit": "count/min",
+      "sdate": 1446486720000,
+      "value": 62
+   }
+],
+"HKQuantityTypeIdentifierFlightsClimbed": [
+   {
+      "unit": "count",
+      "sdate": 1446486600000,
+      "value": 1
+   }
+],
+"HKQuantityTypeIdentifierBodyMass": [
+   {
+      "unit": "kg",
+      "sdate": 1446486600000,
+      "value": 80
+   }
+],
+"HKWorkoutTypeIdentifier": [
+   {
+      "workoutActivityType": 37,
+      "totalEnergyBurned": 90,
+      "edate": 1446486660000,
+      "duration": 840,
+      "workoutEvents": [],
+      "totalDistance": 3218.688,
+      "sdate": 1446485820000
+   }
+]
 }
+
 ```
 
 ###Export using the Example-App
