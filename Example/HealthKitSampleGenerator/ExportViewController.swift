@@ -80,10 +80,6 @@ class ExportViewController : UIViewController, UITextFieldDelegate {
         createAndAnalyzeExportConfiguration()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     @IBAction func scEpxortDataTypeChanged(sender: AnyObject) {
         createAndAnalyzeExportConfiguration()
     }

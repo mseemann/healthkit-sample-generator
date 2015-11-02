@@ -22,6 +22,7 @@ class ImportProfileViewController : UIViewController {
     @IBOutlet weak var pvImportProgress: UIProgressView!
     @IBOutlet weak var lbImportProgress: UILabel!
     @IBOutlet weak var aiImporting: UIActivityIndicatorView!
+    @IBOutlet weak var btImport: UIButton!
     
     let healthStore  = HKHealthStore()
     
@@ -33,6 +34,7 @@ class ImportProfileViewController : UIViewController {
             aiImporting.hidden = !importing
             navigationItem.hidesBackButton = importing
             swDeleteExistingData.enabled = !importing
+            btImport.enabled = !importing
         }
     }
     

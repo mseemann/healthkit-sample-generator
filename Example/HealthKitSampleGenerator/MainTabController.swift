@@ -18,7 +18,6 @@ class MainTabController : UITabBarController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
     }
     
 }
