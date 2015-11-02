@@ -40,7 +40,6 @@ Go to the Profile Tab of the App. There you will see all profiles that are store
 <img src="healthapp.png?raw=true" alt="The imported data in the HealthApp at the simulator." width="320px" height="auto">
 
 
-
 ### Export using the API
 ```swift
 
@@ -93,66 +92,6 @@ exporter.export(
 )
 
 ```
-
-This will output all the data that are available through HealthKit in JSON format:
-```json
-
-{
-   "metaData": {
-      "creationDate": 1446486924969.1,
-      "profileName": "output20151102185522",
-      "version": "1.0.0",
-      "type": "JsonSingleDocExportTarget"
-   },
-   "userData": {
-      "bloodType": 1,
-      "fitzpatrickSkinType": 1,
-      "biologicalSex": 2,
-      "dateOfBirth": 341967600000
-   },
-   "HKQuantityTypeIdentifierStepCount": [
-      {
-         "unit": "count",
-         "sdate": 1446486720000,
-         "value": 200
-      }
-   ],
-   "HKQuantityTypeIdentifierHeartRate": [
-      {
-         "unit": "count/min",
-         "sdate": 1446486720000,
-         "value": 62
-      }
-   ],
-   "HKQuantityTypeIdentifierFlightsClimbed": [
-      {
-         "unit": "count",
-         "sdate": 1446486600000,
-         "value": 1
-      }
-   ],
-   "HKQuantityTypeIdentifierBodyMass": [
-      {
-         "unit": "kg",
-         "sdate": 1446486600000,
-         "value": 80
-      }
-   ],
-   "HKWorkoutTypeIdentifier": [
-      {
-         "workoutActivityType": 37,
-         "totalEnergyBurned": 90,
-         "edate": 1446486660000,
-         "duration": 840,
-         "workoutEvents": [],
-         "totalDistance": 3218.688,
-         "sdate": 1446485820000
-      }
-   ]
-}
-
-```
-
 ### Import by API
 
 ```swift
@@ -187,6 +126,65 @@ if profiles.count > 0 {
         }
     )
 }
+```
+
+The output format is json:
+```json
+
+{
+"metaData": {
+"creationDate": 1446486924969.1,
+"profileName": "output20151102185522",
+"version": "1.0.0",
+"type": "JsonSingleDocExportTarget"
+},
+"userData": {
+"bloodType": 1,
+"fitzpatrickSkinType": 1,
+"biologicalSex": 2,
+"dateOfBirth": 341967600000
+},
+"HKQuantityTypeIdentifierStepCount": [
+{
+"unit": "count",
+"sdate": 1446486720000,
+"value": 200
+}
+],
+"HKQuantityTypeIdentifierHeartRate": [
+{
+"unit": "count/min",
+"sdate": 1446486720000,
+"value": 62
+}
+],
+"HKQuantityTypeIdentifierFlightsClimbed": [
+{
+"unit": "count",
+"sdate": 1446486600000,
+"value": 1
+}
+],
+"HKQuantityTypeIdentifierBodyMass": [
+{
+"unit": "kg",
+"sdate": 1446486600000,
+"value": 80
+}
+],
+"HKWorkoutTypeIdentifier": [
+{
+"workoutActivityType": 37,
+"totalEnergyBurned": 90,
+"edate": 1446486660000,
+"duration": 840,
+"workoutEvents": [],
+"totalDistance": 3218.688,
+"sdate": 1446485820000
+}
+]
+}
+
 ```
 
 
