@@ -11,6 +11,7 @@ import HealthKit
 
 public enum ImportError: ErrorType {
     case UnsupportedType(String)
+    case HealthDataNotAvailable
 }
 
 
@@ -31,6 +32,11 @@ public class HealthKitProfileImporter {
         deleteExistingData: Bool,
         onProgress: (message: String, progressInPercent: NSNumber?)->Void,
         onCompletion: (error: ErrorType?)-> Void) {
+            
+            if !HKHealthStore.isHealthDataAvailable() {
+                onCompletion(error:ImportError.HealthDataNotAvailable)
+                return
+            }
             
             healthStore.requestAuthorizationToShareTypes(HealthKitConstants.authorizationWriteTypes(), readTypes: nil) {
                 (success, error) -> Void in

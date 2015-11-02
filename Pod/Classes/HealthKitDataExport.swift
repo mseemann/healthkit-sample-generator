@@ -10,6 +10,7 @@ import Foundation
 import HealthKit
 
 public enum ExportError: ErrorType {
+    case HealthDataNotAvailable
     case IllegalArgumentError(String)
     case DataWriteError(String?)
 }
@@ -100,6 +101,12 @@ public class HealthKitDataExporter {
     }
     
     public func export(exportTargets exportTargets: [ExportTarget], exportConfiguration: ExportConfiguration, onProgress: ExportProgress, onCompletion: ExportCompletion) -> Void {
+        
+        if !HKHealthStore.isHealthDataAvailable() {
+            onCompletion(ExportError.HealthDataNotAvailable)
+            return
+        }
+        
         for exportTarget in exportTargets {
             if(!exportTarget.isValid()){
                 onCompletion(ExportError.IllegalArgumentError("invalid export target \(exportTarget)"))
