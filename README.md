@@ -78,52 +78,52 @@ This will output all the data that are available through HealthKit in JSON forma
       "profileName": "output20151102185522",
       "version": "1.0.0",
       "type": "JsonSingleDocExportTarget"
-},
+   },
    "userData": {
       "bloodType": 1,
       "fitzpatrickSkinType": 1,
       "biologicalSex": 2,
       "dateOfBirth": 341967600000
-},
-"HKQuantityTypeIdentifierStepCount": [
-   {
-      "unit": "count",
-      "sdate": 1446486720000,
-      "value": 200
-   }
-],
-"HKQuantityTypeIdentifierHeartRate": [
-   {
-      "unit": "count/min",
-      "sdate": 1446486720000,
-      "value": 62
-   }
-],
-"HKQuantityTypeIdentifierFlightsClimbed": [
-   {
-      "unit": "count",
-      "sdate": 1446486600000,
-      "value": 1
-   }
-],
-"HKQuantityTypeIdentifierBodyMass": [
-   {
-      "unit": "kg",
-      "sdate": 1446486600000,
-      "value": 80
-   }
-],
-"HKWorkoutTypeIdentifier": [
-   {
-      "workoutActivityType": 37,
-      "totalEnergyBurned": 90,
-      "edate": 1446486660000,
-      "duration": 840,
-      "workoutEvents": [],
-      "totalDistance": 3218.688,
-      "sdate": 1446485820000
-   }
-]
+   },
+   "HKQuantityTypeIdentifierStepCount": [
+      {
+         "unit": "count",
+         "sdate": 1446486720000,
+         "value": 200
+      }
+   ],
+   "HKQuantityTypeIdentifierHeartRate": [
+      {
+         "unit": "count/min",
+         "sdate": 1446486720000,
+         "value": 62
+      }
+   ],
+   "HKQuantityTypeIdentifierFlightsClimbed": [
+      {
+         "unit": "count",
+         "sdate": 1446486600000,
+         "value": 1
+      }
+   ],
+   "HKQuantityTypeIdentifierBodyMass": [
+      {
+         "unit": "kg",
+         "sdate": 1446486600000,
+         "value": 80
+      }
+   ],
+   "HKWorkoutTypeIdentifier": [
+      {
+         "workoutActivityType": 37,
+         "totalEnergyBurned": 90,
+         "edate": 1446486660000,
+         "duration": 840,
+         "workoutEvents": [],
+         "totalDistance": 3218.688,
+         "sdate": 1446485820000
+      }
+   ]
 }
 
 ```
