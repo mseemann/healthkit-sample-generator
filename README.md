@@ -190,7 +190,8 @@ Some notes about the export/import format:
 - Every HKSample in heakthkit has a start date and an end date. The end date is only exported if it is different from the start date.
 - You can configure the export to include the uuid of every HKSample. This will increase the export file size!
 - Samples that are part of a correlation are not exported under their own type if they are part of a correlation. For example: the HKCorrelationTypeIdentifierBloodPressure type is a correlation of a HKQuantityTypeIdentifierBloodPressureSystolic and a HKQuantityTypeIdentifierBloodPressureDiastolic. That's why they are not exported as quantity types but they are exported as sub objects under the HKCorrelationTypeIdentifierBloodPressure. The same way HKCorrelationTypeIdentifierFood is handled.
-
+- Keep in mind that there are some restrictions about the data that can be written or deleted from the healthkit store. It is not possible to write characteristics data (e.g. date of birth, blood type,...). Also you can't write HKCategoryTypeIdentifierAppleStandHour and HKQuantityTypeIdentifierNikeFuel samples.
+- If you want to exclude some data from export just do not allow the example app to access those data.
 
 ## Requirements
 
