@@ -38,7 +38,7 @@ class SigleDocReaderTest: QuickSpec {
             
             let metaData = metaDataOutput.getMetaData()
             
-            expect(metaData["creationDate"] as? NSNumber)   == 1445344592172.305
+            expect(metaData["creationDate"] as? NSNumber)   == 1446486924969.067
             expect(metaData["profileName"] as? String)      == "output"
             expect(metaData["version"] as? String)          == "1.0.0"
             expect(metaData["type"] as? String)             == "JsonSingleDocExportTarget"

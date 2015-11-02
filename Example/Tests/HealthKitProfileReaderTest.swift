@@ -26,13 +26,13 @@ class HealthKitProfileReaderTest: QuickSpec {
                 expect(profiles.count) == 1
                 expect(profiles[0].fileName) == "version-1.0.0.single-doc.json.hsg"
                 expect(profiles[0].fileSize) > 0
-                expect(profiles[0].description) == "version-1.0.0.single-doc.json.hsg Optional(6495)"
+                expect(profiles[0].description) == "version-1.0.0.single-doc.json.hsg Optional(4046)"
             }
             
             it("should read the profile metadata"){
                 let profile = profiles[0]
                 
-                let testDate = NSDate(timeIntervalSince1970: 1445344592172.305/1000 )
+                let testDate = NSDate(timeIntervalSince1970: 1446486924969.067/1000 )
                 
                 profile.loadMetaData(false){ (metaData:HealthKitProfileMetaData) in
                     expect(metaData.creationDate) == testDate
