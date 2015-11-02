@@ -17,21 +17,23 @@ Status:
 * Import HealthData 100%
 * Generate HealthData 0%
 
-Next Step:
+Next Steps:
 * improve test coverage
 * improve documentation
 * polish api
 * release version 1.0.0
 
 ## Export/Import HealthKit Data
-
 ###Export using the Example-App
 Just build and run the App. Tap on the button "Export HealthKit Data". This will create a JSON file in the App Documents folder. If you are
 using the simulator you may access the export file on your mac - the path to the file is visibe in the UI of the app. To access the exported
 data on a real device you need to open iTunes, go to the device app section and have a look at the shared documents section. From there you
 are able to save the file on your mac.
 
-The output format is the same as using the api.
+###Import using the Example-App
+Go to the Profile Tab of the App. There you will see all profiles that are stored in the app documents folder. Select one and tap on the button "Import HealthKit Data". If you want you can delete all previously imported data from the healthkit store. Keep in mind that the app can only delete those data that were stored by the app. 
+
+<em>The HealthKit Store is obviously not designed to process/write a huge amount of data. You will notice that the app will use a lot of mem during the import. Also you will see a heavy processor load after the import. It looks like heakthkit process all data to create summaries for the diagrams.</em>
 
 <img src="export.png?raw=true" alt="Export using the Example App" width="320px" height="auto">
 <img src="import.png?raw=true" alt="Import using the Example App" width="320px" height="auto">
