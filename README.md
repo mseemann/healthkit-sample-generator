@@ -9,11 +9,10 @@ Easy to use generator for HealthKit Sample Data that can be used in code and in 
 
 Status: 
 * Export of HealthData 100%
-* Import HealthData 5%
+* Import HealthData 100%
 * Generate HealthData 0%
 
 Next Step:
-* complete import of HealthData
 * improve test coverage
 * improve documentation
 * polish api
@@ -143,11 +142,13 @@ using the simulator you may access the export file on your mac - the path to the
 data on a real device you need to open iTunes, go to the device app section and have a look at the shared documents section. From there you
 are able to save the file on your mac.
 
+The output format is the same as using the api.
+
 <img src="export.png?raw=true" alt="Export using the Example App" width="320px" height="auto">
 <img src="import.png?raw=true" alt="Import using the Example App" width="320px" height="auto">
 <img src="healthapp.png?raw=true" alt="The imported data in the HealthApp at the simulator." width="320px" height="auto">
 
-The output format is the same as using the api.
+
 
 ## Requirements
 
