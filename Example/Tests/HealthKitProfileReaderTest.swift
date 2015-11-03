@@ -27,7 +27,7 @@ class HealthKitProfileReaderTest: QuickSpec {
                 expect(profiles.count) == 1
                 expect(profiles[0].fileName) == "version-1.0.0.single-doc.json.hsg"
                 expect(profiles[0].fileSize) > 0
-                expect(profiles[0].description) == "version-1.0.0.single-doc.json.hsg Optional(4046)"
+                expect(profiles[0].description) == "version-1.0.0.single-doc.json.hsg Optional(4491)"
             }
             
             it("should read the profile metadata"){
@@ -43,21 +43,28 @@ class HealthKitProfileReaderTest: QuickSpec {
                 }
             }
             
-            it("should import sample") {
+            it("should import samples") {
                 let profile = profiles[0]
                 var samples:[HKSample] = []
                 try! profile.importSamples(){
                     (sample: HKSample) in
                     samples.append(sample)
+                    print(sample)
                 }
                 
-                expect(samples.count) == 5
+                expect(samples.count) == 8
                 
                 let stepCount = samples[0] as! HKQuantitySample
                 expect(stepCount.sampleType.identifier) == "HKQuantityTypeIdentifierStepCount"
                 expect(stepCount.quantity.doubleValueForUnit(HKUnit(fromString: "count"))) == 200
+               
+                let sleepSample = samples[2] as! HKCategorySample
+                expect(sleepSample.value) == 0
                 
-                let workout = samples[4] as! HKWorkout
+                let bloodPresure = samples[6] as! HKCorrelation
+                expect(bloodPresure.objects.count) == 2
+                
+                let workout = samples[7] as! HKWorkout
                 expect(workout.workoutActivityType) == HKWorkoutActivityType.Running
                 
             }
