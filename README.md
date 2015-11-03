@@ -17,8 +17,6 @@ Status:
 
 Next Steps:
 * improve test coverage
-* improve documentation
-* polish api
 * release version 1.0.0
 
 ## Export/Import HealthKit Data
