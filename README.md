@@ -30,9 +30,9 @@ To import the data go to the Profile Tab of the App. There you will see all prof
 
 <em>The HealthKit Store is obviously not designed to process/write a huge amount of data. You will notice that the App will use a lot of mem during the import. Also you will see a heavy processor load after the import. It looks like heakthkit process all data to create summaries for the diagrams.</em>
 
-<img src="https://github.com/mseemann/healthkit-sample-generator/images/export.png?raw=true" alt="Export using the Example App" width="230px" height="auto">
-<img src="https://github.com/mseemann/healthkit-sample-generator/images/import.png?raw=true" alt="Import using the Example App" width="230px" height="auto">
-<img src="https://github.com/mseemann/healthkit-sample-generator/images/healthapp.png?raw=true" alt="The imported data in the HealthApp at the simulator." width="230px" height="auto">
+<img src="https://raw.githubusercontent.com/mseemann/healthkit-sample-generator/master/images/export.png" alt="Export using the Example App" width="230px" height="auto">
+<img src="https://raw.githubusercontent.com/mseemann/healthkit-sample-generator/master/images/import.png" alt="Import using the Example App" width="230px" height="auto">
+<img src="https://raw.githubusercontent.com/mseemann/healthkit-sample-generator/master/images/healthapp.png" alt="The imported data in the HealthApp at the simulator." width="230px" height="auto">
 
 
 ### Export using the API
