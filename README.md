@@ -13,7 +13,7 @@ Easy to use generator for HealthKit Sample Data that can be used in code and in 
 Status: 
 * Export of HealthData 100%
 * Import HealthData 100%
-* Generate HealthData 0%
+* Generate HealthData 0% (-> version 2.0.0)
 
 Next Steps:
 * improve test coverage

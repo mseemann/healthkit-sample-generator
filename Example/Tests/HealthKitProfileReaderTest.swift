@@ -11,6 +11,7 @@ import Foundation
 import XCTest
 import Quick
 import Nimble
+import HealthKit
 @testable import HealthKitSampleGenerator
 
 class HealthKitProfileReaderTest: QuickSpec {
@@ -40,6 +41,25 @@ class HealthKitProfileReaderTest: QuickSpec {
                     expect(metaData.version) == "1.0.0"
                     expect(metaData.type)   == "JsonSingleDocExportTarget"
                 }
+            }
+            
+            it("should import sample") {
+                let profile = profiles[0]
+                var samples:[HKSample] = []
+                try! profile.importSamples(){
+                    (sample: HKSample) in
+                    samples.append(sample)
+                }
+                
+                expect(samples.count) == 5
+                
+                let stepCount = samples[0] as! HKQuantitySample
+                expect(stepCount.sampleType.identifier) == "HKQuantityTypeIdentifierStepCount"
+                expect(stepCount.quantity.doubleValueForUnit(HKUnit(fromString: "count"))) == 200
+                
+                let workout = samples[4] as! HKWorkout
+                expect(workout.workoutActivityType) == HKWorkoutActivityType.Running
+                
             }
             
             it("shoudl delete a profile"){
