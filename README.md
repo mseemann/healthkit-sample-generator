@@ -33,9 +33,9 @@ Go to the Profile Tab of the App. There you will see all profiles that are store
 
 <em>The HealthKit Store is obviously not designed to process/write a huge amount of data. You will notice that the App will use a lot of mem during the import. Also you will see a heavy processor load after the import. It looks like heakthkit process all data to create summaries for the diagrams.</em>
 
-<img src="images/export.png?raw=true" alt="Export using the Example App" width="300px" height="auto">
-<img src="images/import.png?raw=true" alt="Import using the Example App" width="300px" height="auto">
-<img src="images/healthapp.png?raw=true" alt="The imported data in the HealthApp at the simulator." width="300px" height="auto">
+<img src="images/export.png?raw=true" alt="Export using the Example App" width="200px" height="auto">
+<img src="images/import.png?raw=true" alt="Import using the Example App" width="200px" height="auto">
+<img src="images/healthapp.png?raw=true" alt="The imported data in the HealthApp at the simulator." width="200px" height="auto">
 
 
 ### Export using the API
