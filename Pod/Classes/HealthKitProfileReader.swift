@@ -8,8 +8,14 @@
 
 import Foundation
 
+/// Utility class to generate Profiles from files in a directory
 public class HealthKitProfileReader {
 
+    /**
+        Creates an array of profiles that are stored in a folder
+        - Parameter folder: Url of the folder
+        - Returns: an array of HealthKitProfile objects
+    */
     public static func readProfilesFromDisk(folder: NSURL) -> [HealthKitProfile]{
     
         var profiles:[HealthKitProfile] = []

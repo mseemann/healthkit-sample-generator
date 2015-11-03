@@ -10,6 +10,9 @@ import Foundation
 import HealthKit
 
 // {"metaData":{"creationDate":1445344592172.305,"profileName":"output","version":"1.0.0","type":"JsonSingleDocExportTarget"},
+/**
+    A Json Output Handler that reads the metadata from a profle file
+*/
 class MetaDataOutputJsonHandler: DefaultJsonHandler {
     
     var name:String?

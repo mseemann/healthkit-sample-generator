@@ -9,6 +9,7 @@
 import Foundation
 import HealthKit
 
+/// a protocol every ExportTarget must conform to.
 public protocol ExportTarget {
     func isValid() -> Bool
     func startExport() throws -> Void
@@ -24,7 +25,7 @@ public protocol ExportTarget {
     func writeDictionary(entry:Dictionary <String, AnyObject>) throws -> Void
 }
 
-
+/// An export target that generetes a single json doc for the whole data.
 public class JsonSingleDocExportTarget  {
     
     private(set) var jsonWriter: JsonWriter
@@ -71,6 +72,7 @@ public class JsonSingleDocExportTarget  {
     }
 }
 
+/// an export target that creates a single json doc within a file
 public class JsonSingleDocAsFileExportTarget : JsonSingleDocExportTarget, ExportTarget {
     
     private(set) public var outputFileName: String
@@ -95,6 +97,7 @@ public class JsonSingleDocAsFileExportTarget : JsonSingleDocExportTarget, Export
     }
 }
 
+/// an export target that creates a single json doc in memory
 public class JsonSingleDocInMemExportTarget: JsonSingleDocExportTarget, ExportTarget {
     
     public init(){

@@ -9,13 +9,13 @@
 import Foundation
 import HealthKit
 
+/// errors the importer can create
 public enum ImportError: ErrorType {
     case UnsupportedType(String)
     case HealthDataNotAvailable
 }
 
-
-
+/// importer for a healthkit profile
 public class HealthKitProfileImporter {
     
     let healthStore: HKHealthStore
@@ -27,6 +27,14 @@ public class HealthKitProfileImporter {
         self.importQueue.qualityOfService = NSQualityOfService.UserInteractive
     }
  
+    /**
+        Import a profile in the healthkit store. The import is done on a different thread. You should sync the 
+        callback calls with the main thread if you are updateiung the ui.
+        - Parameter profile: the profile to import
+        - Parameter deleteExistingData: indicates wether the existing healthdata should be deleted before the import (it can only be deleted, what was previously imported by this app).
+        - Parameter onProgress: callback for progress messages
+        - Parameter onCompletion: callback if the import has finished. The error is nl if everything went well.
+    */
     public func importProfile (
         profile: HealthKitProfile,
         deleteExistingData: Bool,

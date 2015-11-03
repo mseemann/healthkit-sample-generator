@@ -8,12 +8,13 @@
 
 import Foundation
 import HealthKit
-
+/// Protocol that every data export must conform to.
 internal protocol DataExporter {
     var message: String {get}
     func export(healthStore: HKHealthStore, exportTargets: [ExportTarget]) throws -> Void
 }
 
+/// convenience base class for dataexporter
 internal class BaseDataExporter {
     var healthQueryError: NSError?  = nil
     var exportError: ErrorType?     = nil
@@ -37,6 +38,7 @@ internal class BaseDataExporter {
     }
 }
 
+/// exports the metadata for a profile
 internal class MetaDataExporter : BaseDataExporter, DataExporter {
     
     internal var message = "exporting metadata"
@@ -48,6 +50,7 @@ internal class MetaDataExporter : BaseDataExporter, DataExporter {
     }
 }
 
+/// exports the userdata (characteristics) of the healthkit store
 internal class UserDataExporter: BaseDataExporter, DataExporter {
     
     internal var message = "exporting user data"
@@ -77,7 +80,7 @@ internal class UserDataExporter: BaseDataExporter, DataExporter {
     }
 }
 
-
+/// exports quanity types
 internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
     internal var message:String = ""
     
@@ -168,6 +171,7 @@ internal class QuantityTypeDataExporter: BaseDataExporter, DataExporter {
      }
 }
 
+/// exports category types
 internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
     internal var message:String = ""
     var type : HKCategoryType
@@ -249,6 +253,7 @@ internal class CategoryTypeDataExporter: BaseDataExporter, DataExporter {
     }
 }
 
+/// exports correlation types
 internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
     internal var message:String = ""
     var type : HKCorrelationType
@@ -366,6 +371,7 @@ internal class CorrelationTypeDataExporter: BaseDataExporter, DataExporter {
     
 }
 
+/// exports workout data
 internal class WorkoutDataExporter: BaseDataExporter, DataExporter {
     internal var message = "exporting workouts data"
 

@@ -18,10 +18,14 @@ class HealthKitStoreCleaner {
     }
     
     
-    /**
+    /*
      healthStore.deleteObjectsOfType results to
      Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.healthd.server" UserInfo={NSDebugDescription=connection to service named com.apple.healthd.server
      in the simulator -> query and delete with healthStore.deleteObjects works :(
+    */
+    /**
+        Cleans all HealthKIt data from the healthkit store that are created by this app.
+        - Parameter onProgress: callback that informs about the cleaning progress
     */
     func clean( onProgress: (message: String, progressInPercent: Double?)->Void){
         

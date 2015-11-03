@@ -83,7 +83,7 @@ class ExportOperation: NSOperation {
     }
 }
 
-
+/// exporter for healthkit data
 public class HealthKitDataExporter {
     
      let exportQueue: NSOperationQueue = {
@@ -100,6 +100,13 @@ public class HealthKitDataExporter {
         self.healthStore = healthStore
     }
     
+    /**
+     Exports the healthkit data to the specified targets with the provided configuration.
+     - Parameter exportTargets: an array of EpxortTargets - you can specify more then one target if you need different formats of the data.
+     - Parameter exportConfiguration: an object that specifies what and how the export should be done
+     - Parameter onProgress: callback for progress informations
+     - Parameter onCompletion: callback if the export is done or aborted with an Error.
+    */
     public func export(exportTargets exportTargets: [ExportTarget], exportConfiguration: ExportConfiguration, onProgress: ExportProgress, onCompletion: ExportCompletion) -> Void {
         
         if !HKHealthStore.isHealthDataAvailable() {

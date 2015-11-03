@@ -20,7 +20,6 @@ public protocol ExportConfiguration {
 
 // possible configuration extension: 
 // export correlations even if they are present in the correlation type section
-// export UUID or do not export the UUID
 // export endDate always - even if the endDate and startDate are the same
 
 internal extension ExportConfiguration {
