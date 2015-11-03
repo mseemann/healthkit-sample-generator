@@ -8,7 +8,7 @@ Export/Import/Sample Generator for HealthKit Data (Swift + UI)
 [![License](https://img.shields.io/cocoapods/l/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 [![Platform](https://img.shields.io/cocoapods/p/healthkit-sample-generator.svg?style=flat)](http://cocoapods.org/pods/healthkit-sample-generator)
 
-Easy to use generator for HealthKit Sample Data that can be used in code and in the simulator. It supports you by exporting the current health data into a json profile, recreates the profile from a json file and is able to create a complete health data profile randomly. So you have reproducable test data to test your code and your ui of your amazing Health-App.
+Easy to use generator for HealthKit Sample Data that can be used in code and in the simulator. It supports you by exporting the current health data into a json profile, recreates the profile from a json file and is able to create a complete health data profile randomly. So you have reproducable test data to test your code and your ui of your amazing Health-App. For sure you can export the health kit data of a real device.
 
 Status: 
 * Export of HealthData 100%
@@ -23,15 +23,15 @@ Next Steps:
 
 ## Export/Import HealthKit Data
 ###Export using the Example-App
-Just build and run the App. Tap on the button "Export HealthKit Data". This will create a JSON file in the App Documents folder. If you are
-using the simulator you may access the export file on your mac - the path to the file is visibe in the UI of the app. To access the exported
-data on a real device you need to open iTunes, go to the device app section and have a look at the shared documents section. From there you
+Just build and run the App. Tap on the button "Export HealthKit Data". This will create a JSON file in the App documents folder. If you are
+using the simulator you may access the export file on your mac - the path to the file is visibe in the UI of the App. To access the exported
+data on a real device you need to open iTunes, go to the device App section and have a look at the shared documents section. From there you
 are able to save the file on your mac.
 
 ###Import using the Example-App
-Go to the Profile Tab of the App. There you will see all profiles that are stored in the app documents folder. Select one and tap on the button "Import HealthKit Data". If you want you can delete all previously imported data from the healthkit store. Keep in mind that the app can only delete those data that were stored by the app. 
+Go to the Profile Tab of the App. There you will see all profiles that are stored in the App documents folder. Select one and tap on the button "Import HealthKit Data". If you want you can delete all previously imported data from the healthkit store. Keep in mind that the App can only delete those data that were stored by the App. 
 
-<em>The HealthKit Store is obviously not designed to process/write a huge amount of data. You will notice that the app will use a lot of mem during the import. Also you will see a heavy processor load after the import. It looks like heakthkit process all data to create summaries for the diagrams.</em>
+<em>The HealthKit Store is obviously not designed to process/write a huge amount of data. You will notice that the App will use a lot of mem during the import. Also you will see a heavy processor load after the import. It looks like heakthkit process all data to create summaries for the diagrams.</em>
 
 <img src="images/export.png?raw=true" alt="Export using the Example App" width="320px" height="auto">
 <img src="images/import.png?raw=true" alt="Import using the Example App" width="320px" height="auto">
@@ -39,7 +39,7 @@ Go to the Profile Tab of the App. There you will see all profiles that are store
 
 
 ### Export using the API
-If you don't want to use the example app or need to integrate the export and import in you own app you can use the Export/Import-API.
+If you don't want to use the example app or need to integrate the export and import in you own App you can use the Export/Import-API.
 
 ```swift
 
@@ -189,9 +189,9 @@ The output format in both cases is json. See the following example:
 Some notes about the export/import format:
 - Every HKSample in heakthkit has a start date and an end date. The end date is only exported if it is different from the start date.
 - You can configure the export to include the uuid of every HKSample. This will increase the export file size!
-- Samples that are part of a correlation are not exported under their own type if they are part of a correlation. For example: the HKCorrelationTypeIdentifierBloodPressure type is a correlation of a HKQuantityTypeIdentifierBloodPressureSystolic and a HKQuantityTypeIdentifierBloodPressureDiastolic. That's why they are not exported as quantity types but they are exported as sub objects under the HKCorrelationTypeIdentifierBloodPressure. The same way HKCorrelationTypeIdentifierFood is handled.
+- Samples that are part of a correlation are not exported under their own type if they are part of a correlation. For example: the HKCorrelationTypeIdentifierBloodPressure type is a correlation of a HKQuantityTypeIdentifierBloodPressureSystolic and a HKQuantityTypeIdentifierBloodPressureDiastolic type. That's why they are not exported as quantity types but they are exported as sub objects under the HKCorrelationTypeIdentifierBloodPressure. The same way HKCorrelationTypeIdentifierFood is handled.
 - Keep in mind that there are some restrictions about the data that can be written or deleted from the healthkit store. It is not possible to write characteristics data (e.g. date of birth, blood type,...). Also you can't write HKCategoryTypeIdentifierAppleStandHour and HKQuantityTypeIdentifierNikeFuel samples.
-- If you want to exclude some data from export just do not allow the example app to access those data.
+- If you want to exclude some data from the export just do not allow the example app to access those data.
 
 ## Requirements
 
