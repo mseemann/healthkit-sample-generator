@@ -54,6 +54,11 @@ public struct HealthDataFullExportConfiguration : ExportConfiguration {
     /// should uuids be exported or not
     public var exportUuids = false
     
+    /**
+        instantiate a HealthDataFullExportConfiguration.
+        - Parameter profileName: the name of the profile
+        - Parameter exportType: what should be exported. see HealthDataToExportType
+    */
     public init(profileName:String, exportType: HealthDataToExportType){
         self.profileName = profileName
         self.exportType = exportType
