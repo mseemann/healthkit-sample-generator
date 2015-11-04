@@ -13,8 +13,11 @@ import HealthKit
     Description of what should be exported.
 */
 public protocol ExportConfiguration {
+    /// what should be exported - see HealthDataToExportType
     var exportType:HealthDataToExportType {get}
+    /// the name of the profile
     var profileName:String {get}
+    /// should uuids be exported or not
     var exportUuids:Bool {get}
 }
 
@@ -44,8 +47,11 @@ internal extension ExportConfiguration {
     Epxort the whole Data from first Entry up to the current Date. E.g. full means the whole period of time.
 */
 public struct HealthDataFullExportConfiguration : ExportConfiguration {
+    /// what should be exported - see HealthDataToExportType
     public var exportType = HealthDataToExportType.ALL // required
+    /// the name of the profile
     public var profileName: String // required
+    /// should uuids be exported or not
     public var exportUuids = false
     
     public init(profileName:String, exportType: HealthDataToExportType){

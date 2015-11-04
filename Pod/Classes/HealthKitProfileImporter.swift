@@ -11,7 +11,9 @@ import HealthKit
 
 /// errors the importer can create
 public enum ImportError: ErrorType {
+    /// the type of the profle is not supported
     case UnsupportedType(String)
+    /// HealthKit is not available on the device
     case HealthDataNotAvailable
 }
 
@@ -21,6 +23,7 @@ public class HealthKitProfileImporter {
     let healthStore: HKHealthStore
     let importQueue = NSOperationQueue()
     
+    /// provide your instance of the HKHealthStore
     public init(healthStore: HKHealthStore) {
         self.healthStore = healthStore
         self.importQueue.maxConcurrentOperationCount = 1

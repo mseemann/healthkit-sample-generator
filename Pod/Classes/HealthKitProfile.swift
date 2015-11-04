@@ -10,9 +10,13 @@ import Foundation
 import HealthKit
 ///MetaData of a profile
 public class HealthKitProfileMetaData {
+    /// the name of the profile
     private(set) public var profileName: String?
+    /// the date the profie was exported
     private(set) public var creationDate: NSDate?
+    /// the version of the profile
     private(set) public var version: String?
+    /// the type of the profile
     private(set) public var type: String?
 }
 
@@ -20,12 +24,14 @@ public class HealthKitProfileMetaData {
 public class HealthKitProfile : CustomStringConvertible {
     
     let fileAtPath: NSURL
+    /// the name of the profile file - without any path components
     private(set) public var fileName: String
+    /// the size of the profile file in bytes
     private(set) public var fileSize:UInt64?
     
     let fileReadQueue = NSOperationQueue()
 
-    
+    /// for textual representation of this object
     public var description: String {
         return "\(fileName) \(fileSize)"
     }
