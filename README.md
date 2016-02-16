@@ -193,7 +193,7 @@ Some notes about the export/import format:
 
 ## Requirements
 
-iOS 9.0, XCode 7
+iOS 9.0, Xcode 7
 
 ## Installation
 
