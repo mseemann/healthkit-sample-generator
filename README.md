@@ -1,4 +1,4 @@
-This repo is archive. You'll find a fork with Swift 5.0 and current Healthkit version here: https://github.com/mkhoshpour/healthkit-sample-generator.
+**This repo is archive. You'll find a fork with Swift 5.0 and current Healthkit version here: https://github.com/mkhoshpour/healthkit-sample-generator.**
 
 # HealthKitSampleGenerator
 
